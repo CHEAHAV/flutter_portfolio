@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/navigation/view/bottom_nav.dart';
+import 'package:portfolio/routes/navigation/view/bottom_nav.dart';
 import 'package:portfolio/routes/app_route.dart';
 
 class MyApp extends StatelessWidget {

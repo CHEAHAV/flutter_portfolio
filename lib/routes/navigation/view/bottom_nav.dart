@@ -1,7 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:portfolio/navigation/controller/navigation_controller.dart';
-import 'package:portfolio/navigation/model/navigation_model.dart';
+import 'package:portfolio/routes/navigation/controller/navigation_controller.dart';
+import 'package:portfolio/routes/navigation/model/navigation_model.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
