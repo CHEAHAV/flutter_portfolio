@@ -25,4 +25,19 @@ class AppColors {
   static const Color success       = Color(0xFF22C55E);
   static const Color warning       = Color(0xFFF59E0B);
   static const Color error         = Color(0xFFEF4444);
+
+    // ── Design tokens ──────────────────────────────────────────────────────────
+  static const Color bgDeep = Color(0xFF0A0F2E);
+  static const Color bgCard = Color(0xFF111836);
+  static const Color bgTile = Color(0xFF0D1228);
+  static const Color accent = Color(0xFF00D4FF);
+  static const Color accentGlow = Color(0x4400D4FF);
+  static const Color textSub = Color(0xFF8892B0);
+  static const Color tileBorder = Color(0xFF1E2A55);
+
+    // ── Colors ────────────────────────────────────────────────────────────────
+  static const Color card = Color(0xFF141E35);
+  static const Color accentDim = Color(0xFF0099BB);
+  static const Color divider = Color(0xFF1E2A4A);
+
 }
