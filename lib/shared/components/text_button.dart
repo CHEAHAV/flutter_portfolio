@@ -5,11 +5,13 @@ import 'package:portfolio/shared/theme/colors.dart';
 class AppTextButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final IconData icon;
 
   const AppTextButton({
     super.key,
     required this.text,
     required this.onPressed,
+    required this.icon,
   });
 
   @override
@@ -39,11 +41,7 @@ class AppTextButton extends StatelessWidget {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(text),
-          SizedBox(width: 6),
-          Icon(Icons.arrow_forward_ios, size: 14),
-        ],
+        children: [Text(text), SizedBox(width: 6), Icon(icon, size: 24)],
       ),
     );
   }
