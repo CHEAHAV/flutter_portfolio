@@ -14,13 +14,13 @@ class AppTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton( // ← now this refers to Flutter's TextButton, not itself
+    return TextButton(
       onPressed: onPressed,
       style: ButtonStyle(
         foregroundColor: WidgetStateProperty.all(AppColors.primary),
         backgroundColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.hovered)) {
-            return AppColors.primary.withOpacity(0.1);
+            return AppColors.primary.withValues(alpha: 0.1);
           }
           return Colors.transparent;
         }),
