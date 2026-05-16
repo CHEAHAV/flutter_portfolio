@@ -100,6 +100,7 @@ class _HomePageState extends State<HomePage> {
                       AppTextButton(
                         text: homeModel.info.button,
                         onPressed: () {},
+                        icon: Icons.arrow_forward_ios,
                       ),
                       SizedBox(height: 20),
                       Center(
