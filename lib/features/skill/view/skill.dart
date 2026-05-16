@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/features/skill/controller/dev_story.dart';
 import 'package:portfolio/features/skill/model/headerdata.dart';
 import 'package:portfolio/features/skill/model/teach_stack.dart';
 import 'package:portfolio/shared/components/profile_card.dart';
@@ -93,7 +94,7 @@ class _SkillPageState extends State<SkillPage>
                   end: Alignment.bottomRight,
                 ).createShader(bounds),
                 child: const Text(
-                  'My Tech Stack',
+                  textstack,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 26,
@@ -123,7 +124,7 @@ class _SkillPageState extends State<SkillPage>
               ),
               const SizedBox(height: 28),
               Text(
-                'It Cheahav',
+                name,
                 style: TextStyle(
                   color: AppColors.textPrimary,
                   fontSize: 22,
@@ -139,6 +140,8 @@ class _SkillPageState extends State<SkillPage>
               ),
               const SizedBox(height: 20),
               DetailedExpertiseCard(),
+              const SizedBox(height: 20),
+              DevStory(),
             ],
           ),
         ),

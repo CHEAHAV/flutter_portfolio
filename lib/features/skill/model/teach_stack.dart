@@ -16,10 +16,13 @@ class TeachStack {
   });
 }
 
-const TeachStack teachStack = TeachStack( 
+const TeachStack teachStack = TeachStack(
   imageLeft: 'assets/images/computer.png',
   labelLeft: 'PYTHON',
   profile: 'assets/images/profile.png',
   imageRight: 'assets/images/computer.png',
   labelRight: 'FLUTTER',
 );
+
+const String textstack = 'My Text Stack';
+const String name = 'IT CHEAHAV';
