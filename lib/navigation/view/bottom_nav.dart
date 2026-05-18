@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/navigation/controller/navigation_controller.dart';
 import 'package:portfolio/navigation/model/navigation_model.dart';
+import 'package:portfolio/shared/theme/colors.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -18,7 +19,7 @@ class _BottomNavState extends State<BottomNav> {
   void initState() {
     super.initState();
     _controller.addListener(() {
-      setState(() {}); 
+      setState(() {});
     });
   }
 
@@ -35,8 +36,9 @@ class _BottomNavState extends State<BottomNav> {
         items: _model.navIcons,
         index: _controller.currentTabIndex,
         height: 65,
-        backgroundColor: Colors.black,
-        color: Colors.white,
+        backgroundColor: AppColors.bgDeep,
+        color: AppColors.bgCard,
+        buttonBackgroundColor: AppColors.accent,
         animationDuration: const Duration(milliseconds: 500),
         onTap: _controller.onTabTapped,
       ),

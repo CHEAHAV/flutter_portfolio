@@ -51,7 +51,7 @@ class FullWidthSkill extends StatelessWidget {
             ),
             child: AnimatedBuilder(
               animation: barAnimation,
-              builder: (_, __) => FractionallySizedBox(
+              builder: (context, child) => FractionallySizedBox(
                 alignment: Alignment.centerLeft,
                 widthFactor: barAnimation.value * (skillItem.score / 10),
                 child: Container(

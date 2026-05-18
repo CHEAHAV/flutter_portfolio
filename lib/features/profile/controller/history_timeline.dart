@@ -90,7 +90,7 @@ class _HistoryTimelineState extends State<HistoryTimeline>
                               height: 8,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: AppColors.bgCard,
+                                color: AppColors.accentDim,
                                 boxShadow: [
                                   BoxShadow(
                                     color:AppColors.accentGlow.withValues(alpha: 0.4),
@@ -107,7 +107,7 @@ class _HistoryTimelineState extends State<HistoryTimeline>
                               margin: EdgeInsets.only(bottom: isLast ? 0 : 16),
                               padding: const EdgeInsets.all(18),
                               decoration: BoxDecoration(
-                                color: AppColors.tertiary,
+                                color: AppColors.card,
                                 borderRadius: BorderRadius.circular(16),
                                 border: Border.all(
                                   color: AppColors.bgCard,

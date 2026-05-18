@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/features/profile/model/certification_model.dart';
+import 'package:portfolio/shared/style/style.dart';
 import 'package:portfolio/shared/theme/colors.dart';
 
 class Certification extends StatefulWidget {
@@ -11,7 +12,6 @@ class Certification extends StatefulWidget {
 
 class _CertificationState extends State<Certification>
     with TickerProviderStateMixin {
-  bool expanded = false;
   late List<AnimationController> barControllers;
   late List<Animation<double>> barAnimations;
 
@@ -49,36 +49,80 @@ class _CertificationState extends State<Certification>
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        height: 155,
+        height: 168,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: certificationModel.length,
           itemBuilder: (context, index) {
             final item = certificationModel[index];
-            return Container(
-              width: 155,
-              margin: EdgeInsets.only(left: 8, right: 8),
-              decoration: BoxDecoration(
-                color: AppColors.card,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: AppColors.divider, width: 1),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(item.icon, color: AppColors.textPrimary),
-                  const SizedBox(height: 5),
-                  Text(
-                    item.name,
-                    style: TextStyle(color: AppColors.textPrimary),
+            return FadeTransition(
+              opacity: barAnimations[index],
+              child: SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(0, 0.12),
+                  end: Offset.zero,
+                ).animate(barAnimations[index]),
+                child: Container(
+                  width: 170,
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.card,
+                    borderRadius: BorderRadius.circular(AppStyle.radiusLg),
+                    border: Border.all(color: AppColors.divider, width: 1),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.32),
+                        blurRadius: 20,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    item.title,
-                    style: TextStyle(color: AppColors.textSecondary),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 42,
+                        height: 42,
+                        decoration: BoxDecoration(
+                          color: AppColors.bgTile,
+                          borderRadius: BorderRadius.circular(
+                            AppStyle.radiusMd,
+                          ),
+                          border: Border.all(color: AppColors.tileBorder),
+                        ),
+                        child: Icon(
+                          item.icon,
+                          color: AppColors.accent,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        item.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: AppStyle.bodyLarge.copyWith(
+                          fontWeight: FontWeight.w700,
+                          height: 1.2,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        item.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: AppStyle.bodySmall.copyWith(
+                          color: AppColors.textSub,
+                          height: 1.35,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             );
           },

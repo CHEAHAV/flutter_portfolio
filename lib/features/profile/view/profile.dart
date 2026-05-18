@@ -24,15 +24,19 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.bgDeep,
       appBar: AppBar(
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(homeModel.headerdata.imageUrl),
+              backgroundImage: AssetImage(homeModel.headerdata.imageUrl),
               radius: 20,
             ),
             SizedBox(width: 16),
-            Text(homeModel.headerdata.name, style: AppStyle.headline1),
+            Text(
+              homeModel.headerdata.name,
+              style: AppStyle.headline1,
+            ),
           ],
         ),
         actions: [
@@ -96,9 +100,14 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(height: 10),
               Row(
                 children: [
-                  Icon(timeline[0]['icon']),
+                  Icon(timeline[0]['icon'], color: AppColors.accent),
                   SizedBox(width: 5),
-                  Text('// ${timeline[0]['title']}'),
+                  Text(
+                    '// ${timeline[0]['title']}',
+                    style: AppStyle.labelLarge.copyWith(
+                      color: AppColors.accent,
+                    ),
+                  ),
                 ],
               ),
               SizedBox(height: 10),
@@ -106,9 +115,14 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(height: 10),
               Row(
                 children: [
-                  Icon(timeline[1]['icon']),
+                  Icon(timeline[1]['icon'], color: AppColors.accent),
                   SizedBox(width: 5),
-                  Text('// ${timeline[1]['title']}'),
+                  Text(
+                    '// ${timeline[1]['title']}',
+                    style: AppStyle.labelLarge.copyWith(
+                      color: AppColors.accent,
+                    ),
+                  ),
                 ],
               ),
               SizedBox(height: 10),

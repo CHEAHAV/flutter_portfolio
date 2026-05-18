@@ -14,8 +14,7 @@ class HomeModel {
 
   final HeaderData headerdata = HeaderData(
     name: 'Portfolio',
-    imageUrl:
-        'https://i.pinimg.com/736x/28/e4/42/28e4428c954459514b112ff915c975b3.jpg',
+    imageUrl: 'assets/images/profile.png',
     icon: Icons.search,
   );
 
@@ -24,11 +23,10 @@ class HomeModel {
   ];
 
   final Info info = Info(
-    name: 'It Cheahav',
+    name: 'IT CHEAHAV',
     description: 'Full Stack & Mobile App Devilopment',
     button: 'Connect & Discuss',
-    image:
-        'https://i.pinimg.com/736x/28/e4/42/28e4428c954459514b112ff915c975b3.jpg',
+    image: 'assets/images/profile.png',
   );
 
   final List<Map<String, dynamic>> mycore = [

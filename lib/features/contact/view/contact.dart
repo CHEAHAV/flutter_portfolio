@@ -24,7 +24,7 @@ class _ContactPageState extends State<ContactPage> {
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(homeModel.headerdata.imageUrl),
+              backgroundImage: AssetImage(homeModel.headerdata.imageUrl),
               radius: 20,
             ),
             SizedBox(width: 16),

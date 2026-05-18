@@ -17,7 +17,7 @@ class _ResumeButtonState extends State<ResumeButton> {
       icon: Icon(buttonData[0].icon, color: AppColors.card, size: 18),
       label: Text(
         buttonData[0].title,
-        style: TextStyle(color: AppColors.card, fontWeight: FontWeight.w600),
+        style: TextStyle(color: AppColors.card, fontWeight: FontWeight.w400),
       ),
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.textPrimary,

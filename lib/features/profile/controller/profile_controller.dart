@@ -19,7 +19,7 @@ class ProfileController extends StatelessWidget {
             ),
             child: CircleAvatar(
               radius: 55,
-              backgroundImage: NetworkImage(homeModel.info.image),
+              backgroundImage: AssetImage(homeModel.info.image),
             ),
           ),
           Positioned(
