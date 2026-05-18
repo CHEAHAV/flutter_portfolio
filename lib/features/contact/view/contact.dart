@@ -24,11 +24,14 @@ class _ContactPageState extends State<ContactPage> {
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(homeModel.headerdata.imageUrl),
+              backgroundImage: AssetImage(homeModel.headerdata.imageUrl),
               radius: 20,
             ),
             SizedBox(width: 16),
-            Text(homeModel.headerdata.name, style: AppStyle.headline1),
+            Text(
+              homeModel.headerdata.name,
+              style: AppStyle.headline1.copyWith(fontSize: 18),
+            ),
           ],
         ),
         actions: [
@@ -40,22 +43,26 @@ class _ContactPageState extends State<ContactPage> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(title, style: AppStyle.headline2),
-              SizedBox(height: 10),
-              Text(description, style: AppStyle.bodyLarge),
-              SizedBox(height: 20),
-              ConnectDirect(),
-              SizedBox(height: 10),
-              Contact(),
-              SizedBox(height: 10),
-              Message(),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(title, style: AppStyle.headline2),
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              child: Text(
+                description,
+                style: AppStyle.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(height: 20),
+            ConnectDirect(),
+            SizedBox(height: 10),
+            Contact(),
+            SizedBox(height: 10),
+            Message(),
+          ],
         ),
       ),
     );

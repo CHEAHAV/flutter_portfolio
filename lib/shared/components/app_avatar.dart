@@ -35,7 +35,7 @@ class AppAvatar extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: CircleAvatar(
-            backgroundImage: NetworkImage(imageUrl),
+            backgroundImage: AssetImage(imageUrl),
             radius: radius,
           ),
         ),

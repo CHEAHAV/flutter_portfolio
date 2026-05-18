@@ -15,12 +15,17 @@ class ConnectDirectModel {
 const List<ConnectDirectModel> connectDirectModel = [
   ConnectDirectModel(
     name: 'Phone',
-    description: 'dara@gmail.com',
+    description: '0887 103 205',
     icon: Icons.phone,
   ),
   ConnectDirectModel(
+    name: 'Email',
+    description: 'cheahav7171@gmail.com                                                                                                                                                     ',
+    icon: Icons.mail,
+  ),
+  ConnectDirectModel(
     name: 'Location',
-    description: 'phnom penh, kampot',
+    description: 'Phnom Penh',
     icon: Icons.location_city,
   ),
 ];

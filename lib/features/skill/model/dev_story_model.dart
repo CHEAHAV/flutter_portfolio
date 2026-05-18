@@ -24,3 +24,5 @@ const List<DevStoryModel> devStory = [
     iconname: 'phone',
   ),
 ];
+
+const IconData terminalicon = Icons.terminal;

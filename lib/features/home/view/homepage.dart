@@ -25,11 +25,14 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(homeModel.headerdata.imageUrl),
+              backgroundImage: AssetImage(homeModel.headerdata.imageUrl),
               radius: 20,
             ),
             SizedBox(width: 16),
-            Text(homeModel.headerdata.name, style: AppStyle.headline1),
+            Text(
+              homeModel.headerdata.name,
+              style: AppStyle.headline1.copyWith(fontSize: 18),
+            ),
           ],
         ),
         actions: [
@@ -90,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(homeModel.info.title, style: AppStyle.headline1),
+                      Text(homeModel.info.name, style: AppStyle.headline1),
                       SizedBox(height: 10),
                       Text(
                         homeModel.info.description,

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/shared/theme/colors.dart';
 
 class AppStyle {
-
   // Headline - Geist
   static const TextStyle headline1 = TextStyle(
-    color: AppColors.tertiary,
+    color: AppColors.textPrimary,
     fontSize: 32,
     fontWeight: FontWeight.w700,
     fontFamily: 'Geist',
@@ -13,7 +12,7 @@ class AppStyle {
   );
 
   static const TextStyle headline2 = TextStyle(
-    color: AppColors.tertiary,
+    color: AppColors.textPrimary,
     fontSize: 24,
     fontWeight: FontWeight.w600,
     fontFamily: 'Geist',
@@ -21,7 +20,7 @@ class AppStyle {
   );
 
   static const TextStyle headline3 = TextStyle(
-    color: AppColors.tertiary,
+    color: AppColors.textPrimary,
     fontSize: 20,
     fontWeight: FontWeight.w600,
     fontFamily: 'Geist',

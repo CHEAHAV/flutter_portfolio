@@ -17,11 +17,11 @@ class TeachStack {
 }
 
 const TeachStack teachStack = TeachStack(
-  imageLeft: 'assets/images/computer.png',
-  labelLeft: 'PYTHON',
+  imageLeft: 'assets/icons/flutter.png',
+  labelLeft: 'FLUTTER',
   profile: 'assets/images/profile.png',
-  imageRight: 'assets/images/computer.png',
-  labelRight: 'FLUTTER',
+  imageRight: 'assets/icons/fast.png',
+  labelRight: 'FASTAPI',
 );
 
 const String textstack = 'My Text Stack';

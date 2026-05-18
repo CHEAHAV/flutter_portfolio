@@ -51,7 +51,7 @@ class SkillPair extends StatelessWidget {
           ),
           child: AnimatedBuilder(
             animation: animation,
-            builder: (_, __) => FractionallySizedBox(
+            builder: (context, child) => FractionallySizedBox(
               alignment: Alignment.centerLeft,
               widthFactor: animation.value * (skill.score / 10),
               child: Container(
