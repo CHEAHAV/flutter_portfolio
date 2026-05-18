@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(homeModel.info.title, style: AppStyle.headline1),
+                      Text(homeModel.info.name, style: AppStyle.headline1),
                       SizedBox(height: 10),
                       Text(
                         homeModel.info.description,

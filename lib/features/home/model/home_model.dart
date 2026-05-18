@@ -24,7 +24,7 @@ class HomeModel {
   ];
 
   final Info info = Info(
-    title: 'It Cheahav',
+    name: 'It Cheahav',
     description: 'Full Stack & Mobile App Devilopment',
     button: 'Connect & Discuss',
     image:

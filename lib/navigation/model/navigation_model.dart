@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/features/contact/view/contact.dart';
 import 'package:portfolio/features/home/view/homepage.dart';
-import 'package:portfolio/features/profile/profile.dart';
+import 'package:portfolio/features/profile/view/profile.dart';
 import 'package:portfolio/features/skill/view/skill.dart';
 
 class NavigationModel {

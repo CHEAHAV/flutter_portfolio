@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/features/skill/model/dev_story.dart';
+import 'package:portfolio/features/skill/model/dev_story_model.dart';
 import 'package:portfolio/shared/theme/colors.dart';
 
 class DevStory extends StatefulWidget {
