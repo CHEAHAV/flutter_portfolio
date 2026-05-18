@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/features/home/model/home_model.dart';
+import 'package:portfolio/features/profile/controller/certification.dart';
 import 'package:portfolio/features/profile/controller/contace_button.dart';
 import 'package:portfolio/features/profile/controller/experience_controller.dart';
 import 'package:portfolio/features/profile/controller/experience_history.dart';
+import 'package:portfolio/features/profile/controller/history_timeline.dart';
 import 'package:portfolio/features/profile/controller/profile_controller.dart';
 import 'package:portfolio/features/profile/controller/resume_button.dart';
+import 'package:portfolio/features/profile/model/history_model.dart';
 import 'package:portfolio/shared/components/divider.dart';
 import 'package:portfolio/shared/style/style.dart';
 import 'package:portfolio/shared/theme/colors.dart';
@@ -80,9 +83,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     // Left button — filled light
                     Expanded(child: ResumeButton()),
-          
+
                     const SizedBox(width: 12),
-          
+
                     // Right button — outlined
                     Expanded(child: ContaceButton()),
                   ],
@@ -90,6 +93,26 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               SizedBox(height: 10),
               ExperienceHistory(),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Icon(timeline[0]['icon']),
+                  SizedBox(width: 5),
+                  Text('// ${timeline[0]['title']}'),
+                ],
+              ),
+              SizedBox(height: 10),
+              HistoryTimeline(),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Icon(timeline[1]['icon']),
+                  SizedBox(width: 5),
+                  Text('// ${timeline[1]['title']}'),
+                ],
+              ),
+              SizedBox(height: 10),
+              Certification(),
             ],
           ),
         ),

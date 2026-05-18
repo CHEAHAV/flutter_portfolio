@@ -68,7 +68,7 @@ class _ExperienceHistoryState extends State<ExperienceHistory>
             // Header row: icon + // Title
             Row(
               children: [
-                Icon(icon, color: AppColors.accentGlow, size: 18),
+                Icon(terminalicon, color: AppColors.accentGlow, size: 18),
                 const SizedBox(width: 8),
                 Text(
                   '// ${devStory[0].title}',

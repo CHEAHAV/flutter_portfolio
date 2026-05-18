@@ -25,4 +25,4 @@ const List<DevStoryModel> devStory = [
   ),
 ];
 
-const IconData icon = Icons.terminal;
+const IconData terminalicon = Icons.terminal;
