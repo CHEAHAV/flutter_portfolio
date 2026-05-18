@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/features/profile/model/history_model.dart';
+import 'package:portfolio/features/profile/model/career_timeline_model.dart';
 import 'package:portfolio/shared/theme/colors.dart';
 
-class HistoryTimeline extends StatefulWidget {
-  const HistoryTimeline({super.key});
+class CareerTimeline extends StatefulWidget {
+  const CareerTimeline({super.key});
 
   @override
-  State<HistoryTimeline> createState() => _HistoryTimelineState();
+  State<CareerTimeline> createState() => _CareerTimelineState();
 }
 
-class _HistoryTimelineState extends State<HistoryTimeline>
+class _CareerTimelineState extends State<CareerTimeline>
     with TickerProviderStateMixin {
   late List<AnimationController> barControllers;
   late List<Animation<double>> barAnimations;
@@ -18,7 +18,7 @@ class _HistoryTimelineState extends State<HistoryTimeline>
   void initState() {
     super.initState();
     barControllers = List.generate(
-      historyModel.length,
+      careerTimeLine.length,
       (i) => AnimationController(
         vsync: this,
         duration: Duration(milliseconds: 700 + i * 150),
@@ -59,8 +59,8 @@ class _HistoryTimelineState extends State<HistoryTimeline>
                   Container(
                     width: 1.5,
                     // Approximate height; stretches with content
-                    height: historyModel.length * 250,
-                    color: AppColors.divider,
+                    height: careerTimeLine.length * 250,
+                    color: AppColors.accentGlow,
                   ),
                 ],
               ),
@@ -68,9 +68,9 @@ class _HistoryTimelineState extends State<HistoryTimeline>
 
             Expanded(
               child: Column(
-                children: List.generate(historyModel.length, (index) {
-                  final item = historyModel[index];
-                  final isLast = index == historyModel.length - 1;
+                children: List.generate(careerTimeLine.length, (index) {
+                  final item = careerTimeLine[index];
+                  final isLast = index == careerTimeLine.length - 1;
 
                   return FadeTransition(
                     opacity: barAnimations[index],

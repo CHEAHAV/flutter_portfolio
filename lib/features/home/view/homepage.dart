@@ -29,7 +29,10 @@ class _HomePageState extends State<HomePage> {
               radius: 20,
             ),
             SizedBox(width: 16),
-            Text(homeModel.headerdata.name, style: AppStyle.headline1),
+            Text(
+              homeModel.headerdata.name,
+              style: AppStyle.headline1.copyWith(fontSize: 18),
+            ),
           ],
         ),
         actions: [

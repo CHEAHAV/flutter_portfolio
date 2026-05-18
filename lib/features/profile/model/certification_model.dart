@@ -24,3 +24,7 @@ const List<CertificationModel> certificationModel = [
     title: 'Security Professional',
   ),
 ];
+
+const List<Map<String, dynamic>> certificate = [
+  {'id': 1, 'icon': Icons.verified, 'title': 'Certifications'},
+];

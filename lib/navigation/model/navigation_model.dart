@@ -15,7 +15,7 @@ class NavigationModel {
 
   final List<Widget> navIcons = const [
     Icon(Icons.home, size: 24, color: AppColors.textPrimary),
-    Icon(Icons.code, size: 24, color: AppColors.textPrimary),
+    Icon(Icons.settings_ethernet, size: 24, color: AppColors.textPrimary),
     Icon(Icons.contact_mail, size: 24, color: AppColors.textPrimary),
     Icon(Icons.person, size: 24, color: AppColors.textPrimary),
   ];

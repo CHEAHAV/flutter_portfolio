@@ -23,13 +23,13 @@ class ProfileController extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 4,
-            right: 4,
+            bottom: 8,
+            right: 8,
             child: Container(
               width: 16,
               height: 16,
               decoration: BoxDecoration(
-                color: AppColors.accentGlow,
+                color: AppColors.primary,
                 shape: BoxShape.circle,
                 border: Border.all(color: AppColors.card, width: 2),
               ),

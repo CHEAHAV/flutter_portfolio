@@ -4,10 +4,13 @@ import 'package:portfolio/features/profile/controller/certification.dart';
 import 'package:portfolio/features/profile/controller/contace_button.dart';
 import 'package:portfolio/features/profile/controller/experience_controller.dart';
 import 'package:portfolio/features/profile/controller/experience_history.dart';
-import 'package:portfolio/features/profile/controller/history_timeline.dart';
+import 'package:portfolio/features/profile/controller/career_timeline.dart';
 import 'package:portfolio/features/profile/controller/profile_controller.dart';
 import 'package:portfolio/features/profile/controller/resume_button.dart';
-import 'package:portfolio/features/profile/model/history_model.dart';
+import 'package:portfolio/features/profile/controller/study_timeline.dart';
+import 'package:portfolio/features/profile/model/career_timeline_model.dart';
+import 'package:portfolio/features/profile/model/certification_model.dart';
+import 'package:portfolio/features/profile/model/study_timeline_model.dart';
 import 'package:portfolio/shared/components/divider.dart';
 import 'package:portfolio/shared/style/style.dart';
 import 'package:portfolio/shared/theme/colors.dart';
@@ -35,7 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(width: 16),
             Text(
               homeModel.headerdata.name,
-              style: AppStyle.headline1,
+              style: AppStyle.headline1.copyWith(fontSize: 18),
             ),
           ],
         ),
@@ -100,10 +103,10 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(height: 10),
               Row(
                 children: [
-                  Icon(timeline[0]['icon'], color: AppColors.accent),
+                  Icon(study[0]['icon'], color: AppColors.accent),
                   SizedBox(width: 5),
                   Text(
-                    '// ${timeline[0]['title']}',
+                    '// ${study[0]['title']}',
                     style: AppStyle.labelLarge.copyWith(
                       color: AppColors.accent,
                     ),
@@ -111,14 +114,29 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
               SizedBox(height: 10),
-              HistoryTimeline(),
+              StudyTimeline(),
               SizedBox(height: 10),
               Row(
                 children: [
-                  Icon(timeline[1]['icon'], color: AppColors.accent),
+                  Icon(career[0]['icon'], color: AppColors.accent),
                   SizedBox(width: 5),
                   Text(
-                    '// ${timeline[1]['title']}',
+                    '// ${career[0]['title']}',
+                    style: AppStyle.labelLarge.copyWith(
+                      color: AppColors.accent,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              CareerTimeline(),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Icon(certificate[0]['icon'], color: AppColors.accent),
+                  SizedBox(width: 5),
+                  Text(
+                    '// ${certificate[0]['title']}',
                     style: AppStyle.labelLarge.copyWith(
                       color: AppColors.accent,
                     ),
