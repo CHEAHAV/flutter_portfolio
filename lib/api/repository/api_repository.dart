@@ -22,57 +22,116 @@ class ApiRepository {
 
   Future<ApiModel> loadApiModel() async {
     final [
-      career,
-      certification,
-      contactme,
-      filter,
-      info,
-      mycore,
-      project,
-      skill,
-      social,
-      story,
-      study,
-      teachstack,
-      message,
+      careerResult,
+      certificationResult,
+      contactmeResult,
+      filterResult,
+      infoResult,
+      mycoreResult,
+      projectResult,
+      skillResult,
+      socialResult,
+      storyResult,
+      studyResult,
+      teachstackResult,
+      messageResult,
     ] = await Future.wait([
-      apiClient.getAllWebsiteList(ApiRoutes.careers),
-      apiClient.getAllWebsiteList(ApiRoutes.certifications),
-      apiClient.getAllWebsiteList(ApiRoutes.contactMes),
-      apiClient.getAllWebsiteList(ApiRoutes.filters),
-      apiClient.getAllWebsiteList(ApiRoutes.infos),
-      apiClient.getAllWebsiteList(ApiRoutes.myCores),
-      apiClient.getAllWebsiteList(ApiRoutes.projects),
-      apiClient.getAllWebsiteList(ApiRoutes.skills),
-      apiClient.getAllWebsiteList(ApiRoutes.socials),
-      apiClient.getAllWebsiteList(ApiRoutes.stories),
-      apiClient.getAllWebsiteList(ApiRoutes.studies),
-      apiClient.getAllWebsiteList(ApiRoutes.teachStacks),
-      apiClient.getAllWebsiteList(ApiRoutes.messages),
+      _loadSection('careers', ApiRoutes.careers),
+      _loadSection('certifications', ApiRoutes.certifications),
+      _loadSection('contact-mes', ApiRoutes.contactMes),
+      _loadSection('filters', ApiRoutes.filters),
+      _loadSection('infos', ApiRoutes.infos),
+      _loadSection('my-cores', ApiRoutes.myCores),
+      _loadSection('projects', ApiRoutes.projects),
+      _loadSection('skills', ApiRoutes.skills),
+      _loadSection('socials', ApiRoutes.socials),
+      _loadSection('stories', ApiRoutes.stories),
+      _loadSection('studies', ApiRoutes.studies),
+      _loadSection('teach-stacks', ApiRoutes.teachStacks),
+      _loadSection('messages', ApiRoutes.messages),
     ]);
+
+    final results = [
+      careerResult,
+      certificationResult,
+      contactmeResult,
+      filterResult,
+      infoResult,
+      mycoreResult,
+      projectResult,
+      skillResult,
+      socialResult,
+      storyResult,
+      studyResult,
+      teachstackResult,
+      messageResult,
+    ];
+
+    if (results.every((result) => !result.loaded)) {
+      throw ApiException(
+        'Unable to load backend data: '
+        '${results.map((result) => result.error).whereType<String>().join(', ')}',
+      );
+    }
+
     return ApiModel(
-      career: career.cast<Map<String, dynamic>>().map(mapCareer).toList(),
-      certification: certification
-          .cast<Map<String, dynamic>>()
-          .map(mapCertification)
-          .toList(),
-      contactme: contactme
-          .cast<Map<String, dynamic>>()
-          .map(mapContactMe)
-          .toList(),
-      filter: filter.cast<Map<String, dynamic>>().map(mapFilter).toList(),
-      info: info.cast<Map<String, dynamic>>().map(mapInfo).toList(),
-      mycore: mycore.cast<Map<String, dynamic>>().map(mapMyCore).toList(),
-      project: project.cast<Map<String, dynamic>>().map(mapProject).toList(),
-      skill: skill.cast<Map<String, dynamic>>().map(mapSkill).toList(),
-      social: social.cast<Map<String, dynamic>>().map(mapSocial).toList(),
-      story: story.cast<Map<String, dynamic>>().map(mapStory).toList(),
-      study: study.cast<Map<String, dynamic>>().map(mapStudy).toList(),
-      teachstack: teachstack
-          .cast<Map<String, dynamic>>()
-          .map(mapTeachStack)
-          .toList(),
-      message: message.cast<Map<String, dynamic>>().map(mapMessage).toList(),
+      career: _mapItems(careerResult.items, mapCareer),
+      certification: _mapItems(certificationResult.items, mapCertification),
+      contactme: _mapItems(contactmeResult.items, mapContactMe),
+      filter: _mapItems(filterResult.items, mapFilter),
+      info: _mapItems(infoResult.items, mapInfo),
+      mycore: _mapItems(mycoreResult.items, mapMyCore),
+      project: _mapItems(projectResult.items, mapProject),
+      skill: _mapItems(skillResult.items, mapSkill),
+      social: _mapItems(socialResult.items, mapSocial),
+      story: _mapItems(storyResult.items, mapStory),
+      study: _mapItems(studyResult.items, mapStudy),
+      teachstack: _mapItems(teachstackResult.items, mapTeachStack),
+      message: _mapItems(messageResult.items, mapMessage),
     );
   }
+
+  Future<_SectionResult> _loadSection(String name, String path) async {
+    try {
+      return _SectionResult.loaded(await apiClient.getAllWebsiteList(path));
+    } catch (error) {
+      return _SectionResult.failed('$name: $error');
+    }
+  }
+
+  List<T> _mapItems<T>(
+    List<Map<String, dynamic>> items,
+    T Function(Map<String, dynamic>) mapper,
+  ) {
+    return items
+        .map((item) {
+          try {
+            return mapper(item);
+          } catch (_) {
+            return null;
+          }
+        })
+        .whereType<T>()
+        .toList();
+  }
+}
+
+class _SectionResult {
+  const _SectionResult({
+    required this.loaded,
+    required this.items,
+    this.error,
+  });
+
+  factory _SectionResult.loaded(List<Map<String, dynamic>> items) {
+    return _SectionResult(loaded: true, items: items);
+  }
+
+  factory _SectionResult.failed(String error) {
+    return _SectionResult(loaded: false, items: const [], error: error);
+  }
+
+  final bool loaded;
+  final List<Map<String, dynamic>> items;
+  final String? error;
 }
