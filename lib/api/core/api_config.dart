@@ -14,7 +14,7 @@
 // ngrok
 
 class ApiConfig {
-  static const String _defaultBaseUrl = 'https://timberless-jonah-pedunculate.ngrok-free.dev';
+  static const String _defaultBaseUrl = 'https://web-production-eece4.up.railway.app';
 
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
