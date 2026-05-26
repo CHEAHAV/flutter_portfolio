@@ -31,7 +31,6 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-!/build/web/
 /coverage/
 
 # Symbolication related
@@ -45,4 +44,4 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 "/gradle-8.11.1-bin/" 
-"gradle-8.11.1-bin/"
+"gradle-8.11.1-bin/" 
