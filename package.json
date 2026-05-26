@@ -1,0 +1,6 @@
+{
+  "name": "portfolio-frontend",
+  "scripts": {
+    "start": "npx serve build/web -l $PORT"
+  }
+}
