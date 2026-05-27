@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage>
         appBar: MyAppBar(
           info: _info,
           index: 0,
-          onProfileTap: widget.onProfileTap,
+          onProfileTap: widget.onProfileTap, contactme: [],
         ),
         body: FadeTransition(
           opacity: fadeIn,

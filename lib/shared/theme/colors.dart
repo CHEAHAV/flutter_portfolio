@@ -11,7 +11,7 @@ class AppColors {
   static const Color secondary = Color(0xFF3D5AFE); // Blue
   static const Color tertiary = Color(0xFF0F172A); // Deep navy
   static const Color accentCyan = Color(0xFF00D4B8);
-  static const Color accentPurple = Color(0xFF7C3AED);
+  static const Color accentPurple = Color.fromARGB(255, 128, 68, 230);
 
   // ── Text ────────────────────────────────────────────────────
   static const Color textPrimary = Color(0xFFE6EDF3);

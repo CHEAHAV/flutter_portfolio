@@ -15,10 +15,25 @@ class _StudyTimelineState extends State<StudyTimeline>
     with TickerProviderStateMixin {
   late List<AnimationController> barControllers;
   late List<Animation<double>> barAnimations;
+  int _animationRun = 0;
 
   @override
   void initState() {
     super.initState();
+    _setupAnimations();
+  }
+
+  @override
+  void didUpdateWidget(covariant StudyTimeline oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.items.length != widget.items.length) {
+      _disposeAnimations();
+      _setupAnimations();
+    }
+  }
+
+  void _setupAnimations() {
+    _animationRun++;
     barControllers = List.generate(
       widget.items.length,
       (i) => AnimationController(
@@ -31,17 +46,26 @@ class _StudyTimelineState extends State<StudyTimeline>
         .toList();
 
     for (int i = 0; i < barControllers.length; i++) {
+      final controller = barControllers[i];
+      final animationRun = _animationRun;
       Future.delayed(Duration(milliseconds: i * 120), () {
-        if (mounted) barControllers[i].forward();
+        if (mounted && animationRun == _animationRun) {
+          controller.forward();
+        }
       });
+    }
+  }
+
+  void _disposeAnimations() {
+    _animationRun++;
+    for (final c in barControllers) {
+      c.dispose();
     }
   }
 
   @override
   void dispose() {
-    for (final c in barControllers) {
-      c.dispose();
-    }
+    _disposeAnimations();
     super.dispose();
   }
 
@@ -49,44 +73,44 @@ class _StudyTimelineState extends State<StudyTimeline>
   Widget build(BuildContext context) {
     if (widget.items.isEmpty) return const SizedBox.shrink();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    final lineAnimation = barAnimations.last;
+
+    return Stack(
+      clipBehavior: Clip.none,
       children: [
+        Positioned(
+          left: 9.25,
+          top: 0,
+          bottom: 0,
+          child: ExcludeSemantics(
+            child: ScaleTransition(
+              scale: lineAnimation,
+              alignment: Alignment.topCenter,
+              child: Container(width: 1.5, color: AppColors.accentDim),
+            ),
+          ),
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Left: vertical line
-            SizedBox(
-              width: 20,
-              child: Column(
-                children: [
-                  Container(
-                    width: 1.5,
-                    // Approximate height; stretches with content
-                    height: widget.items.length * 250,
-                    color: AppColors.accentGlow,
-                  ),
-                ],
-              ),
-            ),
-
+            const SizedBox(width: 20),
             Expanded(
               child: Column(
                 children: List.generate(widget.items.length, (index) {
                   final item = widget.items[index];
                   final isLast = index == widget.items.length - 1;
+                  final itemAnimation = barAnimations[index];
 
                   return FadeTransition(
-                    opacity: barAnimations[index],
+                    opacity: itemAnimation,
                     child: SlideTransition(
                       position: Tween<Offset>(
                         begin: const Offset(0, 0.12),
                         end: Offset.zero,
-                      ).animate(barAnimations[index]),
+                      ).animate(itemAnimation),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Dot
                           Padding(
                             padding: const EdgeInsets.only(top: 14, right: 12),
                             child: Container(
@@ -106,8 +130,6 @@ class _StudyTimelineState extends State<StudyTimeline>
                               ),
                             ),
                           ),
-
-                          // Card
                           Expanded(
                             child: Container(
                               margin: EdgeInsets.only(bottom: isLast ? 0 : 16),
@@ -132,7 +154,6 @@ class _StudyTimelineState extends State<StudyTimeline>
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Title + Date
                                   Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -161,10 +182,7 @@ class _StudyTimelineState extends State<StudyTimeline>
                                       ),
                                     ],
                                   ),
-
                                   const SizedBox(height: 6),
-
-                                  // Subtitle
                                   Text(
                                     item.subtitle,
                                     style: const TextStyle(
@@ -173,10 +191,7 @@ class _StudyTimelineState extends State<StudyTimeline>
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-
                                   const SizedBox(height: 10),
-
-                                  // Description
                                   Text(
                                     item.description,
                                     style: const TextStyle(
@@ -186,8 +201,6 @@ class _StudyTimelineState extends State<StudyTimeline>
                                       height: 1.65,
                                     ),
                                   ),
-
-                                  // Subject chips — first card only
                                 ],
                               ),
                             ),

@@ -41,9 +41,7 @@ class ApiClient {
         .timeout(const Duration(seconds: 15));
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      throw ApiException(
-        'Request failed: ${response.statusCode} ${response.body}',
-      );
+      throw ApiException(_errorMessageFromResponse(response));
     }
 
     final decoded = jsonDecode(response.body);
@@ -52,6 +50,20 @@ class ApiClient {
     }
 
     return decoded;
+  }
+
+  String _errorMessageFromResponse(http.Response response) {
+    try {
+      final decoded = jsonDecode(response.body);
+      if (decoded is Map<String, dynamic>) {
+        final message = decoded['message'] ?? decoded['error'];
+        if (message != null && message.toString().trim().isNotEmpty) {
+          return message.toString();
+        }
+      }
+    } catch (_) {}
+
+    return 'Request failed: ${response.statusCode}';
   }
 
   Future<Map<String, dynamic>> _getWebsiteResponse(String path) async {

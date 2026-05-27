@@ -58,7 +58,7 @@ class _ContactPageState extends State<ContactPage> {
         appBar: MyAppBar(
           info: _info,
           index: 2,
-          onProfileTap: widget.onProfileTap,
+          onProfileTap: widget.onProfileTap, contactme: [],
         ),
         body: FutureBuilder<ApiModel>(
           future: apiModelFuture,

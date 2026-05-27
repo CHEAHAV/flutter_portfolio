@@ -70,7 +70,7 @@ class _SkillDetailPageState extends State<SkillDetailPage>
       },
       child: Scaffold(
         backgroundColor: AppColors.bgColor,
-        appBar: MyAppBar(info: _info, index: 1),
+        appBar: MyAppBar(info: _info, index: 1, contactme: [],),
         body: FadeTransition(
           opacity: fadeIn,
           child: FutureBuilder<ApiModel>(

@@ -76,7 +76,7 @@ class _MyCoreDetailPageState extends State<MyCoreDetailPage>
       },
       child: Scaffold(
         backgroundColor: AppColors.tertiary,
-        appBar: MyAppBar(info: _info, index: 6),
+        appBar: MyAppBar(info: _info, index: 6, contactme: [],),
         body: FadeTransition(
           opacity: fadeIn,
           child: FutureBuilder<ApiModel>(

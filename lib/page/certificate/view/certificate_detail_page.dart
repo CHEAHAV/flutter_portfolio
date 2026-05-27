@@ -76,7 +76,7 @@ class _CertificateDetailPageState extends State<CertificateDetailPage>
       },
       child: Scaffold(
         backgroundColor: AppColors.tertiary,
-        appBar: MyAppBar(info: _info, index: 5),
+        appBar: MyAppBar(info: _info, index: 5, contactme: [],),
         body: FadeTransition(
           opacity: fadeIn,
           child: FutureBuilder<ApiModel>(

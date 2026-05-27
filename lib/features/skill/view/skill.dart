@@ -73,7 +73,7 @@ class _SkillPageState extends State<SkillPage>
         appBar: MyAppBar(
           info: _info,
           index: 1,
-          onProfileTap: widget.onProfileTap,
+          onProfileTap: widget.onProfileTap, contactme: [],
         ),
         body: FadeTransition(
           opacity: _fadeIn,

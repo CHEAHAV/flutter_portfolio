@@ -72,7 +72,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage>
       },
       child: Scaffold(
         backgroundColor: AppColors.bgColor,
-        appBar: MyAppBar(info: _info, index: 4),
+        appBar: MyAppBar(info: _info, index: 4, contactme: [],),
         body: FadeTransition(
           opacity: fadeIn,
           child: FutureBuilder<ApiModel>(

@@ -69,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
         appBar: MyAppBar(
           info: _info,
           index: 3,
-          onProfileTap: widget.onProfileTap,
+          onProfileTap: widget.onProfileTap, contactme: [],
         ),
         body: FutureBuilder<ApiModel>(
           future: apiModelFuture,
