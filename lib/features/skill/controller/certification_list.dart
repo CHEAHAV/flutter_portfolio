@@ -76,6 +76,7 @@ class CertificationList extends StatelessWidget {
                             item.icon,
                             fallbackAsset: 'assets/images/computer.png',
                           ),
+                          fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return Image.asset(
                               'assets/icons/resume.png',

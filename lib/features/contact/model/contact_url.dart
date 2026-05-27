@@ -3,8 +3,8 @@ class ContactUrl {
   static const String linkedinUrl = 'https://kh.linkedin.com';
   static const String resumeUrl =
       'https://www.pinterest.com/pin/802555596101887248/';
-  static const String twitterUrl =
-      'https://www.pinterest.com/pin/1111263276908777564/';
+  static const String tiktokUrl =
+      'https://www.tiktok.com/@hav_jumper';
 
   static String? urlForName(String name) {
     final normalizedName = name.toLowerCase();
@@ -26,9 +26,9 @@ class ContactUrl {
       return resumeUrl;
     }
 
-    if (normalizedName.contains('Twitter') ||
-        normalizedName.contains('twitter')) {
-      return twitterUrl;
+    if (normalizedName.contains('TikTok') ||
+        normalizedName.contains('tiktok')) {
+      return tiktokUrl;
     }
 
     return null;
