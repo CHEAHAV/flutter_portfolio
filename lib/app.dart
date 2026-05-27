@@ -7,8 +7,8 @@ import 'package:portfolio/page/skill/view/skill_detail_page.dart';
 import 'package:portfolio/routes/app_route.dart';
 import 'package:portfolio/shared/theme/colors.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Portfolio extends StatelessWidget {
+  const Portfolio({super.key});
 
   @override
   Widget build(BuildContext context) {

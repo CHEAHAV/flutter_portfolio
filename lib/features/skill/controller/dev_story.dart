@@ -32,7 +32,6 @@ class _DevStoryState extends State<DevStory> with TickerProviderStateMixin {
   }
 
   void _setupAnimations(int count) {
-    // Dispose old controllers if any
     for (final c in _barControllers) {
       c.dispose();
     }
@@ -74,6 +73,8 @@ class _DevStoryState extends State<DevStory> with TickerProviderStateMixin {
         ? '${story.description.substring(0, 80)}...'
         : story.description;
 
+    const double iconSize = 72;
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -90,92 +91,108 @@ class _DevStoryState extends State<DevStory> with TickerProviderStateMixin {
       ),
       child: Padding(
         padding: const EdgeInsets.all(18),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            // Left: title + description + read more
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    story.title,
-                    style: const TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 22,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 0.2,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    _expanded ? story.description : shortDesc,
-                    style: const TextStyle(
-                      color: AppColors.textSecondary,
-                      fontSize: 15,
-                      height: 1.5,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: () => setState(() => _expanded = !_expanded),
-                    child: Text(
-                      _expanded ? 'Show Less' : '... Read More',
-                      style: const TextStyle(
-                        color: AppColors.accentGlow,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
+            // Main content column
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // This SizedBox reserves vertical space for the icon row
+                SizedBox(
+                  height: iconSize,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: iconSize + 16),
+                      child: Text(
+                        story.title,
+                        style: const TextStyle(
+                          color: AppColors.textPrimary,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 0.2,
+                        ),
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 16),
-            // Right: icon
-            Container(
-              width: 72,
-              height: 72,
-              decoration: BoxDecoration(
-                color: AppColors.card,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.divider, width: 1),
-                boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.32),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
+                ),
+
+                const SizedBox(height: 10),
+
+                // Description: full width, safely below the icon
+                Text(
+                  _expanded ? story.description : shortDesc,
+                  style: const TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 15,
+                    height: 1.5,
+                  ),
+                ),
+
+                const SizedBox(height: 10),
+
+                GestureDetector(
+                  onTap: () => setState(() => _expanded = !_expanded),
+                  child: Text(
+                    _expanded ? 'Show Less' : '... Read More',
+                    style: const TextStyle(
+                      color: AppColors.accentGlow,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
               ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image(
-                    image: ApiImage.imageProviderFor(
-                      story.icon,
-                      fallbackAsset: 'assets/icons/backend.png',
+            ),
+
+            // Icon floating top-right
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Container(
+                width: iconSize,
+                height: iconSize,
+                decoration: BoxDecoration(
+                  color: AppColors.card,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: AppColors.divider, width: 1),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.32),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
                     ),
-                    width: 28,
-                    height: 28,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        'assets/icons/backend.png',
-                        width: 28,
-                        height: 28,
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    story.iconname,
-                    style: const TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image(
+                      image: ApiImage.imageProviderFor(
+                        story.icon,
+                        fallbackAsset: 'assets/icons/backend.png',
+                      ),
+                      width: 28,
+                      height: 28,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/icons/backend.png',
+                          width: 28,
+                          height: 28,
+                        );
+                      },
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 4),
+                    Text(
+                      story.iconname,
+                      style: const TextStyle(
+                        color: AppColors.textPrimary,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

@@ -8,7 +8,7 @@ class Experience {
 }
 
 const List<Experience> experience = [
-  Experience(title: 'years Exp', data: '8+'),
-  Experience(title: 'Project', data: '42'),
-  Experience(title: 'Commits', data: '15k'),
+  Experience(title: 'years Exp', data: '2+'),
+  Experience(title: 'Project', data: '26'),
+  Experience(title: 'Commits', data: '2.3k'),
 ];

@@ -25,43 +25,44 @@ class SkillList extends StatelessWidget {
       );
     }
 
-    return Column(
-      children: [
-        if (skill.length == 1)
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => onSkillDetailPage?.call(0),
-            child: FullWidthSkill(
-              skill: skill[0],
-              index: 0,
-              barAnimation: animations[0],
-            ),
-          ),
-        if (skill.length >= 2)
+    final List<Widget> rows = [];
+
+    int i = 0;
+    while (i < skill.length) {
+      if (i + 1 < skill.length) {
+        // Pair: left + right
+        rows.add(
           SkillPair(
-            left: skill[0],
-            right: skill[1],
-            leftAnimation: animations[0],
-            rightAnimation: animations[1],
-            onLeftTap: () => onSkillDetailPage?.call(0),
-            onRightTap: () => onSkillDetailPage?.call(1),
+            left: skill[i],
+            right: skill[i + 1],
+            leftAnimation: animations[i],
+            rightAnimation: animations[i + 1],
+            onLeftTap: () => onSkillDetailPage?.call(i),
+            onRightTap: () => onSkillDetailPage?.call(i + 1),
           ),
-        ...List.generate(
-          skill.length > 2 ? skill.length - 2 : 0,
-          (i) => Padding(
+        );
+        i += 2;
+      } else {
+        // Odd item left — show full width
+        final index = i;
+        rows.add(
+          Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: () => onSkillDetailPage?.call(i + 2),
+              onTap: () => onSkillDetailPage?.call(index),
               child: FullWidthSkill(
-                skill: skill[i + 2],
-                index: i + 2,
-                barAnimation: animations[i + 2],
+                skill: skill[index],
+                index: index,
+                barAnimation: animations[index],
               ),
             ),
           ),
-        ),
-      ],
-    );
+        );
+        i += 1;
+      }
+    }
+
+    return Column(children: rows);
   }
 }

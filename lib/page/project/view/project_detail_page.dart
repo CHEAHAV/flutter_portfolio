@@ -165,7 +165,6 @@ class _ProjectDetailPageState extends State<ProjectDetailPage>
                       ),
                     ),
 
-                    const SizedBox(height: 28),
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: Container(
@@ -195,6 +194,58 @@ class _ProjectDetailPageState extends State<ProjectDetailPage>
                                   const SizedBox(width: 10),
                                   Text(
                                     projectModel[3].label,
+                                    style: AppStyle.headline2.copyWith(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.textPrimary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Text(
+                                  project.description,
+                                  style: AppStyle.bodyMedium.copyWith(
+                                    color: AppColors.textSub,
+                                    height: 1.7,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: AppColors.card,
+                          borderRadius: BorderRadius.circular(
+                            AppStyle.radiusLg,
+                          ),
+                          border: Border.all(color: AppColors.divider),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 8, 0, 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 4,
+                                    height: 26,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.accentCyan,
+                                      borderRadius: BorderRadius.circular(2),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    projectModel[4].label,
                                     style: AppStyle.headline2.copyWith(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w700,

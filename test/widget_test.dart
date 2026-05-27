@@ -6,7 +6,7 @@ void main() {
   testWidgets('Portfolio app renders the home screen', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const Portfolio());
     await tester.pumpAndSettle();
 
     expect(find.text('Portfolio'), findsOneWidget);

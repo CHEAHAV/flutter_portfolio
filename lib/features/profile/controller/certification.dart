@@ -126,6 +126,7 @@ class _CertificationCardState extends State<CertificationCard>
                                   item.icon,
                                   fallbackAsset: 'assets/icons/resume.png',
                                 ),
+                                fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) {
                                   return Image.asset(
                                     'assets/icons/resume.png',
