@@ -121,10 +121,12 @@ class _DetailedExpertiseCardState extends State<DetailedExpertiseCard>
               skill: skill,
               animations: _barAnimations,
               onSkillDetailPage: (index) {
+                if (index < 0 || index >= skill.length) return;
+
                 Navigator.pushNamed(
                   context,
                   AppRoute.skillDetailRoute,
-                  arguments: index,
+                  arguments: {'id': skill[index].id, 'index': index},
                 );
               },
             ),

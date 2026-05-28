@@ -30,21 +30,33 @@ class SkillList extends StatelessWidget {
     int i = 0;
     while (i < skill.length) {
       if (i + 1 < skill.length) {
+        final leftIndex = i;
+        final rightIndex = i + 1;
+        final leftAnimation = leftIndex < animations.length
+            ? animations[leftIndex]
+            : const AlwaysStoppedAnimation<double>(1);
+        final rightAnimation = rightIndex < animations.length
+            ? animations[rightIndex]
+            : const AlwaysStoppedAnimation<double>(1);
+
         // Pair: left + right
         rows.add(
           SkillPair(
-            left: skill[i],
-            right: skill[i + 1],
-            leftAnimation: animations[i],
-            rightAnimation: animations[i + 1],
-            onLeftTap: () => onSkillDetailPage?.call(i),
-            onRightTap: () => onSkillDetailPage?.call(i + 1),
+            left: skill[leftIndex],
+            right: skill[rightIndex],
+            leftAnimation: leftAnimation,
+            rightAnimation: rightAnimation,
+            onLeftTap: () => onSkillDetailPage?.call(leftIndex),
+            onRightTap: () => onSkillDetailPage?.call(rightIndex),
           ),
         );
         i += 2;
       } else {
         // Odd item left — show full width
         final index = i;
+        final animation = index < animations.length
+            ? animations[index]
+            : const AlwaysStoppedAnimation<double>(1);
         rows.add(
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -54,7 +66,7 @@ class SkillList extends StatelessWidget {
               child: FullWidthSkill(
                 skill: skill[index],
                 index: index,
-                barAnimation: animations[index],
+                barAnimation: animation,
               ),
             ),
           ),

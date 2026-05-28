@@ -10,4 +10,5 @@ class ActionButtonModel {
 const List<ActionButtonModel> actionButtonModel = [
   ActionButtonModel(icon: Icons.verified_outlined, label: 'Official Page'),
   ActionButtonModel(icon: Icons.backspace_outlined, label: 'Back Button'),
+  ActionButtonModel(icon: Icons.link, label: 'Link to Project'),
 ];

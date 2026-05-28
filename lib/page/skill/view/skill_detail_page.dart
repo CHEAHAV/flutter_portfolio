@@ -26,6 +26,7 @@ class _SkillDetailPageState extends State<SkillDetailPage>
   late Future<ApiModel> apiModelFuture;
   Info? _info;
   int? skillIndex;
+  String? skillId;
 
   @override
   void initState() {
@@ -44,6 +45,17 @@ class _SkillDetailPageState extends State<SkillDetailPage>
     final arguments = ModalRoute.of(context)?.settings.arguments;
     if (arguments is int) {
       skillIndex = arguments;
+    } else if (arguments is String) {
+      skillId = arguments;
+    } else if (arguments is Map<String, dynamic>) {
+      final id = arguments['id'];
+      final index = arguments['index'];
+      if (id is String && id.isNotEmpty) {
+        skillId = id;
+      }
+      if (index is int) {
+        skillIndex = index;
+      }
     }
   }
 
@@ -70,7 +82,7 @@ class _SkillDetailPageState extends State<SkillDetailPage>
       },
       child: Scaffold(
         backgroundColor: AppColors.bgColor,
-        appBar: MyAppBar(info: _info, index: 1, contactme: [],),
+        appBar: MyAppBar(info: _info, index: 1, contactme: []),
         body: FadeTransition(
           opacity: fadeIn,
           child: FutureBuilder<ApiModel>(
@@ -98,7 +110,12 @@ class _SkillDetailPageState extends State<SkillDetailPage>
 
               final info = content.info.isNotEmpty ? content.info.first : null;
               final skills = content.skill;
-              final selectedIndex = skillIndex ?? 0;
+              final indexById = skillId == null
+                  ? -1
+                  : skills.indexWhere((skill) => skill.id == skillId);
+              final selectedIndex = indexById >= 0
+                  ? indexById
+                  : (skillIndex ?? 0);
               if (skills.isEmpty ||
                   selectedIndex < 0 ||
                   selectedIndex >= skills.length) {
@@ -202,7 +219,10 @@ class _SkillDetailPageState extends State<SkillDetailPage>
                             icon: actionButtonModel[1].icon,
                             label: actionButtonModel[1].label,
                             onTap: () {
-                              Navigator.pushNamed(context, AppRoute.skillPageRoute);
+                              Navigator.pushNamed(
+                                context,
+                                AppRoute.skillPageRoute,
+                              );
                             },
                             filled: false,
                           ),

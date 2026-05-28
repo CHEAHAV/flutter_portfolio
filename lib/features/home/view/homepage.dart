@@ -90,7 +90,8 @@ class _HomePageState extends State<HomePage>
         appBar: MyAppBar(
           info: _info,
           index: 0,
-          onProfileTap: widget.onProfileTap, contactme: [],
+          onProfileTap: widget.onProfileTap,
+          contactme: [],
         ),
         body: FadeTransition(
           opacity: fadeIn,
@@ -170,7 +171,10 @@ class _HomePageState extends State<HomePage>
                             Navigator.pushNamed(
                               context,
                               AppRoute.skillDetailRoute,
-                              arguments: skills.indexOf(filteredSkills[index]),
+                              arguments: {
+                                'id': filteredSkills[index].id,
+                                'index': skills.indexOf(filteredSkills[index]),
+                              },
                             );
                           },
                         ),
@@ -202,9 +206,12 @@ class _HomePageState extends State<HomePage>
                             Navigator.pushNamed(
                               context,
                               AppRoute.projectDetailRoute,
-                              arguments: projects.indexOf(
-                                filteredProjects[index],
-                              ),
+                              arguments: {
+                                'id': filteredProjects[index].id,
+                                'index': projects.indexOf(
+                                  filteredProjects[index],
+                                ),
+                              },
                             );
                           },
                         ),

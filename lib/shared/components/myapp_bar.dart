@@ -69,6 +69,10 @@ class _MyAppBarState extends State<MyAppBar> {
 
   @override
   Widget build(BuildContext context) {
+    final headerIndex = widget.index >= 0 && widget.index < headerdata.length
+        ? widget.index
+        : 0;
+
     return AppBar(
       automaticallyImplyLeading: false,
       title: Row(
@@ -104,7 +108,7 @@ class _MyAppBarState extends State<MyAppBar> {
               end: Alignment.bottomRight,
             ).createShader(bounds),
             child: Text(
-              headerdata[widget.index].name.toUpperCase(),
+              headerdata[headerIndex].name.toUpperCase(),
               style: AppStyle.headline1.copyWith(fontSize: 18),
             ),
           ),

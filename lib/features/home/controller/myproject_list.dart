@@ -45,7 +45,7 @@ class MyprojectList extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   AppRoute.projectDetailRoute,
-                  arguments: index,
+                  arguments: {'id': item.id, 'index': index},
                 );
               },
               child: Row(

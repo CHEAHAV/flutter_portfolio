@@ -34,7 +34,7 @@ class MyFilterSkill extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 AppRoute.skillDetailRoute,
-                arguments: index,
+                arguments: {'id': skill.id, 'index': index},
               );
             },
             child: Container(

@@ -28,6 +28,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage>
   late Future<ApiModel> apiModelFuture;
   Info? _info;
   int? _projectIndex;
+  String? _projectId;
 
   @override
   void initState() {
@@ -46,6 +47,17 @@ class _ProjectDetailPageState extends State<ProjectDetailPage>
     final arguments = ModalRoute.of(context)?.settings.arguments;
     if (arguments is int) {
       _projectIndex = arguments;
+    } else if (arguments is String) {
+      _projectId = arguments;
+    } else if (arguments is Map<String, dynamic>) {
+      final id = arguments['id'];
+      final index = arguments['index'];
+      if (id is String && id.isNotEmpty) {
+        _projectId = id;
+      }
+      if (index is int) {
+        _projectIndex = index;
+      }
     }
   }
 
@@ -72,7 +84,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage>
       },
       child: Scaffold(
         backgroundColor: AppColors.bgColor,
-        appBar: MyAppBar(info: _info, index: 4, contactme: [],),
+        appBar: MyAppBar(info: _info, index: 4, contactme: []),
         body: FadeTransition(
           opacity: fadeIn,
           child: FutureBuilder<ApiModel>(
@@ -104,7 +116,12 @@ class _ProjectDetailPageState extends State<ProjectDetailPage>
                 );
               }
               final projects = content.project;
-              final selectedIndex = _projectIndex ?? 0;
+              final indexById = _projectId == null
+                  ? -1
+                  : projects.indexWhere((project) => project.id == _projectId);
+              final selectedIndex = indexById >= 0
+                  ? indexById
+                  : (_projectIndex ?? 0);
               if (projects.isEmpty ||
                   selectedIndex < 0 ||
                   selectedIndex >= projects.length) {
@@ -265,6 +282,26 @@ class _ProjectDetailPageState extends State<ProjectDetailPage>
                                 ),
                               ),
                             ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                        child: SizedBox(
+                          width: MediaQuery.sizeOf(context).width,
+                          child: ActionButton(
+                            icon: actionButtonModel[2].icon,
+                            label: actionButtonModel[2].label,
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoute.homePageRoute,
+                              );
+                            },
+                            filled: false,
                           ),
                         ),
                       ),
