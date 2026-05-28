@@ -11,6 +11,7 @@ import 'package:portfolio/shared/components/backend_message.dart';
 import 'package:portfolio/shared/components/myapp_bar.dart';
 import 'package:portfolio/shared/theme/colors.dart';
 import 'package:portfolio/page/certificate/model/meta_item_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CertificateDetailPage extends StatefulWidget {
   const CertificateDetailPage({super.key, required this.actionButtonModel});
@@ -76,7 +77,7 @@ class _CertificateDetailPageState extends State<CertificateDetailPage>
       },
       child: Scaffold(
         backgroundColor: AppColors.tertiary,
-        appBar: MyAppBar(info: _info, index: 5, contactme: [],),
+        appBar: MyAppBar(info: _info, index: 5, contactme: []),
         body: FadeTransition(
           opacity: fadeIn,
           child: FutureBuilder<ApiModel>(
@@ -156,7 +157,15 @@ class _CertificateDetailPageState extends State<CertificateDetailPage>
                     ActionButton(
                       icon: actionButtonModel[0].icon,
                       label: actionButtonModel[0].label,
-                      onTap: () {},
+                      onTap: () async {
+                        final uri = Uri.parse(certification.certificateurl);
+                        if (await canLaunchUrl(uri)) {
+                          await launchUrl(
+                            uri,
+                            mode: LaunchMode.externalApplication,
+                          );
+                        }
+                      },
                       filled: true,
                     ),
 
@@ -165,7 +174,7 @@ class _CertificateDetailPageState extends State<CertificateDetailPage>
                       icon: actionButtonModel[1].icon,
                       label: actionButtonModel[1].label,
                       onTap: () {
-                        Navigator.pushNamed(context, AppRoute.homePageRoute);
+                        Navigator.pushNamed(context, AppRoute.profilePageRoute);
                       },
                       filled: false,
                     ),

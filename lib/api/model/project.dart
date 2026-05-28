@@ -6,6 +6,7 @@ class Project {
   final String role;
   final String platform;
   final String challenge;
+  final String projecturl;
   final String image;
 
   const Project({
@@ -17,5 +18,6 @@ class Project {
     required this.platform,
     required this.challenge,
     required this.image,
+    required this.projecturl,
   });
 }

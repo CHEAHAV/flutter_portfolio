@@ -1,5 +1,6 @@
 import 'package:portfolio/api/core/api_image.dart';
 import 'package:portfolio/api/core/api_object.dart';
+import 'package:portfolio/api/core/api_url.dart';
 import 'package:portfolio/api/model/project.dart';
 
 Project mapProject(Map<String, dynamic> item) {
@@ -11,6 +12,7 @@ Project mapProject(Map<String, dynamic> item) {
     role       : ApiObject.resolveRole(item),
     platform   : ApiObject.resolvePlatform(item),
     challenge  : ApiObject.resolveChallenge(item),
+    projecturl : ApiUrl.resolveProjectUrl(item),
     image      : ApiImage.resolveImage(item),
   );
 }

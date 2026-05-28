@@ -5,6 +5,7 @@ class Certification {
   final String issuer;
   final String dateEarned;
   final String credentialId;
+  final String certificateurl;
   final String icon;
 
   const Certification({
@@ -14,6 +15,7 @@ class Certification {
     required this.issuer,
     required this.dateEarned,
     required this.credentialId,
+    required this.certificateurl,
     required this.icon,
   });
 }
