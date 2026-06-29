@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/api/core/api_image.dart';
 import 'package:portfolio/api/model/contact_me.dart';
-import 'package:portfolio/features/contact/model/connect_direct_url.dart';
 import 'package:portfolio/shared/theme/colors.dart';
 import 'package:portfolio/shared/utils/external_link.dart';
 
@@ -61,13 +60,7 @@ class _ConnectDirectState extends State<ConnectDirect>
   }
 
   Future<void> _openContactUrl(ContactMe item) async {
-    final url = ConnectDirectUrl.urlForName(item.name);
-    if (url == null) {
-      _showLinkError();
-      return;
-    }
-
-    final opened = await ExternalLink.open(url);
+    final opened = await ExternalLink.open(item.effectiveContactUrl);
     if (!opened && mounted) {
       _showLinkError();
     }

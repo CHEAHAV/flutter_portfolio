@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/api/core/api_image.dart';
 import 'package:portfolio/api/model/social.dart';
-import 'package:portfolio/features/contact/model/contact_url.dart';
 import 'package:portfolio/shared/theme/colors.dart';
 import 'package:portfolio/shared/utils/external_link.dart';
 
@@ -66,13 +65,7 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
   }
 
   Future<void> _openContactUrl(Social item) async {
-    final url = ContactUrl.urlForName(item.name);
-    if (url == null) {
-      _showLinkError();
-      return;
-    }
-
-    final opened = await ExternalLink.open(url);
+    final opened = await ExternalLink.open(item.socialUrl);
     if (!opened && mounted) {
       _showLinkError();
     }

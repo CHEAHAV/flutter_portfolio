@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/api/model/contact_me.dart';
 import 'package:portfolio/api/model/info.dart';
-import 'package:portfolio/features/contact/model/connect_direct_url.dart';
+import 'package:portfolio/api/repository/api_repository.dart';
 import 'package:portfolio/features/home/model/headerdata.dart';
 import 'package:portfolio/routes/app_route.dart';
 import 'package:portfolio/shared/components/divider.dart';
@@ -31,6 +31,48 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _MyAppBarState extends State<MyAppBar> {
+  List<ContactMe> _backendContactme = const [];
+  bool _loadingContactme = false;
+
+  List<ContactMe> get _contactme =>
+      widget.contactme.isNotEmpty ? widget.contactme : _backendContactme;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBackendContactmeIfNeeded();
+  }
+
+  @override
+  void didUpdateWidget(covariant MyAppBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.contactme.isEmpty && oldWidget.contactme != widget.contactme) {
+      _loadBackendContactmeIfNeeded();
+    }
+  }
+
+  Future<void> _loadBackendContactmeIfNeeded() async {
+    if (widget.contactme.isNotEmpty ||
+        _backendContactme.isNotEmpty ||
+        _loadingContactme) {
+      return;
+    }
+
+    _loadingContactme = true;
+    try {
+      final content = await ApiRepository().loadApiModel();
+      if (mounted) {
+        setState(() {
+          _backendContactme = content.contactme;
+        });
+      }
+    } catch (_) {
+      // Keep the app bar usable; pressing email will show the link error.
+    } finally {
+      _loadingContactme = false;
+    }
+  }
+
   Future<void> _openUrl(String url) async {
     final opened = await ExternalLink.open(url);
     if (!opened && mounted) {
@@ -39,25 +81,31 @@ class _MyAppBarState extends State<MyAppBar> {
   }
 
   Future<void> _openContactUrl(ContactMe item) async {
-    final url = ConnectDirectUrl.urlForName(item.name);
-    if (url == null) {
-      _showLinkError();
-      return;
-    }
-
-    await _openUrl(url);
+    await _openUrl(item.effectiveContactUrl);
   }
 
   Future<void> _openEmail() async {
-    for (final item in widget.contactme) {
-      final url = ConnectDirectUrl.urlForName(item.name);
-      if (url == ConnectDirectUrl.emailUrl) {
+    await _loadBackendContactmeIfNeeded();
+
+    for (final item in _contactme) {
+      final normalizedName = item.name.toLowerCase();
+      final normalizedDescription = item.description.toLowerCase();
+      final isEmailContact =
+          normalizedName.contains('email') ||
+          normalizedName.contains('mail') ||
+          normalizedDescription.contains('@') ||
+          item.effectiveContactUrl.toLowerCase().startsWith('mailto:') ||
+          item.effectiveContactUrl.toLowerCase().contains('mail.google.com');
+
+      if (isEmailContact && item.effectiveContactUrl.trim().isNotEmpty) {
         await _openContactUrl(item);
         return;
       }
     }
 
-    await _openUrl(ConnectDirectUrl.emailUrl);
+    if (mounted) {
+      _showLinkError();
+    }
   }
 
   void _showLinkError() {

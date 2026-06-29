@@ -2,7 +2,6 @@ class ApiRoutes {
   static const String careers        = '/get_career';
   static const String certifications = '/get_certification';
   static const String contactMes     = '/get_contact_me';
-  static const String filters        = '/get_filter';
   static const String infos          = '/get_info';
   static const String myCores        = '/get_mycore';
   static const String projects       = '/get_project';

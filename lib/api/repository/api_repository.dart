@@ -1,7 +1,6 @@
 import 'package:portfolio/api/repository/career_repository.dart';
 import 'package:portfolio/api/repository/certification_repository.dart';
 import 'package:portfolio/api/repository/contact_me_repository.dart';
-import 'package:portfolio/api/repository/filter_repository.dart';
 import 'package:portfolio/api/repository/info_repository.dart';
 import 'package:portfolio/api/repository/message_repository.dart';
 import 'package:portfolio/api/repository/my_core_repository.dart';
@@ -39,7 +38,6 @@ class ApiRepository {
       _loadSection('careers', ApiRoutes.careers),
       _loadSection('certifications', ApiRoutes.certifications),
       _loadSection('contact-mes', ApiRoutes.contactMes),
-      _loadSection('filters', ApiRoutes.filters),
       _loadSection('infos', ApiRoutes.infos),
       _loadSection('my-cores', ApiRoutes.myCores),
       _loadSection('projects', ApiRoutes.projects),
@@ -78,7 +76,6 @@ class ApiRepository {
       career: _mapItems(careerResult.items, mapCareer),
       certification: _mapItems(certificationResult.items, mapCertification),
       contactme: _mapItems(contactmeResult.items, mapContactMe),
-      filter: _mapItems(filterResult.items, mapFilter),
       info: _mapItems(infoResult.items, mapInfo),
       mycore: _mapItems(mycoreResult.items, mapMyCore),
       project: _mapItems(projectResult.items, mapProject),

@@ -1,6 +1,5 @@
 import 'package:portfolio/api/model/career.dart';
 import 'package:portfolio/api/model/contact_me.dart';
-import 'package:portfolio/api/model/filter.dart';
 import 'package:portfolio/api/model/info.dart';
 import 'package:portfolio/api/model/message.dart';
 import 'package:portfolio/api/model/my_core.dart';
@@ -16,7 +15,6 @@ class ApiModel {
   final List<Career> career;
   final List<Certification> certification;
   final List<ContactMe> contactme;
-  final List<Filter> filter;
   final List<Info> info;
   final List<MyCore> mycore;
   final List<Project> project;
@@ -31,7 +29,6 @@ class ApiModel {
     required this.career,
     required this.certification,
     required this.contactme,
-    required this.filter,
     required this.info,
     required this.mycore,
     required this.project,
@@ -47,7 +44,6 @@ class ApiModel {
     return career.isEmpty &&
         certification.isEmpty &&
         contactme.isEmpty &&
-        filter.isEmpty &&
         info.isEmpty &&
         mycore.isEmpty &&
         project.isEmpty &&
