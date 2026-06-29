@@ -23,7 +23,7 @@ Future<void> sendContactMessage({
   ApiClient? apiClient,
 }) async {
   final client = apiClient ?? ApiClient();
-  await client.postWebsiteForm(ApiRoutes.messages, {
+  await client.postWebsiteForm(ApiRoutes.createMessage, {
     'first_name': firstName,
     'last_name': lastName,
     'email': email,
