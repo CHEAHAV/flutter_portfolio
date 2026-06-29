@@ -13,7 +13,7 @@ import 'package:portfolio/shared/components/backend_message.dart';
 import 'package:portfolio/shared/components/myapp_bar.dart';
 import 'package:portfolio/shared/style/style.dart';
 import 'package:portfolio/shared/theme/colors.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:portfolio/shared/utils/external_link.dart';
 
 class ProjectDetailPage extends StatefulWidget {
   const ProjectDetailPage({super.key, required List<dynamic> projectModel});
@@ -297,13 +297,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage>
                             icon: actionButtonModel[2].icon,
                             label: actionButtonModel[2].label,
                             onTap: () async {
-                              final uri = Uri.parse(project.projecturl);
-                              if (await canLaunchUrl(uri)) {
-                                await launchUrl(
-                                  uri,
-                                  mode: LaunchMode.externalApplication,
-                                );
-                              }
+                              await ExternalLink.open(project.projecturl);
                             },
                             filled: true,
                           ),

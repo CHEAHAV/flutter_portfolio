@@ -8,7 +8,7 @@ class ApiConfig {
     defaultValue: _defaultBaseUrl,
   );
 
-  static const String websiteBaseUrl = '$baseUrl/api/v1/website';
+  static const String websiteBaseUrl = '$baseUrl/website';
 }
 
 
@@ -22,5 +22,5 @@ class ApiConfig {
 //     defaultValue: _defaultBaseUrl,
 //   );
 
-//   static const String websiteBaseUrl = '$baseUrl/api/v1/website';
+//   static const String websiteBaseUrl = '$baseUrl/website';
 // }

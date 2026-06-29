@@ -3,7 +3,7 @@ import 'package:portfolio/api/core/api_image.dart';
 import 'package:portfolio/api/model/contact_me.dart';
 import 'package:portfolio/features/contact/model/connect_direct_url.dart';
 import 'package:portfolio/shared/theme/colors.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:portfolio/shared/utils/external_link.dart';
 
 class ConnectDirect extends StatefulWidget {
   const ConnectDirect({super.key, required this.contactme});
@@ -67,8 +67,7 @@ class _ConnectDirectState extends State<ConnectDirect>
       return;
     }
 
-    final uri = Uri.parse(url);
-    final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    final opened = await ExternalLink.open(url);
     if (!opened && mounted) {
       _showLinkError();
     }

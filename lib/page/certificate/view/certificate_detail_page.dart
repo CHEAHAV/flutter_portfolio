@@ -11,7 +11,7 @@ import 'package:portfolio/shared/components/backend_message.dart';
 import 'package:portfolio/shared/components/myapp_bar.dart';
 import 'package:portfolio/shared/theme/colors.dart';
 import 'package:portfolio/page/certificate/model/meta_item_model.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:portfolio/shared/utils/external_link.dart';
 
 class CertificateDetailPage extends StatefulWidget {
   const CertificateDetailPage({super.key, required this.actionButtonModel});
@@ -158,13 +158,7 @@ class _CertificateDetailPageState extends State<CertificateDetailPage>
                       icon: actionButtonModel[0].icon,
                       label: actionButtonModel[0].label,
                       onTap: () async {
-                        final uri = Uri.parse(certification.certificateurl);
-                        if (await canLaunchUrl(uri)) {
-                          await launchUrl(
-                            uri,
-                            mode: LaunchMode.externalApplication,
-                          );
-                        }
+                        await ExternalLink.open(certification.certificateurl);
                       },
                       filled: true,
                     ),

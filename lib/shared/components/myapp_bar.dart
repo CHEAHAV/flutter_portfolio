@@ -7,7 +7,7 @@ import 'package:portfolio/routes/app_route.dart';
 import 'package:portfolio/shared/components/divider.dart';
 import 'package:portfolio/shared/style/style.dart';
 import 'package:portfolio/shared/theme/colors.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:portfolio/shared/utils/external_link.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   const MyAppBar({
@@ -32,8 +32,7 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _MyAppBarState extends State<MyAppBar> {
   Future<void> _openUrl(String url) async {
-    final uri = Uri.parse(url);
-    final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    final opened = await ExternalLink.open(url);
     if (!opened && mounted) {
       _showLinkError();
     }

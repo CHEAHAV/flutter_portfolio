@@ -3,7 +3,7 @@ import 'package:portfolio/api/core/api_image.dart';
 import 'package:portfolio/api/model/social.dart';
 import 'package:portfolio/features/contact/model/contact_url.dart';
 import 'package:portfolio/shared/theme/colors.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:portfolio/shared/utils/external_link.dart';
 
 class Contact extends StatefulWidget {
   const Contact({super.key, required this.social});
@@ -72,8 +72,7 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
       return;
     }
 
-    final uri = Uri.parse(url);
-    final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    final opened = await ExternalLink.open(url);
     if (!opened && mounted) {
       _showLinkError();
     }
