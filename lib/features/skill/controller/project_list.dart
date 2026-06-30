@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/core/api_image.dart';
-import 'package:portfolio/api/model/project.dart';
-import 'package:portfolio/routes/app_route.dart';
-import 'package:portfolio/shared/style/style.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../../api/api.dart';
+import '../../../routes/route.dart';
+import '../../../shared/shared.dart';
 
 class ProjectList extends StatelessWidget {
   const ProjectList({

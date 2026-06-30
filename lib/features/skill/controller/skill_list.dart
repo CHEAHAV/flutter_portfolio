@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/model/skill.dart';
-import 'package:portfolio/features/skill/controller/full_width_skill.dart';
-import 'package:portfolio/features/skill/controller/skill_pair.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../skill/skill.dart';
+import '../../../api/api.dart';
+import '../../../shared/shared.dart';
 
 class SkillList extends StatelessWidget {
   const SkillList({

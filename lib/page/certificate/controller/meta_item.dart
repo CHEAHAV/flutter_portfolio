@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../../shared/shared.dart';
 
 class MetaItem extends StatelessWidget {
   const MetaItem({super.key, 

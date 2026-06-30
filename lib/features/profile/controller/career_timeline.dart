@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/model/career.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../../api/api.dart';
+import '../../../shared/shared.dart';
 
 class CareerTimeline extends StatefulWidget {
   const CareerTimeline({super.key, required this.items});

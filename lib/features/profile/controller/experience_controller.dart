@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/features/profile/model/profile_model.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../profile/profile.dart';
+import '../../../shared/shared.dart';
 
 class ExperienceController extends StatelessWidget {
   const ExperienceController({super.key});

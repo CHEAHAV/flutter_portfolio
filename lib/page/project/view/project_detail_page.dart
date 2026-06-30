@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/model/api_model.dart';
-import 'package:portfolio/api/model/info.dart';
-import 'package:portfolio/api/repository/api_repository.dart';
-import 'package:portfolio/features/home/model/homebackend_message.dart';
-import 'package:portfolio/page/certificate/controller/action_button.dart';
-import 'package:portfolio/page/certificate/model/action_button_model.dart';
-import 'package:portfolio/page/project/controller/meta_tile.dart';
-import 'package:portfolio/page/project/controller/project_card.dart';
-import 'package:portfolio/page/project/model/project_model.dart';
-import 'package:portfolio/routes/app_route.dart';
-import 'package:portfolio/shared/components/backend_message.dart';
-import 'package:portfolio/shared/components/myapp_bar.dart';
-import 'package:portfolio/shared/style/style.dart';
-import 'package:portfolio/shared/theme/colors.dart';
-import 'package:portfolio/shared/utils/external_link.dart';
+import '../../../api/api.dart';
+import '../../../features/home/home.dart';
+import '../../certificate/certificate.dart';
+import '../../project/project.dart';
+import '../../../routes/route.dart';
+import '../../../shared/shared.dart';
 
 class ProjectDetailPage extends StatefulWidget {
   const ProjectDetailPage({super.key, required List<dynamic> projectModel});

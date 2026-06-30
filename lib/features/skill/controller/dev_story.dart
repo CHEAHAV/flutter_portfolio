@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/model/story.dart';
-import 'package:portfolio/api/core/api_image.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../../api/api.dart';
+import '../../../shared/shared.dart';
 
 class DevStory extends StatefulWidget {
   const DevStory({super.key, required this.stories});

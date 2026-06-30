@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/model/story.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../../api/api.dart';
+import '../../../shared/shared.dart';
 
 class ExperienceHistory extends StatefulWidget {
   const ExperienceHistory({super.key, required this.stories});

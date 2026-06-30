@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/core/api_image.dart';
-import 'package:portfolio/api/model/skill.dart';
-import 'package:portfolio/shared/style/style.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../../api/api.dart';
+import '../../../shared/shared.dart';
 
 class SkillCard extends StatelessWidget {
   const SkillCard({super.key, required this.skill});

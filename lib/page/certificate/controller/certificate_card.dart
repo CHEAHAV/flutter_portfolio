@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/core/api_image.dart';
-import 'package:portfolio/api/model/certification.dart';
-import 'package:portfolio/page/certificate/controller/meta_item.dart';
-import 'package:portfolio/page/certificate/model/meta_item_model.dart';
-import 'package:portfolio/shared/components/divider.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../../api/api.dart';
+import '../../certificate/certificate.dart';
+import '../../../shared/shared.dart';
 
 class CertificateCard extends StatelessWidget {
   const CertificateCard({

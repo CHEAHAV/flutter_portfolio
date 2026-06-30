@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/repository/api_repository.dart';
-import 'package:portfolio/api/model/api_model.dart';
-import 'package:portfolio/api/model/info.dart';
-import 'package:portfolio/features/skill/controller/dev_story.dart';
-import 'package:portfolio/features/skill/model/skillbackend_message.dart';
-import 'package:portfolio/shared/components/backend_message.dart';
-import 'package:portfolio/shared/components/myapp_bar.dart';
-import 'package:portfolio/shared/components/profile_card.dart';
-import 'package:portfolio/features/skill/controller/detailed_expertise_card.dart';
-import 'package:portfolio/features/skill/controller/skill_title.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../skill.dart';
+import '../../../api/api.dart';
+import '../../../shared/shared.dart';
 
 class SkillPage extends StatefulWidget {
   const SkillPage({

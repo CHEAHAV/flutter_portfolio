@@ -1,17 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/repository/api_repository.dart';
-import 'package:portfolio/api/model/api_model.dart';
-import 'package:portfolio/api/model/info.dart';
-import 'package:portfolio/features/home/controller/mycore_list.dart';
-import 'package:portfolio/features/home/controller/myfilter_skill.dart';
-import 'package:portfolio/features/home/controller/myinfo.dart';
-import 'package:portfolio/features/home/controller/myproject_list.dart';
-import 'package:portfolio/features/home/model/homebackend_message.dart';
-import 'package:portfolio/routes/app_route.dart';
-import 'package:portfolio/shared/components/backend_message.dart';
-import 'package:portfolio/shared/components/myapp_bar.dart';
-import 'package:portfolio/shared/components/appsearch_bar.dart';
-import 'package:portfolio/shared/style/style.dart';
+import '../../home/home.dart';
+import '../../../api/api.dart';
+import '../../../routes/route.dart';
+import '../../../shared/shared.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({

@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/model/api_model.dart';
-import 'package:portfolio/api/model/info.dart';
-import 'package:portfolio/api/repository/api_repository.dart';
-import 'package:portfolio/features/home/model/homebackend_message.dart';
-import 'package:portfolio/page/certificate/controller/action_button.dart';
-import 'package:portfolio/page/certificate/model/action_button_model.dart';
-import 'package:portfolio/page/mycore/controller/mycore_card.dart';
-import 'package:portfolio/routes/app_route.dart';
-import 'package:portfolio/shared/components/backend_message.dart';
-import 'package:portfolio/shared/components/myapp_bar.dart';
-import 'package:portfolio/shared/theme/colors.dart';
-import 'package:portfolio/page/certificate/model/meta_item_model.dart';
+import '../../../api/api.dart';
+import '../../../features/home/home.dart';
+import '../../certificate/certificate.dart';
+import '../../mycore/mycore.dart';
+import '../../../routes/route.dart';
+import '../../../shared/shared.dart';
 
 class MyCoreDetailPage extends StatefulWidget {
   const MyCoreDetailPage({super.key, required this.actionButtonModel});

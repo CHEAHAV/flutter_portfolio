@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/model/certification.dart';
-import 'package:portfolio/api/model/project.dart';
-import 'package:portfolio/api/model/skill.dart';
-import 'package:portfolio/features/skill/controller/certification_list.dart';
-import 'package:portfolio/features/skill/controller/project_list.dart';
-import 'package:portfolio/features/skill/controller/skill_list.dart';
-import 'package:portfolio/features/skill/model/skill_item.dart';
-import 'package:portfolio/routes/app_route.dart';
-import 'package:portfolio/shared/components/tab_bar.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../skill.dart';
+import '../../../api/api.dart';
+import '../../../routes/route.dart';
+import '../../../shared/shared.dart';
 
 class DetailedExpertiseCard extends StatefulWidget {
   const DetailedExpertiseCard({

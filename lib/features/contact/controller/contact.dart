@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/core/api_image.dart';
-import 'package:portfolio/api/model/social.dart';
-import 'package:portfolio/shared/theme/colors.dart';
-import 'package:portfolio/shared/utils/external_link.dart';
+import '../../../api/api.dart';
+import '../../../shared/shared.dart';
 
 class Contact extends StatefulWidget {
   const Contact({super.key, required this.social});

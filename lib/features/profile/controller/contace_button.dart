@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/features/profile/model/button_data.dart';
-import 'package:portfolio/routes/app_route.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../profile/profile.dart';
+import '../../../routes/route.dart';
+import '../../../shared/shared.dart';
 
 class ContaceButton extends StatelessWidget {
   const ContaceButton({super.key, this.onContactTap});

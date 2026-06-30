@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/model/api_model.dart';
-import 'package:portfolio/api/model/info.dart';
-import 'package:portfolio/api/repository/api_repository.dart';
-import 'package:portfolio/features/skill/model/skillbackend_message.dart';
-import 'package:portfolio/page/certificate/controller/action_button.dart';
-import 'package:portfolio/page/certificate/model/action_button_model.dart';
-import 'package:portfolio/page/skill/controller/skill_card.dart';
-import 'package:portfolio/routes/app_route.dart';
-import 'package:portfolio/shared/components/backend_message.dart';
-import 'package:portfolio/shared/components/myapp_bar.dart';
-import 'package:portfolio/shared/style/style.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../../api/api.dart';
+import '../../../features/skill/skill.dart';
+import '../../../page/certificate/certificate.dart';
+import '../../../page/skill/skill.dart';
+import '../../../routes/route.dart';
+import '../../../shared/shared.dart';
 
 class SkillDetailPage extends StatefulWidget {
   const SkillDetailPage({super.key, required List<dynamic> projectModel});

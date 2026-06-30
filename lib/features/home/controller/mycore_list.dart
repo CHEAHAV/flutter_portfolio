@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/core/api_image.dart';
-import 'package:portfolio/api/model/my_core.dart';
-import 'package:portfolio/routes/app_route.dart';
-import 'package:portfolio/shared/style/style.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../../api/api.dart';
+import '../../../routes/route.dart';
+import '../../../shared/shared.dart';
 
 class MyCoreList extends StatelessWidget {
   const MyCoreList({super.key, required this.mycore, this.onMyCoreDetailPage});

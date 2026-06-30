@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/model/study.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../../api/api.dart';
+import '../../../shared/shared.dart';
 
 class StudyTimeline extends StatefulWidget {
   const StudyTimeline({super.key, required this.items});

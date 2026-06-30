@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/repository/api_repository.dart';
-import 'package:portfolio/api/model/api_model.dart';
-import 'package:portfolio/api/model/info.dart';
-import 'package:portfolio/features/contact/controller/contact.dart';
-import 'package:portfolio/features/contact/controller/connect_direct.dart';
-import 'package:portfolio/features/contact/controller/message.dart';
-import 'package:portfolio/features/contact/model/contactbackend_message.dart';
-import 'package:portfolio/features/contact/model/work.dart';
-import 'package:portfolio/shared/components/backend_message.dart';
-import 'package:portfolio/shared/components/myapp_bar.dart';
-import 'package:portfolio/shared/style/style.dart';
+import '../../contact/contact.dart';
+import '../../../api/api.dart' hide Message;
+import '../../../shared/shared.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({
@@ -58,7 +50,8 @@ class _ContactPageState extends State<ContactPage> {
         appBar: MyAppBar(
           info: _info,
           index: 2,
-          onProfileTap: widget.onProfileTap, contactme: [],
+          onProfileTap: widget.onProfileTap,
+          contactme: [],
         ),
         body: FutureBuilder<ApiModel>(
           future: apiModelFuture,
@@ -117,7 +110,7 @@ class _ContactPageState extends State<ContactPage> {
                   if (content.social.isNotEmpty)
                     Contact(social: content.social),
                   SizedBox(height: 10),
-                  Message(),
+                  const Message(),
                 ],
               ),
             );

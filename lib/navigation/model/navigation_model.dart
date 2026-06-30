@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/features/contact/view/contact.dart';
-import 'package:portfolio/features/home/view/homepage.dart';
-import 'package:portfolio/features/profile/view/profile.dart';
-import 'package:portfolio/features/skill/view/skill.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../features/contact/contact.dart';
+import '../../features/profile/profile.dart';
+import '../../features/home/home.dart';
+import '../../features/skill/skill.dart';
+import '../../shared/shared.dart';
 
 class NavigationModel {
   NavigationModel({

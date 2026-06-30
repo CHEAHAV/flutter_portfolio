@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/features/profile/model/button_data.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../profile/profile.dart';
+import '../../../shared/shared.dart';
 
 class ResumeButton extends StatefulWidget {
   const ResumeButton({super.key});

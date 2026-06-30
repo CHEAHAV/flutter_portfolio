@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:portfolio/shared/style/style.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../../shared/shared.dart';
 
 class SectionTitle extends StatelessWidget {
   const SectionTitle({super.key, required this.icon, required this.title});

@@ -1,21 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/model/api_model.dart';
-import 'package:portfolio/api/model/info.dart';
-import 'package:portfolio/api/repository/api_repository.dart';
-import 'package:portfolio/features/profile/controller/contace_button.dart';
-import 'package:portfolio/features/profile/controller/experience_controller.dart';
-import 'package:portfolio/features/profile/controller/experience_history.dart';
-import 'package:portfolio/features/profile/controller/career_timeline.dart';
-import 'package:portfolio/features/profile/controller/profile_controller.dart';
-import 'package:portfolio/features/profile/controller/resume_button.dart';
-import 'package:portfolio/features/profile/controller/section_title.dart';
-import 'package:portfolio/features/profile/controller/study_timeline.dart';
-import 'package:portfolio/features/profile/model/data_section_title.dart';
-import 'package:portfolio/features/profile/model/profilebackend_message.dart';
-import 'package:portfolio/shared/components/backend_message.dart';
-import 'package:portfolio/shared/components/myapp_bar.dart';
-import 'package:portfolio/shared/theme/colors.dart';
-import 'package:portfolio/features/profile/controller/certification.dart';
+import '../../profile/profile.dart';
+import '../../../api/api.dart';
+import '../../../shared/shared.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({

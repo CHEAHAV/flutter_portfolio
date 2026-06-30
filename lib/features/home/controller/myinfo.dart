@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/model/info.dart';
-import 'package:portfolio/routes/app_route.dart';
-import 'package:portfolio/shared/components/app_avatar.dart';
-import 'package:portfolio/shared/components/text_button.dart';
-import 'package:portfolio/shared/style/style.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../../api/api.dart';
+import '../../../routes/route.dart';
+import '../../../shared/shared.dart';
 
 class MyInfo extends StatelessWidget {
   const MyInfo({super.key, required this.info, this.onContactTap});

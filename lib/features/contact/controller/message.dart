@@ -1,15 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/repository/message_repository.dart';
-import 'package:portfolio/features/contact/controller/message_validation.dart';
-import 'package:portfolio/features/contact/model/message_model.dart';
-import 'package:portfolio/features/contact/model/sending.dart';
-import 'package:portfolio/shared/components/lottie.dart';
-import 'package:portfolio/shared/components/text_button.dart';
-import 'package:portfolio/shared/components/textform.dart';
-import 'package:portfolio/shared/components/textformarray.dart';
-import 'package:portfolio/shared/style/style.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../contact/contact.dart';
+import '../../../api/api.dart';
+import '../../../shared/shared.dart';
 
 class Message extends StatefulWidget {
   const Message({super.key});
