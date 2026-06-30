@@ -35,7 +35,7 @@ class ApiClient {
     String path,
     Map<String, String> fields,
   ) async {
-    final uri = Uri.parse('${ApiConfig.websiteBaseUrl}$path');
+    final uri = _websiteUri(path);
     final response = await _client
         .post(uri, body: fields)
         .timeout(const Duration(seconds: 15));
@@ -56,7 +56,8 @@ class ApiClient {
     try {
       final decoded = jsonDecode(response.body);
       if (decoded is Map<String, dynamic>) {
-        final message = decoded['message'] ?? decoded['error'];
+        final message =
+            decoded['message'] ?? decoded['detail'] ?? decoded['error'];
         if (message != null && message.toString().trim().isNotEmpty) {
           return message.toString();
         }
@@ -67,13 +68,13 @@ class ApiClient {
   }
 
   Future<Map<String, dynamic>> _getWebsiteResponse(String path) async {
-    final uri = Uri.parse('${ApiConfig.websiteBaseUrl}$path');
+    final uri = _websiteUri(path);
     final response = await _client
         .get(uri)
         .timeout(const Duration(seconds: 15));
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
-      throw ApiException('Request failed: ${response.statusCode}');
+      throw ApiException(_errorMessageFromResponse(response));
     }
 
     final decoded = jsonDecode(response.body);
@@ -123,6 +124,12 @@ class ApiClient {
           },
         )
         .toString();
+  }
+
+  Uri _websiteUri(String path) {
+    final normalizedPath = path.startsWith('/') ? path.substring(1) : path;
+    final base = Uri.parse('${ApiConfig.websiteBaseUrl}/');
+    return base.resolve(normalizedPath);
   }
 }
 
