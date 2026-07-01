@@ -12,4 +12,5 @@ class ApiRoutes {
   static const String teachStacks    = '/get_teach_stack';
   static const String messages       = '/get_message';
   static const String createMessage  = '/create_message';
+  static const String experience     = '/get_experience';
 }

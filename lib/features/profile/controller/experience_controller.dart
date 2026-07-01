@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import '../../../api/api.dart';
 import '../../profile/profile.dart';
 import '../../../shared/shared.dart';
 
 class ExperienceController extends StatelessWidget {
-  const ExperienceController({super.key});
+  const ExperienceController({super.key, required this.items});
+
+  final List<Experience> items;
 
   @override
   Widget build(BuildContext context) {
+    final stats = buildExperienceStats(items);
+
     return IntrinsicHeight(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(experience.length, (index) {
-          final item = experience[index];
+        children: List.generate(stats.length, (index) {
+          final item = stats[index];
           return Row(
             children: [
               if (index != 0)

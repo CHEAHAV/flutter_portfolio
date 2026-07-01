@@ -20,6 +20,7 @@ class ApiRepository {
       studyResult,
       teachstackResult,
       messageResult,
+      experienceResult,
     ] = await Future.wait([
       _loadSection('careers', ApiRoutes.careers),
       _loadSection('certifications', ApiRoutes.certifications),
@@ -33,6 +34,7 @@ class ApiRepository {
       _loadSection('studies', ApiRoutes.studies),
       _loadSection('teach-stacks', ApiRoutes.teachStacks),
       _loadSection('messages', ApiRoutes.messages),
+      _loadSection('experience', ApiRoutes.experience),
     ]);
 
     final results = [
@@ -48,12 +50,19 @@ class ApiRepository {
       studyResult,
       teachstackResult,
       messageResult,
+      experienceResult,
     ];
 
     if (results.every((result) => !result.loaded)) {
       throw ApiException(
         'Unable to load backend data: '
         '${results.map((result) => result.error).whereType<String>().join(', ')}',
+      );
+    }
+
+    if (!experienceResult.loaded) {
+      throw ApiException(
+        'Unable to load experience data: ${experienceResult.error}',
       );
     }
 
@@ -70,6 +79,7 @@ class ApiRepository {
       study        : _mapItems(studyResult.items, mapStudy),
       teachstack   : _mapItems(teachstackResult.items, mapTeachStack),
       message      : _mapItems(messageResult.items, mapMessage),
+      experience   : _mapItems(experienceResult.items, mapExperience),
     );
   }
 

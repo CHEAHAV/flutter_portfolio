@@ -102,4 +102,17 @@ class ApiObject {
   static String resolveMessage(Map<String, dynamic> item) {
     return (item['message'] ?? item['Message'] ?? '').toString();
   }
+
+  static String resolveYearExp(Map<String, dynamic> item) {
+    return (item['year_exp'] ?? item['yearexp'] ?? item['yearExp'] ?? '')
+        .toString();
+  }
+
+  static String resolveProject(Map<String, dynamic> item) {
+    return (item['project'] ?? item['Project'] ?? '').toString();
+  }
+
+  static String resolveCommit(Map<String, dynamic> item) {
+    return (item['commit'] ?? item['Commit'] ?? '').toString();
+  }
 }

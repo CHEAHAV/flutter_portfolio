@@ -1,14 +1,18 @@
-const String title = 'Junior Mobile App Developer';
+import '../../../api/api.dart';
 
-class Experience {
+class ProfileExperienceStat {
   final String title;
   final String data;
 
-  const Experience({required this.title, required this.data});
+  const ProfileExperienceStat({required this.title, required this.data});
 }
 
-const List<Experience> experience = [
-  Experience(title: 'years Exp', data: '2+'),
-  Experience(title: 'Project', data: '26'),
-  Experience(title: 'Commits', data: '2.3k'),
-];
+List<ProfileExperienceStat> buildExperienceStats(List<Experience> items) {
+  final item = items.isNotEmpty ? items.first : null;
+
+  return [
+    ProfileExperienceStat(title: 'years Exp', data: item?.yearexp ?? '0'),
+    ProfileExperienceStat(title: 'Project', data: item?.project ?? '0'),
+    ProfileExperienceStat(title: 'Commits', data: item?.commit ?? '0'),
+  ];
+}

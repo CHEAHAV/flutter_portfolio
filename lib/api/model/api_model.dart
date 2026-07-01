@@ -1,15 +1,4 @@
-import 'package:portfolio/api/model/career.dart';
-import 'package:portfolio/api/model/contact_me.dart';
-import 'package:portfolio/api/model/info.dart';
-import 'package:portfolio/api/model/message.dart';
-import 'package:portfolio/api/model/my_core.dart';
-import 'package:portfolio/api/model/project.dart';
-import 'package:portfolio/api/model/skill.dart';
-import 'package:portfolio/api/model/social.dart';
-import 'package:portfolio/api/model/story.dart';
-import 'package:portfolio/api/model/study.dart';
-import 'package:portfolio/api/model/teach_stack.dart';
-import 'package:portfolio/api/model/certification.dart';
+import '../../api/api.dart';
 
 class ApiModel {
   final List<Career> career;
@@ -24,6 +13,7 @@ class ApiModel {
   final List<Study> study;
   final List<TeachStack> teachstack;
   final List<Message> message;
+  final List<Experience> experience;
 
   const ApiModel({
     required this.career,
@@ -38,6 +28,7 @@ class ApiModel {
     required this.study,
     required this.teachstack,
     required this.message,
+    required this.experience,
   });
 
   bool get isEmpty {
@@ -52,6 +43,7 @@ class ApiModel {
         story.isEmpty &&
         study.isEmpty &&
         teachstack.isEmpty &&
-        message.isEmpty;
+        message.isEmpty &&
+        experience.isEmpty;
   }
 }
