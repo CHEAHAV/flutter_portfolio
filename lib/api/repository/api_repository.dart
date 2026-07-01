@@ -1,18 +1,5 @@
-import 'package:portfolio/api/repository/career_repository.dart';
-import 'package:portfolio/api/repository/certification_repository.dart';
-import 'package:portfolio/api/repository/contact_me_repository.dart';
-import 'package:portfolio/api/repository/info_repository.dart';
-import 'package:portfolio/api/repository/message_repository.dart';
-import 'package:portfolio/api/repository/my_core_repository.dart';
-import 'package:portfolio/api/repository/project_repository.dart';
-import 'package:portfolio/api/repository/skill_repository.dart';
-import 'package:portfolio/api/repository/social_repository.dart';
-import 'package:portfolio/api/repository/story_repository.dart';
-import 'package:portfolio/api/repository/study_repository.dart';
-import 'package:portfolio/api/repository/teach_stack_repository.dart';
-import 'package:portfolio/api/core/api_client.dart';
-import 'package:portfolio/api/model/api_model.dart';
-import 'package:portfolio/routes/api_route.dart';
+import '../../api/api.dart';
+import '../../routes/route.dart';
 
 class ApiRepository {
   final ApiClient apiClient;
@@ -112,11 +99,7 @@ class ApiRepository {
 }
 
 class _SectionResult {
-  const _SectionResult({
-    required this.loaded,
-    required this.items,
-    this.error,
-  });
+  const _SectionResult({required this.loaded, required this.items, this.error});
 
   factory _SectionResult.loaded(List<Map<String, dynamic>> items) {
     return _SectionResult(loaded: true, items: items);

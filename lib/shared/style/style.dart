@@ -1,76 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../shared/shared.dart';
 
 class AppStyle {
   // Headline - Geist
   static const TextStyle headline1 = TextStyle(
-    color: AppColors.textPrimary,
-    fontSize: 32,
-    fontWeight: FontWeight.w700,
-    fontFamily: 'Geist',
+    color        : AppColors.textPrimary,
+    fontSize     : 32,
+    fontWeight   : FontWeight.w700,
+    fontFamily   : 'Geist',
     letterSpacing: -0.5,
   );
 
   static const TextStyle headline2 = TextStyle(
-    color: AppColors.textPrimary,
-    fontSize: 24,
-    fontWeight: FontWeight.w600,
-    fontFamily: 'Geist',
+    color        : AppColors.textPrimary,
+    fontSize     : 24,
+    fontWeight   : FontWeight.w600,
+    fontFamily   : 'Geist',
     letterSpacing: -0.3,
   );
 
   static const TextStyle headline3 = TextStyle(
-    color: AppColors.textPrimary,
-    fontSize: 20,
+    color     : AppColors.textPrimary,
+    fontSize  : 20,
     fontWeight: FontWeight.w600,
     fontFamily: 'Geist',
   );
 
   // Body - Geist
   static const TextStyle bodyLarge = TextStyle(
-    color: AppColors.textPrimary,
-    fontSize: 16,
+    color     : AppColors.textPrimary,
+    fontSize  : 16,
     fontWeight: FontWeight.w400,
     fontFamily: 'Geist',
-    height: 1.5,
+    height    : 1.5,
   );
 
   static const TextStyle bodyMedium = TextStyle(
-    color: AppColors.textSecondary,
-    fontSize: 14,
+    color     : AppColors.textSecondary,
+    fontSize  : 14,
     fontWeight: FontWeight.w400,
     fontFamily: 'Geist',
-    height: 1.5,
+    height    : 1.5,
   );
 
   static const TextStyle bodySmall = TextStyle(
-    color: AppColors.textSecondary,
-    fontSize: 12,
+    color     : AppColors.textSecondary,
+    fontSize  : 12,
     fontWeight: FontWeight.w400,
     fontFamily: 'Geist',
   );
 
   // Label - JetBrains Mono
   static const TextStyle label = TextStyle(
-    color: AppColors.textPrimary,
-    fontSize: 12,
-    fontWeight: FontWeight.w700,
-    fontFamily: 'JetBrainsMono',
+    color        : AppColors.textPrimary,
+    fontSize     : 12,
+    fontWeight   : FontWeight.w700,
+    fontFamily   : 'JetBrainsMono',
     letterSpacing: 0.8,
   );
 
   static const TextStyle labelLarge = TextStyle(
-    color: AppColors.textPrimary,
-    fontSize: 14,
-    fontWeight: FontWeight.w700,
-    fontFamily: 'JetBrainsMono',
+    color        : AppColors.textPrimary,
+    fontSize     : 14,
+    fontWeight   : FontWeight.w700,
+    fontFamily   : 'JetBrainsMono',
     letterSpacing: 0.5,
   );
 
   // ── Border Radius ───────────────────────────────────────────
-  static const double radiusSm = 8;
-  static const double radiusMd = 12;
-  static const double radiusLg = 16;
+  static const double radiusSm   = 8;
+  static const double radiusMd   = 12;
+  static const double radiusLg   = 16;
   static const double radiusFull = 999;
 
   // ── Spacing ─────────────────────────────────────────────────
@@ -84,71 +84,71 @@ class AppStyle {
   static final ButtonStyle primaryButton = ElevatedButton.styleFrom(
     backgroundColor: AppColors.primary,
     foregroundColor: AppColors.bgColor,
-    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-    shape: RoundedRectangleBorder(
+    padding        : const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+    shape          : RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(radiusMd),
     ),
     textStyle: const TextStyle(
       fontFamily: 'Geist',
       fontWeight: FontWeight.w600,
-      fontSize: 14,
+      fontSize  : 14,
     ),
   );
 
   static final ButtonStyle secondaryButton = ElevatedButton.styleFrom(
     backgroundColor: AppColors.cardColor,
     foregroundColor: AppColors.textPrimary,
-    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-    shape: RoundedRectangleBorder(
+    padding        : const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+    shape          : RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(radiusMd),
     ),
     textStyle: const TextStyle(
       fontFamily: 'Geist',
       fontWeight: FontWeight.w500,
-      fontSize: 14,
+      fontSize  : 14,
     ),
   );
 
   static final ButtonStyle outlinedButton = OutlinedButton.styleFrom(
     foregroundColor: AppColors.textPrimary,
-    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-    side: const BorderSide(color: AppColors.borderColor),
-    shape: RoundedRectangleBorder(
+    padding        : const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+    side           : const BorderSide(color: AppColors.borderColor),
+    shape          : RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(radiusMd),
     ),
     textStyle: const TextStyle(
       fontFamily: 'Geist',
       fontWeight: FontWeight.w500,
-      fontSize: 14,
+      fontSize  : 14,
     ),
   );
 
   // ── Card Decoration ─────────────────────────────────────────
   static final BoxDecoration cardDecoration = BoxDecoration(
-    color: AppColors.cardColor,
+    color       : AppColors.cardColor,
     borderRadius: BorderRadius.circular(radiusLg),
-    border: Border.all(color: AppColors.borderColor),
+    border      : Border.all(color: AppColors.borderColor),
   );
 
   // ── Input Decoration ────────────────────────────────────────
   static InputDecoration inputDecoration({String? hint, Widget? prefix}) {
     return InputDecoration(
-      hintText: hint,
-      hintStyle: bodyMedium,
+      hintText  : hint,
+      hintStyle : bodyMedium,
       prefixIcon: prefix,
-      filled: true,
-      fillColor: AppColors.cardColor,
-      border: OutlineInputBorder(
+      filled    : true,
+      fillColor : AppColors.cardColor,
+      border    : OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusFull),
-        borderSide: const BorderSide(color: AppColors.borderColor),
+        borderSide  : const BorderSide(color: AppColors.borderColor),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusFull),
-        borderSide: const BorderSide(color: AppColors.borderColor),
+        borderSide  : const BorderSide(color: AppColors.borderColor),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(radiusFull),
-        borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+        borderSide  : const BorderSide(color: AppColors.primary, width: 1.5),
       ),
       contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
     );

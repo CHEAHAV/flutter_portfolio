@@ -1,17 +1,15 @@
-import 'package:portfolio/api/core/api_client.dart';
-import 'package:portfolio/api/core/api_object.dart';
-import 'package:portfolio/api/model/message.dart';
-import 'package:portfolio/routes/api_route.dart';
+import '../../api/api.dart';
+import '../../routes/route.dart';
 
 Message mapMessage(Map<String, dynamic> item) {
   return Message(
-    id: ApiObject.resolveID(item),
+    id       : ApiObject.resolveID(item),
     firstname: ApiObject.resolveFirstName(item),
-    lastname: ApiObject.resolveLastName(item),
-    email: ApiObject.resolveEmail(item),
-    phone: ApiObject.resolvePhone(item),
-    subject: ApiObject.resolveSubject(item),
-    message: ApiObject.resolveMessage(item),
+    lastname : ApiObject.resolveLastName(item),
+    email    : ApiObject.resolveEmail(item),
+    phone    : ApiObject.resolvePhone(item),
+    subject  : ApiObject.resolveSubject(item),
+    message  : ApiObject.resolveMessage(item),
   );
 }
 

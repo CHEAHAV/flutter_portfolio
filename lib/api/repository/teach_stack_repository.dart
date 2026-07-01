@@ -1,6 +1,4 @@
-import 'package:portfolio/api/core/api_image.dart';
-import 'package:portfolio/api/core/api_object.dart';
-import 'package:portfolio/api/model/teach_stack.dart';
+import '../../api/api.dart';
 
 TeachStack mapTeachStack(Map<String, dynamic> item) {
   return TeachStack(

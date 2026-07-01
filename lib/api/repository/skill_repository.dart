@@ -1,6 +1,4 @@
-import 'package:portfolio/api/core/api_image.dart';
-import 'package:portfolio/api/core/api_object.dart';
-import 'package:portfolio/api/model/skill.dart';
+import '../../api/api.dart';
 
 Skill mapSkill(Map<String, dynamic> item) => Skill(
   id         : ApiObject.resolveID(item),

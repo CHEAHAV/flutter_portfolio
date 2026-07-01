@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../shared/shared.dart';
 
 class AppDivider extends StatelessWidget {
   const AppDivider({super.key});

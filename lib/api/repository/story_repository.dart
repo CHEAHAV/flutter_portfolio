@@ -1,6 +1,4 @@
-import 'package:portfolio/api/core/api_image.dart';
-import 'package:portfolio/api/core/api_object.dart';
-import 'package:portfolio/api/model/story.dart';
+import '../../api/api.dart';
 
 Story mapStory(Map<String, dynamic> item) => Story(
   id         : ApiObject.resolveID(item),

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:portfolio/shared/style/style.dart';
+import '../../shared/shared.dart';
 
 class BackendMessage extends StatelessWidget {
   const BackendMessage({super.key, 

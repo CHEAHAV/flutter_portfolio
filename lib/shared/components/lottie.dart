@@ -31,13 +31,13 @@ class _MyLottieState extends State<MyLottie> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: widget.size,
+      width : widget.size,
       height: widget.size,
-      child: Lottie.asset(
+      child : Lottie.asset(
         'assets/jsons/success.json',
         controller: _controller,
-        repeat: false,
-        onLoaded: (composition) {
+        repeat    : false,
+        onLoaded  : (composition) {
           _controller
             ..duration = composition.duration
             ..forward(from: 0);

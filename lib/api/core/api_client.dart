@@ -17,10 +17,10 @@ class ApiClient {
     String path, {
     int pageSize = 100,
   }) async {
-    final firstPath = _pathWithQuery(path, page: 1, size: pageSize);
+    final firstPath     = _pathWithQuery(path, page: 1, size: pageSize);
     final firstResponse = await _getWebsiteResponse(firstPath);
-    final lists = [..._listsFromResponse(firstResponse)];
-    final totalPages = _totalPagesFromResponse(firstResponse);
+    final lists         = [..._listsFromResponse(firstResponse)];
+    final totalPages    = _totalPagesFromResponse(firstResponse);
 
     for (var page = 2; page <= totalPages; page++) {
       final pagePath = _pathWithQuery(path, page: page, size: pageSize);
@@ -35,7 +35,7 @@ class ApiClient {
     String path,
     Map<String, String> fields,
   ) async {
-    final uri = _websiteUri(path);
+    final uri      = _websiteUri(path);
     final response = await _client
         .post(uri, body: fields)
         .timeout(const Duration(seconds: 15));
@@ -56,7 +56,7 @@ class ApiClient {
     try {
       final decoded = jsonDecode(response.body);
       if (decoded is Map<String, dynamic>) {
-        final message =
+        final message = 
             decoded['message'] ?? decoded['detail'] ?? decoded['error'];
         if (message != null && message.toString().trim().isNotEmpty) {
           return message.toString();
@@ -68,7 +68,7 @@ class ApiClient {
   }
 
   Future<Map<String, dynamic>> _getWebsiteResponse(String path) async {
-    final uri = _websiteUri(path);
+    final uri      = _websiteUri(path);
     final response = await _client
         .get(uri)
         .timeout(const Duration(seconds: 15));
@@ -128,7 +128,7 @@ class ApiClient {
 
   Uri _websiteUri(String path) {
     final normalizedPath = path.startsWith('/') ? path.substring(1) : path;
-    final base = Uri.parse('${ApiConfig.websiteBaseUrl}/');
+    final base           = Uri.parse('${ApiConfig.websiteBaseUrl}/');
     return base.resolve(normalizedPath);
   }
 }

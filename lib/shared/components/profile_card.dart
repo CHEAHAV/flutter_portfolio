@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/core/api_image.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../api/api.dart';
+import '../../shared/shared.dart';
 
 class ProfileCard extends StatelessWidget {
   final String assetPath;

@@ -1,5 +1,4 @@
-import 'package:portfolio/api/core/api_object.dart';
-import 'package:portfolio/api/model/study.dart';
+import '../../api/api.dart';
 
 Study mapStudy(Map<String, dynamic> item) {
   return Study(

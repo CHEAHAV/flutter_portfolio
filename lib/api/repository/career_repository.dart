@@ -1,5 +1,4 @@
-import 'package:portfolio/api/core/api_object.dart';
-import 'package:portfolio/api/model/career.dart';
+import '../../api/api.dart';
 
 Career mapCareer(Map<String, dynamic> item) {
   return Career(

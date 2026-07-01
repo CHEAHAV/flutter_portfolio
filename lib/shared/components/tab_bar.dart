@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/features/skill/model/skill_item.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../features/skill/skill.dart';
+import '../../shared/shared.dart';
 
 class ExpertiseTabBar extends StatefulWidget {
   final ValueChanged<int> onTabSelected;

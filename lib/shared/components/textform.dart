@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import '../../shared/shared.dart';
 
 class TextForm extends StatefulWidget {
   final String hintText;

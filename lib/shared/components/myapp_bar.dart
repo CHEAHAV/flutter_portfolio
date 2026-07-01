@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/model/contact_me.dart';
-import 'package:portfolio/api/model/info.dart';
-import 'package:portfolio/api/repository/api_repository.dart';
-import 'package:portfolio/features/home/model/headerdata.dart';
-import 'package:portfolio/routes/app_route.dart';
-import 'package:portfolio/shared/components/divider.dart';
-import 'package:portfolio/shared/style/style.dart';
-import 'package:portfolio/shared/theme/colors.dart';
-import 'package:portfolio/shared/utils/external_link.dart';
+import '../../api/api.dart';
+import '../../features/home/home.dart';
+import '../../routes/route.dart';
+import '../../shared/shared.dart';
 
 class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
   const MyAppBar({
@@ -32,10 +27,10 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _MyAppBarState extends State<MyAppBar> {
   List<ContactMe> _backendContactme = const [];
-  bool _loadingContactme = false;
+  bool            _loadingContactme = false;
 
-  List<ContactMe> get _contactme =>
-      widget.contactme.isNotEmpty ? widget.contactme : _backendContactme;
+  List<ContactMe> get _contactme => 
+      widget.contactme.isNotEmpty ? widget.contactme: _backendContactme;
 
   @override
   void initState() {
@@ -67,7 +62,7 @@ class _MyAppBarState extends State<MyAppBar> {
         });
       }
     } catch (_) {
-      // Keep the app bar usable; pressing email will show the link error.
+          // Keep the app bar usable; pressing email will show the link error.
     } finally {
       _loadingContactme = false;
     }
@@ -88,9 +83,9 @@ class _MyAppBarState extends State<MyAppBar> {
     await _loadBackendContactmeIfNeeded();
 
     for (final item in _contactme) {
-      final normalizedName = item.name.toLowerCase();
+      final normalizedName        = item.name.toLowerCase();
       final normalizedDescription = item.description.toLowerCase();
-      final isEmailContact =
+      final isEmailContact        = 
           normalizedName.contains('email') ||
           normalizedName.contains('mail') ||
           normalizedDescription.contains('@') ||
@@ -118,31 +113,31 @@ class _MyAppBarState extends State<MyAppBar> {
   Widget build(BuildContext context) {
     final headerIndex = widget.index >= 0 && widget.index < headerdata.length
         ? widget.index
-        : 0;
+        :   0;
 
     return AppBar(
       automaticallyImplyLeading: false,
-      title: Row(
+      title                    : Row(
         children: [
           Container(
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
+              shape : BoxShape.circle,
               border: Border.all(color: AppColors.primary, width: 1),
             ),
             child: GestureDetector(
-              onTap:
+              onTap: 
                   widget.onProfileTap ??
                   () => Navigator.pushNamed(context, AppRoute.profilePageRoute),
               child: Padding(
                 padding: const EdgeInsets.all(2),
-                child: CircleAvatar(
+                child  : CircleAvatar(
                   backgroundImage: widget.info != null
                       ? NetworkImage(widget.info!.image)
-                      : null,
+                        :   null,
                   radius: 20,
-                  child: widget.info == null
+                  child : widget.info == null
                       ? const Icon(Icons.person, size: 20)
-                      : null,
+                      :   null,
                 ),
               ),
             ),
@@ -151,8 +146,8 @@ class _MyAppBarState extends State<MyAppBar> {
           ShaderMask(
             shaderCallback: (bounds) => const LinearGradient(
               colors: [AppColors.accent, AppColors.accentPurple],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin : Alignment.topLeft,
+              end   : Alignment.bottomRight,
             ).createShader(bounds),
             child: Text(
               headerdata[headerIndex].name.toUpperCase(),
@@ -163,13 +158,13 @@ class _MyAppBarState extends State<MyAppBar> {
       ),
       actions: [
         IconButton(
-          tooltip: 'Email',
+          tooltip  : 'Email',
           onPressed: _openEmail,
-          icon: ShaderMask(
+          icon     : ShaderMask(
             shaderCallback: (bounds) => const LinearGradient(
               colors: [AppColors.accent, AppColors.accentPurple],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin : Alignment.topLeft,
+              end   : Alignment.bottomRight,
             ).createShader(bounds),
             child: const Icon(Icons.email),
           ),
@@ -177,7 +172,7 @@ class _MyAppBarState extends State<MyAppBar> {
       ],
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(1),
-        child: AppDivider(),
+        child        : AppDivider(),
       ),
     );
   }
