@@ -81,14 +81,14 @@ class _ConnectDirectState extends State<ConnectDirect>
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.card,
+        color       : AppColors.card,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.divider, width: 1),
+        border      : Border.all(color: AppColors.divider, width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.4),
+            color     : Colors.black.withValues(alpha: 0.4),
             blurRadius: 24,
-            offset: const Offset(0, 8),
+            offset    : const Offset(0, 8),
           ),
         ],
       ),
@@ -100,8 +100,8 @@ class _ConnectDirectState extends State<ConnectDirect>
             Text(
               'Connect Directly',
               style: TextStyle(
-                color: AppColors.textPrimary,
-                fontSize: 24,
+                color     : AppColors.textPrimary,
+                fontSize  : 24,
                 fontWeight: FontWeight.w800,
               ),
             ),
@@ -115,7 +115,7 @@ class _ConnectDirectState extends State<ConnectDirect>
                   child: Row(
                     children: [
                       Container(
-                        width: 48,
+                        width : 48,
                         height: 48,
                         decoration: BoxDecoration(
                           color: AppColors.divider,
@@ -147,9 +147,9 @@ class _ConnectDirectState extends State<ConnectDirect>
                             Text(
                               item.name.toUpperCase(),
                               style: TextStyle(
-                                color: AppColors.textSecondary,
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
+                                color        : AppColors.textSecondary,
+                                fontSize     : 11,
+                                fontWeight   : FontWeight.w600,
                                 letterSpacing: 1.2,
                               ),
                             ),
@@ -157,8 +157,8 @@ class _ConnectDirectState extends State<ConnectDirect>
                             Text(
                               item.description,
                               style: TextStyle(
-                                color: AppColors.textPrimary,
-                                fontSize: 15,
+                                color     : AppColors.textPrimary,
+                                fontSize  : 15,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),

@@ -78,12 +78,12 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap  : true,
+      physics     : const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+        crossAxisCount  : 2,
         crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
+        mainAxisSpacing : 12,
         childAspectRatio: 2.8,
       ),
       itemCount: widget.social.length,
@@ -94,14 +94,14 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
           onTap: () => _openContactUrl(item),
           child: Container(
             decoration: BoxDecoration(
-              color: AppColors.card,
+              color       : AppColors.card,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: AppColors.divider, width: 1),
+              border      : Border.all(color: AppColors.divider, width: 1),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.32),
+                  color     : Colors.black.withValues(alpha: 0.32),
                   blurRadius: 20,
-                  offset: const Offset(0, 8),
+                  offset    : const Offset(0, 8),
                 ),
               ],
             ),
@@ -115,9 +115,9 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
                       item.icon,
                       fallbackAsset: 'assets/icons/github.png',
                     ),
-                    width: 20,
+                    width : 20,
                     height: 20,
-                    color: AppColors.textPrimary,
+                    color : AppColors.textPrimary,
                     errorBuilder: (context, error, stackTrace) {
                       return Image.asset(
                         'assets/icons/github.png',
@@ -131,8 +131,8 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
                   Text(
                     item.name,
                     style: TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 15,
+                      color     : AppColors.textPrimary,
+                      fontSize  : 15,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

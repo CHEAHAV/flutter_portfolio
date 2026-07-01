@@ -45,6 +45,9 @@ class ApiObject {
   static String resolveDuration(Map<String, dynamic> item) {
     return (item['duration'] ?? item['Duration'] ?? '').toString();
   }
+  static String resolvePhone(Map<String, dynamic> item) {
+    return (item['phone'] ?? item['Phone'] ?? '').toString();
+  }
 
   static String resolveRole(Map<String, dynamic> item) {
     return (item['role'] ?? item['Role'] ?? '').toString();
