@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/api/core/api_config.dart';
+import '../../api/api.dart';
 
 class ApiImage {
   static bool isNetworkImage(String image) {

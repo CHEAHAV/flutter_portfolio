@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/navigation/view/bottom_nav.dart';
-import 'package:portfolio/page/certificate/view/certificate_detail_page.dart';
-import 'package:portfolio/page/mycore/view/mycore_detail_page.dart';
-import 'package:portfolio/page/project/view/project_detail_page.dart';
-import 'package:portfolio/page/skill/view/skill_detail_page.dart';
-import 'package:portfolio/routes/app_route.dart';
-import 'package:portfolio/shared/theme/colors.dart';
+import 'navigation/navigation.dart';
+import 'page/certificate/certificate.dart';
+import 'page/mycore/mycore.dart';
+import 'page/project/project.dart';
+import 'page/skill/skill.dart';
+import 'routes/route.dart';
+import 'shared/shared.dart';
 
 class Portfolio extends StatelessWidget {
   const Portfolio({super.key});

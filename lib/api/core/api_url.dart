@@ -1,4 +1,4 @@
-import 'package:portfolio/api/core/api_config.dart';
+import '../../api/api.dart';
 
 class ApiUrl {
   static String toAbsoluteUrl(String path) {
