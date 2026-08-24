@@ -63,7 +63,7 @@ const String webConnectTitle  = 'Connect directly';
 const String webFollowTitle   = 'Find me online';
 
 // ── Footer ──────────────────────────────────────────────────
-const String webFooterNote  = 'Built with precision and code.';
+const String webFooterNote  = 'Built with Flutter code.';
 const String webFooterLinks = 'Navigate';
 const String webFooterReach = 'Reach me';
 
