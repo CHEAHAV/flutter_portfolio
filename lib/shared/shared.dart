@@ -9,6 +9,7 @@ export 'components/tab_bar.dart';
 export 'components/text_button.dart';
 export 'components/textform.dart';
 export 'components/textformarray.dart';
+export 'responsive/breakpoint.dart';
 export 'style/style.dart';
 export 'theme/colors.dart';
 export 'utils/external_link.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'navigation/navigation.dart';
+import 'web/web.dart';
 import 'page/certificate/certificate.dart';
 import 'page/mycore/mycore.dart';
 import 'page/project/project.dart';
@@ -14,7 +14,7 @@ class Portfolio extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title                     : 'Portfolio',
-      home                      : const BottomNav(),
+      home                      : const ResponsiveRoot(),
       debugShowCheckedModeBanner: false,
       theme                     : ThemeData(
         useMaterial3           : true,
@@ -34,11 +34,11 @@ class Portfolio extends StatelessWidget {
         ),
       ),
       routes: {
-        AppRoute.bottomNavRoute        : (context) => const BottomNav(),
-        AppRoute.homePageRoute         : (context) => const BottomNav(initialIndex: 0),
-        AppRoute.skillPageRoute        : (context) => const BottomNav(initialIndex: 1),
-        AppRoute.contactPageRoute      : (context) => const BottomNav(initialIndex: 2),
-        AppRoute.profilePageRoute      : (context) => const BottomNav(initialIndex: 3),
+        AppRoute.bottomNavRoute        : (context) => const ResponsiveRoot(),
+        AppRoute.homePageRoute         : (context) => const ResponsiveRoot(initialIndex: 0),
+        AppRoute.skillPageRoute        : (context) => const ResponsiveRoot(initialIndex: 1),
+        AppRoute.contactPageRoute      : (context) => const ResponsiveRoot(initialIndex: 2),
+        AppRoute.profilePageRoute      : (context) => const ResponsiveRoot(initialIndex: 3),
         AppRoute.projectDetailRoute    : (context) => const ProjectDetailPage(projectModel: []),
         AppRoute.certificateDetailRoute: (context) => const CertificateDetailPage(actionButtonModel: []),
         AppRoute.skillDetailRoute      : (context) => const SkillDetailPage(projectModel: []),

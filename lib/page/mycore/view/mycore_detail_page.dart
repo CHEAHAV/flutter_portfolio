@@ -127,10 +127,10 @@ class _MyCoreDetailPageState extends State<MyCoreDetailPage>
               }
 
               return SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 24,
-                ),
+                padding: ResponsiveInsets.page(
+                  context,
+                ).copyWith(top: 24, bottom: 24) +
+                    const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [

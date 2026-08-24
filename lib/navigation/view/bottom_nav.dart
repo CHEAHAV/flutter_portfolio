@@ -4,9 +4,10 @@ import '../navigation.dart';
 import '../../shared/shared.dart';
 
 class BottomNav extends StatefulWidget {
-  const BottomNav({super.key, this.initialIndex = 0});
+  const BottomNav({super.key, this.initialIndex = 0, this.onIndexChanged});
 
   final int initialIndex;
+  final ValueChanged<int>? onIndexChanged;
 
   @override
   State<BottomNav> createState() => _BottomNavState();
@@ -33,6 +34,7 @@ class _BottomNavState extends State<BottomNav> {
     );
     _controller.addListener(() {
       setState(() {});
+      widget.onIndexChanged?.call(_controller.currentTabIndex);
     });
   }
 

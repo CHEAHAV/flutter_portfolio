@@ -1,0 +1,15 @@
+export '../web/controller/web_about.dart';
+export '../web/controller/web_background.dart';
+export '../web/controller/web_buttons.dart';
+export '../web/controller/web_career.dart';
+export '../web/controller/web_contact_section.dart';
+export '../web/controller/web_footer.dart';
+export '../web/controller/web_hero.dart';
+export '../web/controller/web_nav_bar.dart';
+export '../web/controller/web_section.dart';
+export '../web/controller/web_skills.dart';
+export '../web/controller/web_work.dart';
+export '../web/model/web_nav_item.dart';
+export '../web/model/web_text.dart';
+export '../web/view/responsive_root.dart';
+export '../web/view/web_shell.dart';

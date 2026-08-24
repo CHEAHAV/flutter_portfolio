@@ -127,6 +127,7 @@ class _SkillDetailPageState extends State<SkillDetailPage>
               }
 
               return SingleChildScrollView(
+                padding: ResponsiveInsets.page(context),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

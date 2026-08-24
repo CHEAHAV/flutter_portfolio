@@ -1,12 +1,12 @@
 {
-    "name": "portfolio",
-    "short_name": "portfolio",
+    "name": "Mr. IT Cheahav - Mobile App Developer",
+    "short_name": "Portfolio",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#0A0F2E",
+    "theme_color": "#0A0F2E",
+    "description": "Portfolio of Mr. IT Cheahav: Flutter mobile applications, back-end services and selected case studies.",
+    "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
         {

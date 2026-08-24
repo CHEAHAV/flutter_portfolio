@@ -130,6 +130,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage>
               }
 
               return SingleChildScrollView(
+                padding: ResponsiveInsets.page(context),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
