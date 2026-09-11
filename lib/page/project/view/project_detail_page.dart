@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+
 import '../../../api/api.dart';
-import '../../../features/home/home.dart';
-import '../../certificate/certificate.dart';
-import '../../project/project.dart';
 import '../../../routes/route.dart';
 import '../../../shared/shared.dart';
+import '../../../web/controller/web_section.dart';
+import '../controller/project_detail_bar.dart';
+import '../controller/project_detail_content.dart';
+import '../model/project_model.dart';
 
+/// Case study for a single project. The phone keeps the app bar it shares
+/// with every other detail page; tablet and desktop get the site header, the
+/// centred content column and the two-column reading layout.
 class ProjectDetailPage extends StatefulWidget {
-  const ProjectDetailPage({super.key, required List<dynamic> projectModel});
+  const ProjectDetailPage({
+    super.key,
+    List<dynamic>? projectModel,
+    this.loadContent,
+  });
+
+  final Future<ApiModel> Function()? loadContent;
 
   @override
   State<ProjectDetailPage> createState() => _ProjectDetailPageState();
@@ -15,312 +26,228 @@ class ProjectDetailPage extends StatefulWidget {
 
 class _ProjectDetailPageState extends State<ProjectDetailPage>
     with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  late Animation<double> fadeIn;
-  late Future<ApiModel> apiModelFuture;
-  Info? _info;
-  int? _projectIndex;
-  String? _projectId;
+  final ScrollController _scroll = ScrollController();
+
+  late final AnimationController _fadeController;
+  late final Animation<double> _fade;
+  late Future<ApiModel> _content;
+
+  /// Set when the reader moves to a neighbouring case study, so the pager
+  /// swaps projects in place instead of pushing another route.
+  String? _selectedId;
+  bool _scrolled = false;
+  double _progress = 0;
 
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(
+    _fadeController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 600),
     )..forward();
-    fadeIn = CurvedAnimation(parent: controller, curve: Curves.easeOut);
-    apiModelFuture = loadApiModel();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final arguments = ModalRoute.of(context)?.settings.arguments;
-    if (arguments is int) {
-      _projectIndex = arguments;
-    } else if (arguments is String) {
-      _projectId = arguments;
-    } else if (arguments is Map<String, dynamic>) {
-      final id = arguments['id'];
-      final index = arguments['index'];
-      if (id is String && id.isNotEmpty) {
-        _projectId = id;
-      }
-      if (index is int) {
-        _projectIndex = index;
-      }
-    }
+    _fade = CurvedAnimation(parent: _fadeController, curve: Curves.easeOut);
+    _content = _load();
+    _scroll.addListener(_onScroll);
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _scroll
+      ..removeListener(_onScroll)
+      ..dispose();
+    _fadeController.dispose();
     super.dispose();
   }
 
-  Future<ApiModel> loadApiModel() => ApiRepository().loadApiModel();
+  Future<ApiModel> _load() =>
+      widget.loadContent?.call() ?? ApiRepository().loadApiModel();
 
-  void _retryLoadHomeContent() {
+  Future<void> _refresh() async {
+    final future = _load();
     setState(() {
-      apiModelFuture = loadApiModel();
+      _content = future;
     });
+    // FutureBuilder shows a recoverable error if the refresh itself fails.
+    try {
+      await future;
+    } catch (_) {}
+  }
+
+  void _onScroll() {
+    if (!_scroll.hasClients) return;
+
+    final offset = _scroll.offset;
+    final maxExtra = _scroll.position.maxScrollExtent;
+    final scrolled = offset > 12;
+    final progress = maxExtra <= 0 ? 0.0 : (offset / maxExtra).clamp(0.0, 1.0);
+
+    if (scrolled != _scrolled || (progress - _progress).abs() > 0.004) {
+      setState(() {
+        _scrolled = scrolled;
+        _progress = progress;
+      });
+    }
+  }
+
+  void _backToTop() {
+    if (!_scroll.hasClients) return;
+    _scroll.animateTo(
+      0,
+      duration: const Duration(milliseconds: 520),
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
+  void _backToWork() {
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) {
+      navigator.pop();
+    } else {
+      navigator.pushReplacementNamed(AppRoute.skillPageRoute);
+    }
+  }
+
+  void _openSite() {
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) {
+      navigator.pop();
+    } else {
+      navigator.pushReplacementNamed(AppRoute.homePageRoute);
+    }
+  }
+
+  void _selectProject(Project project) {
+    setState(() => _selectedId = project.id);
+    if (_scroll.hasClients) _scroll.jumpTo(0);
+  }
+
+  /// `-1` when the requested record is no longer served by the backend.
+  int _selectedIndex(List<Project> projects) {
+    if (projects.isEmpty) return -1;
+
+    final pinned = _selectedId;
+    if (pinned != null) {
+      final index = projects.indexWhere((project) => project.id == pinned);
+      if (index >= 0) return index;
+    }
+
+    final arguments = ModalRoute.of(context)?.settings.arguments;
+    String? id;
+    int? index;
+    if (arguments is String) {
+      id = arguments;
+    } else if (arguments is int) {
+      index = arguments;
+    } else if (arguments is Map) {
+      if (arguments['id'] is String) id = arguments['id'] as String;
+      if (arguments['index'] is int) index = arguments['index'] as int;
+    }
+
+    // A supplied ID wins over a list index that may have gone stale.
+    if (id != null && id.trim().isNotEmpty) {
+      return projects.indexWhere((project) => project.id == id);
+    }
+
+    final selected = index ?? 0;
+    return selected >= 0 && selected < projects.length ? selected : -1;
   }
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        setState(() => apiModelFuture = loadApiModel());
-        await apiModelFuture;
-      },
-      child: Scaffold(
-        backgroundColor: AppColors.bgColor,
-        appBar: MyAppBar(info: _info, index: 4, contactme: []),
-        body: FadeTransition(
-          opacity: fadeIn,
-          child: FutureBuilder<ApiModel>(
-            future: apiModelFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (snapshot.hasError) {
-                return BackendMessage(
-                  title: homeBackendMessage[0].title,
-                  message: homeBackendMessage[0].message,
-                  actionLabel: homeBackendMessage[0].actionLabel,
-                  onActionPressed: _retryLoadHomeContent,
-                );
-              }
-              final content = snapshot.data;
-              if (content == null || content.isEmpty) {
-                return BackendMessage(
-                  title: homeBackendMessage[1].title,
-                  message: homeBackendMessage[1].message,
-                );
-              }
-              final info = content.info.isNotEmpty ? content.info.first : null;
-              if (info == null) {
-                return BackendMessage(
-                  title: homeBackendMessage[2].title,
-                  message: homeBackendMessage[2].message,
-                );
-              }
-              final projects = content.project;
-              final indexById = _projectId == null
-                  ? -1
-                  : projects.indexWhere((project) => project.id == _projectId);
-              final selectedIndex = indexById >= 0
-                  ? indexById
-                  : (_projectIndex ?? 0);
-              if (projects.isEmpty ||
-                  selectedIndex < 0 ||
-                  selectedIndex >= projects.length) {
-                return BackendMessage(
-                  title: homeBackendMessage[3].title,
-                  message: homeBackendMessage[3].message,
-                );
-              }
-              final project = projects[selectedIndex];
-              if (_info == null) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  setState(() => _info = info);
-                });
-              }
+    final isMobile = context.isMobile;
 
-              return SingleChildScrollView(
-                padding: ResponsiveInsets.page(context),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ProjectCard(project: project),
+    return FutureBuilder<ApiModel>(
+      future: _content,
+      builder: (context, snapshot) {
+        final content = snapshot.data;
+        final info = content != null && content.info.isNotEmpty
+            ? content.info.first
+            : null;
 
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: MetaTile(
-                              icon: projectModel[0].icon,
-                              label: projectModel[0].label,
-                              value: project.duration,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: MetaTile(
-                              icon: projectModel[1].icon,
-                              label: projectModel[1].label,
-                              value: project.role,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 12),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Center(
-                        child: SizedBox(
-                          width: 250,
-                          child: MetaTile(
-                            icon: projectModel[2].icon,
-                            label: projectModel[2].label,
-                            value: project.platform,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: AppColors.card,
-                          borderRadius: BorderRadius.circular(
-                            AppStyle.radiusLg,
-                          ),
-                          border: Border.all(color: AppColors.divider),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 8, 0, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 4,
-                                    height: 26,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.accentCyan,
-                                      borderRadius: BorderRadius.circular(2),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    projectModel[3].label,
-                                    style: AppStyle.headline2.copyWith(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                      color: AppColors.textPrimary,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: Text(
-                                  project.description,
-                                  style: AppStyle.bodyMedium.copyWith(
-                                    color: AppColors.textSub,
-                                    height: 1.7,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: AppColors.card,
-                          borderRadius: BorderRadius.circular(
-                            AppStyle.radiusLg,
-                          ),
-                          border: Border.all(color: AppColors.divider),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 8, 0, 0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 4,
-                                    height: 26,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.accentCyan,
-                                      borderRadius: BorderRadius.circular(2),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    projectModel[4].label,
-                                    style: AppStyle.headline2.copyWith(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                      color: AppColors.textPrimary,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: Text(
-                                  project.challenge,
-                                  style: AppStyle.bodyMedium.copyWith(
-                                    color: AppColors.textSub,
-                                    height: 1.7,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                        child: SizedBox(
-                          width: MediaQuery.sizeOf(context).width,
-                          child: ActionButton(
-                            icon: actionButtonModel[2].icon,
-                            label: actionButtonModel[2].label,
-                            onTap: () async {
-                              await ExternalLink.open(project.projecturl);
-                            },
-                            filled: true,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                        child: SizedBox(
-                          width: MediaQuery.sizeOf(context).width,
-                          child: ActionButton(
-                            icon: actionButtonModel[1].icon,
-                            label: actionButtonModel[1].label,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                AppRoute.homePageRoute,
-                              );
-                            },
-                            filled: false,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 32),
-                  ],
+        return Scaffold(
+          backgroundColor: AppColors.bgDeep,
+          appBar: isMobile
+              ? MyAppBar(
+                  info: info,
+                  index: 4,
+                  contactme: content?.contactme ?? const [],
+                )
+              : null,
+          body: Stack(
+            children: [
+              const Positioned.fill(child: AuroraBackground()),
+              Positioned.fill(child: _body(context, snapshot)),
+              if (!isMobile)
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: ProjectDetailBar(
+                    scrolled: _scrolled,
+                    progress: _progress,
+                    onBrandTap: _openSite,
+                    onBackToWork: _backToWork,
+                  ),
                 ),
-              );
-            },
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _body(BuildContext context, AsyncSnapshot<ApiModel> snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const Center(
+        child: CircularProgressIndicator(semanticsLabel: projectLoadingLabel),
+      );
+    }
+
+    if (snapshot.hasError) {
+      return BackendMessage(
+        title: projectErrorTitle,
+        message: projectErrorMessage,
+        actionLabel: projectRetryAction,
+        onActionPressed: _refresh,
+      );
+    }
+
+    final projects = snapshot.data?.project ?? const <Project>[];
+    final index = _selectedIndex(projects);
+    if (index < 0) {
+      return BackendMessage(
+        title: projectMissingTitle,
+        message: projectMissingDetail,
+        actionLabel: projectBackToWork,
+        onActionPressed: _backToWork,
+      );
+    }
+
+    final isMobile = context.isMobile;
+    final isDesktop = context.isDesktop;
+    final padding = isMobile
+        ? const EdgeInsets.fromLTRB(20, 26, 20, 44)
+        : ResponsiveInsets.page(context).copyWith(
+            top: WebSection.navHeight + (isDesktop ? 46 : 34),
+            bottom: isDesktop ? 76 : 56,
+          );
+
+    return RefreshIndicator(
+      onRefresh: _refresh,
+      child: FadeTransition(
+        opacity: _fade,
+        child: SingleChildScrollView(
+          controller: _scroll,
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: padding,
+          child: ProjectDetailContent(
+            project: projects[index],
+            index: index,
+            previous: index > 0 ? projects[index - 1] : null,
+            next: index < projects.length - 1 ? projects[index + 1] : null,
+            onSelectProject: _selectProject,
+            onBackToWork: _backToWork,
+            onBackToTop: _backToTop,
           ),
         ),
       ),

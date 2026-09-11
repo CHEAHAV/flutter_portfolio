@@ -47,6 +47,7 @@ class _ContactPageState extends State<ContactPage> {
         await apiModelFuture;
       },
       child: Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: MyAppBar(
           info: _info,
           index: 2,

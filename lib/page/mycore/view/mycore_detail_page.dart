@@ -1,175 +1,185 @@
 import 'package:flutter/material.dart';
+
 import '../../../api/api.dart';
-import '../../../features/home/home.dart';
-import '../../certificate/certificate.dart';
-import '../../mycore/mycore.dart';
 import '../../../routes/route.dart';
 import '../../../shared/shared.dart';
+import '../controller/mycore_detail_content.dart';
 
+/// Case-study screen for a single core competency — the same page chrome
+/// and layout language as [SkillDetailPage], so both detail screens read as
+/// one system.
 class MyCoreDetailPage extends StatefulWidget {
-  const MyCoreDetailPage({super.key, required this.actionButtonModel});
+  const MyCoreDetailPage({super.key, this.loadContent});
 
-  final List<ActionButtonModel> actionButtonModel;
+  final Future<ApiModel> Function()? loadContent;
 
   @override
   State<MyCoreDetailPage> createState() => _MyCoreDetailPageState();
 }
 
-class _MyCoreDetailPageState extends State<MyCoreDetailPage>
-    with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  late Animation<double> fadeIn;
-  late Future<ApiModel> apiModelFuture;
-  Info? _info;
-  int? mycoreIndex;
+class _MyCoreDetailPageState extends State<MyCoreDetailPage> {
+  late Future<ApiModel> _content;
 
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    )..forward();
-    fadeIn = CurvedAnimation(parent: controller, curve: Curves.easeOut);
-    apiModelFuture = loadApiModel();
+    _content = _load();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final arguments = ModalRoute.of(context)?.settings.arguments;
-    if (arguments is int) {
-      mycoreIndex = arguments;
+  Future<ApiModel> _load() =>
+      widget.loadContent?.call() ?? ApiRepository().loadApiModel();
+
+  Future<void> _refresh() async {
+    final future = _load();
+    setState(() {
+      _content = future;
+    });
+    // FutureBuilder displays a recoverable error if a refresh fails.
+    try {
+      await future;
+    } catch (_) {}
+  }
+
+  void _backToHome() {
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) {
+      navigator.pop();
+    } else {
+      navigator.pushReplacementNamed(AppRoute.homePageRoute);
     }
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  Future<ApiModel> loadApiModel() {
-    return ApiRepository().loadApiModel();
-  }
-
-  void _retryLoadHomeContent() {
-    setState(() {
-      apiModelFuture = loadApiModel();
-    });
+  MyCore? _selectedMyCore(List<MyCore> mycores) {
+    final arguments = ModalRoute.of(context)?.settings.arguments;
+    String? id;
+    int? index;
+    if (arguments is String) {
+      id = arguments;
+    } else if (arguments is int) {
+      index = arguments;
+    } else if (arguments is Map) {
+      if (arguments['id'] is String) id = arguments['id'] as String;
+      if (arguments['index'] is int) index = arguments['index'] as int;
+    }
+    // A supplied ID takes precedence over a potentially stale list index.
+    if (id != null && id.trim().isNotEmpty) {
+      for (final myCore in mycores) {
+        if (myCore.id == id) return myCore;
+      }
+      return null;
+    }
+    final selectedIndex = index ?? 0;
+    return selectedIndex >= 0 && selectedIndex < mycores.length
+        ? mycores[selectedIndex]
+        : null;
   }
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        setState(() {
-          apiModelFuture = loadApiModel();
-        });
-        await apiModelFuture;
-      },
-      child: Scaffold(
-        backgroundColor: AppColors.tertiary,
-        appBar: MyAppBar(info: _info, index: 6, contactme: [],),
-        body: FadeTransition(
-          opacity: fadeIn,
-          child: FutureBuilder<ApiModel>(
-            future: apiModelFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(color: AppColors.primary),
-                );
-              }
-
-              if (snapshot.hasError) {
-                return BackendMessage(
-                  title: homeBackendMessage[0].title,
-                  message: homeBackendMessage[0].message,
-                  actionLabel: homeBackendMessage[0].actionLabel,
-                  onActionPressed: _retryLoadHomeContent,
-                );
-              }
-
-              final content = snapshot.data;
-              if (content == null || content.isEmpty) {
-                return BackendMessage(
-                  title: homeBackendMessage[1].title,
-                  message: homeBackendMessage[1].message,
-                );
-              }
-
-              final info = content.info.isNotEmpty ? content.info.first : null;
-              if (info == null) {
-                return BackendMessage(
-                  title: homeBackendMessage[2].title,
-                  message: homeBackendMessage[2].message,
-                );
-              }
-
-              final mycores = content.mycore;
-              final selectedIndex = mycoreIndex ?? 0;
-              if (mycores.isEmpty ||
-                  selectedIndex < 0 ||
-                  selectedIndex >= mycores.length) {
-                return BackendMessage(
-                  title: homeBackendMessage[3].title,
-                  message: homeBackendMessage[3].message,
-                );
-              }
-
-              final mycore = mycores[selectedIndex];
-
-              if (_info == null) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  setState(() => _info = info);
-                });
-              }
-
-              return SingleChildScrollView(
-                padding: ResponsiveInsets.page(
-                  context,
-                ).copyWith(top: 24, bottom: 24) +
-                    const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.divider,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppColors.accent, width: 1),
-                      ),
-                      child: MyCoreCard(
-                        myCore: mycore,
-                        metaItemModel: metaItemModel,
-                      ),
+    return Scaffold(
+      backgroundColor: AppColors.bgDeep,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                color: AppColors.bgCard,
+                border: Border(bottom: BorderSide(color: AppColors.divider)),
+              ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 1216),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
                     ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
-                        child: SizedBox(
-                          width: MediaQuery.sizeOf(context).width,
-                          child: ActionButton(
-                            icon: actionButtonModel[1].icon,
-                            label: actionButtonModel[1].label,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                AppRoute.homePageRoute,
-                              );
-                            },
-                            filled: false,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.workspace_premium_rounded,
+                          color: AppColors.accent,
+                          size: 24,
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child:
+                              MediaQuery.sizeOf(context).width >= 380 &&
+                                  MediaQuery.textScalerOf(context).scale(14) <=
+                                      21
+                              ? Text('PORTFOLIO', style: AppStyle.labelLarge)
+                              : const SizedBox.shrink(),
+                        ),
+                        TextButton.icon(
+                          onPressed: _backToHome,
+                          icon: const Icon(Icons.arrow_back_rounded, size: 18),
+                          label: const Text('Back to home'),
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.textPrimary,
+                            minimumSize: const Size(48, 48),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: FutureBuilder<ApiModel>(
+                future: _content,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        semanticsLabel: 'Loading core competency details',
+                      ),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return BackendMessage(
+                      title: 'Unable to load this competency',
+                      message: 'Please check your connection and try again.',
+                      actionLabel: 'Try again',
+                      onActionPressed: _refresh,
+                    );
+                  }
+                  final myCore = _selectedMyCore(
+                    snapshot.data?.mycore ?? const [],
+                  );
+                  if (myCore == null) {
+                    return BackendMessage(
+                      title: 'Competency not found',
+                      message:
+                          'Return to the home page to choose another competency.',
+                      actionLabel: 'Back to home',
+                      onActionPressed: _backToHome,
+                    );
+                  }
+                  return RefreshIndicator(
+                    onRefresh: _refresh,
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 1216),
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(
+                              24,
+                              context.isMobile ? 28 : 48,
+                              24,
+                              48,
+                            ),
+                            child: MyCoreDetailContent(myCore: myCore),
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-              );
-            },
-          ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

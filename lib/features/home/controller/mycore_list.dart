@@ -37,27 +37,53 @@ class MyCoreList extends StatelessWidget {
               margin: const EdgeInsets.only(right: 8),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
               decoration: BoxDecoration(
-                color: AppColors.cardColor,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.borderColor),
+                color: AppColors.card,
+                borderRadius: BorderRadius.circular(AppStyle.radiusLg + 2),
+                border: Border.all(color: AppColors.divider),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.34),
+                    blurRadius: 28,
+                    offset: const Offset(0, 14),
+                    spreadRadius: -8,
+                  ),
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.22),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
+                    spreadRadius: -2,
+                  ),
+                ],
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image(
-                    image: ApiImage.imageProviderFor(
-                      item.image,
-                      fallbackAsset: 'assets/icons/backend.png',
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.35),
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
                     ),
-                    width: 24,
-                    height: 24,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        'assets/icons/backend.png',
-                        width: 24,
-                        height: 24,
-                      );
-                    },
+                    child: Image(
+                      image: ApiImage.imageProviderFor(
+                        item.image,
+                        fallbackAsset: 'assets/icons/backend.png',
+                      ),
+                      width: 24,
+                      height: 24,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/icons/backend.png',
+                          width: 24,
+                          height: 24,
+                        );
+                      },
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(

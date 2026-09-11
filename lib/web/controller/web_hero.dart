@@ -131,7 +131,6 @@ class WebHero extends StatelessWidget {
 
     return Stack(
       children: [
-        const Positioned.fill(child: WebHeroBackground()),
         ConstrainedBox(
           constraints: BoxConstraints(
             minHeight: isDesktop ? (viewport - 8).clamp(620.0, 1000.0) : 0,
@@ -212,11 +211,13 @@ class WebHeroPortrait extends StatefulWidget {
     required this.image,
     required this.radius,
     required this.mycore,
+    this.compact = false,
   });
 
   final String image;
   final double radius;
   final List<MyCore> mycore;
+  final bool compact;
 
   static const Duration orbitDuration = Duration(seconds: 24);
   static const Duration stormDuration = Duration(milliseconds: 2800);
@@ -279,7 +280,31 @@ class _WebHeroPortraitState extends State<WebHeroPortrait>
 
   @override
   Widget build(BuildContext context) {
-    final radius      = widget.radius;
+    if (!widget.compact) return _portrait(widget.radius);
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = math.min(constraints.maxWidth, 420.0);
+        // The tags extend past the ring. Reserve their full scaled width,
+        // plus breathing room, even at the left/right extremes of the orbit.
+        final tagWidth = width < 350 && _tags.length > 3
+            ? 90.0
+            : WebFloatingTag.compactWidth;
+        final clearance = tagWidth * 1.04 + 16;
+        final radius = math.min(widget.radius,
+            math.max(1.0, (width - clearance) / 2.5));
+        return SizedBox(
+          width: width,
+          height: radius * 2.5 + 88,
+          child: Center(child: _portrait(radius, tagWidth: tagWidth)),
+        );
+      },
+    );
+  }
+
+  Widget _portrait(double radius, {
+    double tagWidth = WebFloatingTag.compactWidth,
+  }) {
     final frame       = radius * 2.5;
     final orbitRadius = frame / 2;
     final tags        = _tags;
@@ -353,7 +378,12 @@ class _WebHeroPortraitState extends State<WebHeroPortrait>
                   ),
                 );
               },
-              child: WebFloatingTag(label: tag.name, image: tag.image),
+              child: WebFloatingTag(
+                label: tag.name,
+                image: tag.image,
+                compact: widget.compact,
+                maxWidth: tagWidth,
+              ),
             );
           }),
         ],
@@ -684,15 +714,41 @@ class WebLightningPainter extends CustomPainter {
 
 /// Small glass tag that floats beside the portrait.
 class WebFloatingTag extends StatelessWidget {
-  const WebFloatingTag({super.key, required this.label, required this.image});
+  const WebFloatingTag({
+    super.key,
+    required this.label,
+    required this.image,
+    this.compact = false,
+    this.maxWidth = compactWidth,
+  });
+
+  static const double compactWidth = 110;
 
   final String label;
   final String image;
+  final bool compact;
+  final double maxWidth;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(6, 6, 16, 6),
+    final text = Text(
+      label.toUpperCase(),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: AppStyle.bodySmall.copyWith(
+        color: AppColors.textPrimary,
+        fontFamily: 'JetBrainsMono',
+        fontSize: compact ? 9 : 10,
+        fontWeight: FontWeight.w700,
+        letterSpacing: compact ? 0.7 : 1.3,
+      ),
+    );
+
+    final tag = Container(
+      constraints: compact ? BoxConstraints(maxWidth: maxWidth) : null,
+      padding: compact
+          ? const EdgeInsets.fromLTRB(5, 5, 10, 5)
+          : const EdgeInsets.fromLTRB(6, 6, 16, 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppStyle.radiusFull),
         gradient: LinearGradient(
@@ -721,8 +777,8 @@ class WebFloatingTag extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width  : 26,
-            height : 26,
+            width  : compact ? 22 : 26,
+            height : compact ? 22 : 26,
             padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
               color: AppColors.bgDeep,
@@ -741,20 +797,12 @@ class WebFloatingTag extends StatelessWidget {
               },
             ),
           ),
-          const SizedBox(width: 11),
-          Text(
-            label.toUpperCase(),
-            style: AppStyle.bodySmall.copyWith(
-              color        : AppColors.textPrimary,
-              fontFamily   : 'JetBrainsMono',
-              fontSize     : 10,
-              fontWeight   : FontWeight.w700,
-              letterSpacing: 1.3,
-            ),
-          ),
+          SizedBox(width: compact ? 7 : 11),
+          if (compact) Flexible(child: text) else text,
         ],
       ),
     );
+    return compact ? Tooltip(message: label, child: tag) : tag;
   }
 }
 

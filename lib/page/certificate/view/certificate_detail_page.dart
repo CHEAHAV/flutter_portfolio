@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+
 import '../../../api/api.dart';
-import '../../certificate/certificate.dart';
-import '../../../shared/shared.dart';
 import '../../../routes/route.dart';
-import 'package:portfolio/features/home/model/homebackend_message.dart';
+import '../../../shared/shared.dart';
+import '../../../web/controller/web_section.dart';
+import '../controller/certificate_detail_bar.dart';
+import '../controller/certificate_detail_content.dart';
+import '../model/certificate_detail_model.dart';
 
+/// Case study for a single credential. The phone keeps the app bar it
+/// shares with every other detail page; tablet and desktop get the site
+/// header, the centred content column, and the aurora backdrop — the same
+/// chrome as [ProjectDetailPage], so a certificate never feels like a
+/// plainer, second-class page.
 class CertificateDetailPage extends StatefulWidget {
-  const CertificateDetailPage({super.key, required this.actionButtonModel});
+  const CertificateDetailPage({super.key, this.loadContent});
 
-  final List<ActionButtonModel> actionButtonModel;
+  final Future<ApiModel> Function()? loadContent;
 
   @override
   State<CertificateDetailPage> createState() => _CertificateDetailPageState();
@@ -16,159 +24,211 @@ class CertificateDetailPage extends StatefulWidget {
 
 class _CertificateDetailPageState extends State<CertificateDetailPage>
     with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  late Animation<double> fadeIn;
-  late Future<ApiModel> apiModelFuture;
-  Info? _info;
-  int? certificateIndex;
+  final ScrollController _scroll = ScrollController();
+
+  late final AnimationController _fadeController;
+  late final Animation<double> _fade;
+  late Future<ApiModel> _content;
+
+  bool _scrolled = false;
+  double _progress = 0;
 
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(
+    _fadeController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 600),
     )..forward();
-    fadeIn = CurvedAnimation(parent: controller, curve: Curves.easeOut);
-    apiModelFuture = loadApiModel();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final arguments = ModalRoute.of(context)?.settings.arguments;
-    if (arguments is int) {
-      certificateIndex = arguments;
-    }
+    _fade = CurvedAnimation(parent: _fadeController, curve: Curves.easeOut);
+    _content = _load();
+    _scroll.addListener(_onScroll);
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _scroll
+      ..removeListener(_onScroll)
+      ..dispose();
+    _fadeController.dispose();
     super.dispose();
   }
 
-  Future<ApiModel> loadApiModel() {
-    return ApiRepository().loadApiModel();
+  Future<ApiModel> _load() =>
+      widget.loadContent?.call() ?? ApiRepository().loadApiModel();
+
+  Future<void> _refresh() async {
+    final future = _load();
+    setState(() {
+      _content = future;
+    });
+    // FutureBuilder shows a recoverable error if the refresh itself fails.
+    try {
+      await future;
+    } catch (_) {}
   }
 
-  void _retryLoadHomeContent() {
-    setState(() {
-      apiModelFuture = loadApiModel();
-    });
+  void _onScroll() {
+    if (!_scroll.hasClients) return;
+
+    final offset = _scroll.offset;
+    final maxExtra = _scroll.position.maxScrollExtent;
+    final scrolled = offset > 12;
+    final progress = maxExtra <= 0 ? 0.0 : (offset / maxExtra).clamp(0.0, 1.0);
+
+    if (scrolled != _scrolled || (progress - _progress).abs() > 0.004) {
+      setState(() {
+        _scrolled = scrolled;
+        _progress = progress;
+      });
+    }
+  }
+
+  void _backToTop() {
+    if (!_scroll.hasClients) return;
+    _scroll.animateTo(
+      0,
+      duration: const Duration(milliseconds: 520),
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
+  void _backToCareer() {
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) {
+      navigator.pop();
+    } else {
+      navigator.pushReplacementNamed(AppRoute.homePageRoute);
+    }
+  }
+
+  void _openSite() {
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) {
+      navigator.pop();
+    } else {
+      navigator.pushReplacementNamed(AppRoute.homePageRoute);
+    }
+  }
+
+  /// `-1` when the requested record is no longer served by the backend.
+  int _selectedIndex(List<Certification> certifications) {
+    if (certifications.isEmpty) return -1;
+
+    final arguments = ModalRoute.of(context)?.settings.arguments;
+    String? id;
+    int? index;
+    if (arguments is String) {
+      id = arguments;
+    } else if (arguments is int) {
+      index = arguments;
+    } else if (arguments is Map) {
+      if (arguments['id'] is String) id = arguments['id'] as String;
+      if (arguments['index'] is int) index = arguments['index'] as int;
+    }
+
+    if (id != null && id.trim().isNotEmpty) {
+      return certifications.indexWhere((item) => item.id == id);
+    }
+
+    final selected = index ?? 0;
+    return selected >= 0 && selected < certifications.length ? selected : -1;
   }
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        setState(() {
-          apiModelFuture = loadApiModel();
-        });
-        await apiModelFuture;
-      },
-      child: Scaffold(
-        backgroundColor: AppColors.tertiary,
-        appBar: MyAppBar(info: _info, index: 5, contactme: []),
-        body: FadeTransition(
-          opacity: fadeIn,
-          child: FutureBuilder<ApiModel>(
-            future: apiModelFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(color: AppColors.primary),
-                );
-              }
+    final isMobile = context.isMobile;
 
-              if (snapshot.hasError) {
-                return BackendMessage(
-                  title: homeBackendMessage[0].title,
-                  message: homeBackendMessage[0].message,
-                  actionLabel: homeBackendMessage[0].actionLabel,
-                  onActionPressed: _retryLoadHomeContent,
-                );
-              }
+    return FutureBuilder<ApiModel>(
+      future: _content,
+      builder: (context, snapshot) {
+        final content = snapshot.data;
+        final info = content != null && content.info.isNotEmpty
+            ? content.info.first
+            : null;
 
-              final content = snapshot.data;
-              if (content == null || content.isEmpty) {
-                return BackendMessage(
-                  title: homeBackendMessage[1].title,
-                  message: homeBackendMessage[1].message,
-                );
-              }
-
-              final info = content.info.isNotEmpty ? content.info.first : null;
-              if (info == null) {
-                return BackendMessage(
-                  title: homeBackendMessage[2].title,
-                  message: homeBackendMessage[2].message,
-                );
-              }
-
-              final certifications = content.certification;
-              final selectedIndex = certificateIndex ?? 0;
-              if (certifications.isEmpty ||
-                  selectedIndex < 0 ||
-                  selectedIndex >= certifications.length) {
-                return BackendMessage(
-                  title: homeBackendMessage[3].title,
-                  message: homeBackendMessage[3].message,
-                );
-              }
-
-              final certification = certifications[selectedIndex];
-
-              if (_info == null) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  setState(() => _info = info);
-                });
-              }
-
-              return SingleChildScrollView(
-                padding: ResponsiveInsets.page(
-                  context,
-                ).copyWith(top: 24, bottom: 24) +
-                    const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.divider,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppColors.accent, width: 1),
-                      ),
-                      child: CertificateCard(
-                        certification: certification,
-                        metaItemModel: metaItemModel,
-                      ),
-                    ),
-
-                    const SizedBox(height: 16),
-                    ActionButton(
-                      icon: actionButtonModel[0].icon,
-                      label: actionButtonModel[0].label,
-                      onTap: () async {
-                        await ExternalLink.open(certification.certificateurl);
-                      },
-                      filled: true,
-                    ),
-
-                    const SizedBox(height: 12),
-                    ActionButton(
-                      icon: actionButtonModel[1].icon,
-                      label: actionButtonModel[1].label,
-                      onTap: () {
-                        Navigator.pushNamed(context, AppRoute.profilePageRoute);
-                      },
-                      filled: false,
-                    ),
-                    const SizedBox(height: 32),
-                  ],
+        return Scaffold(
+          backgroundColor: AppColors.bgDeep,
+          appBar: isMobile
+              ? MyAppBar(
+                  info: info,
+                  index: 5,
+                  contactme: content?.contactme ?? const [],
+                )
+              : null,
+          body: Stack(
+            children: [
+              const Positioned.fill(child: AuroraBackground()),
+              Positioned.fill(child: _body(context, snapshot)),
+              if (!isMobile)
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: CertificateDetailBar(
+                    scrolled: _scrolled,
+                    progress: _progress,
+                    onBrandTap: _openSite,
+                    onBack: _backToCareer,
+                  ),
                 ),
-              );
-            },
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _body(BuildContext context, AsyncSnapshot<ApiModel> snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return const Center(
+        child: CircularProgressIndicator(
+          semanticsLabel: certificateLoadingLabel,
+        ),
+      );
+    }
+
+    if (snapshot.hasError) {
+      return BackendMessage(
+        title: certificateErrorTitle,
+        message: certificateErrorMessage,
+        actionLabel: certificateRetryAction,
+        onActionPressed: _refresh,
+      );
+    }
+
+    final certifications = snapshot.data?.certification ?? const <Certification>[];
+    final index = _selectedIndex(certifications);
+    if (index < 0) {
+      return BackendMessage(
+        title: certificateMissingTitle,
+        message: certificateMissingDetail,
+        actionLabel: certificateBackAction,
+        onActionPressed: _backToCareer,
+      );
+    }
+
+    final isMobile = context.isMobile;
+    final isDesktop = context.isDesktop;
+    final padding = isMobile
+        ? const EdgeInsets.fromLTRB(20, 26, 20, 44)
+        : ResponsiveInsets.page(context).copyWith(
+            top: WebSection.navHeight + (isDesktop ? 46 : 34),
+            bottom: isDesktop ? 76 : 56,
+          );
+
+    return RefreshIndicator(
+      onRefresh: _refresh,
+      child: FadeTransition(
+        opacity: _fade,
+        child: SingleChildScrollView(
+          controller: _scroll,
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: padding,
+          child: CertificateDetailContent(
+            certification: certifications[index],
+            onBackToCareer: _backToCareer,
+            onBackToTop: _backToTop,
           ),
         ),
       ),

@@ -78,6 +78,7 @@ class _HomePageState extends State<HomePage>
         await apiModelFuture;
       },
       child: Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: MyAppBar(
           info: _info,
           index: 0,
@@ -181,7 +182,11 @@ class _HomePageState extends State<HomePage>
                         ),
                       ],
                       const SizedBox(height: 10),
-                      MyInfo(info: info, onContactTap: widget.onContactTap),
+                      MyInfo(
+                        info: info,
+                        mycore: mycore,
+                        onContactTap: widget.onContactTap,
+                      ),
                       if (mycore.isNotEmpty) ...[
                         const SizedBox(height: 20),
                         Text("My Core Competencies", style: AppStyle.headline3),

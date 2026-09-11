@@ -40,7 +40,11 @@ class AppTextButton extends StatelessWidget {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [Text(text), SizedBox(width: 6), Icon(icon, size: 24)],
+        children: [
+          Flexible(child: Text(text)),
+          const SizedBox(width: 6),
+          Icon(icon, size: 24),
+        ],
       ),
     );
   }

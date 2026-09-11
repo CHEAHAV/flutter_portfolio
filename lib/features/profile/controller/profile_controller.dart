@@ -1,45 +1,25 @@
 import 'package:flutter/material.dart';
 import '../../../api/api.dart';
-import '../../../shared/shared.dart';
+import '../../../web/controller/web_hero.dart' show WebHeroPortrait;
 
 class ProfileController extends StatelessWidget {
-  const ProfileController({super.key, required this.image});
+  const ProfileController({
+    super.key,
+    required this.image,
+    required this.mycore,
+  });
 
   final String image;
+  final List<MyCore> mycore;
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Stack(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(3),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.accentGlow, width: 2),
-            ),
-            child: CircleAvatar(
-              radius: 55,
-              backgroundImage: ApiImage.imageProviderFor(
-                image,
-                fallbackAsset: 'assets/images/profile.png',
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 8,
-            right: 8,
-            child: Container(
-              width: 16,
-              height: 16,
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                shape: BoxShape.circle,
-                border: Border.all(color: AppColors.card, width: 2),
-              ),
-            ),
-          ),
-        ],
+      child: WebHeroPortrait(
+        image: image,
+        radius: 120,
+        mycore: mycore,
+        compact: true,
       ),
     );
   }

@@ -114,6 +114,9 @@ class _MyAppBarState extends State<MyAppBar> {
     final headerIndex = widget.index >= 0 && widget.index < headerdata.length
         ? widget.index
         :   0;
+    // An info record saved without a picture must fall back to the icon
+    // rather than ask the network for an empty URL.
+    final avatarUrl = widget.info?.image.trim() ?? '';
 
     return AppBar(
       automaticallyImplyLeading: false,
@@ -131,11 +134,11 @@ class _MyAppBarState extends State<MyAppBar> {
               child: Padding(
                 padding: const EdgeInsets.all(2),
                 child  : CircleAvatar(
-                  backgroundImage: widget.info != null
-                      ? NetworkImage(widget.info!.image)
+                  backgroundImage: avatarUrl.isNotEmpty
+                      ? NetworkImage(avatarUrl)
                         :   null,
                   radius: 20,
-                  child : widget.info == null
+                  child : avatarUrl.isEmpty
                       ? const Icon(Icons.person, size: 20)
                       :   null,
                 ),

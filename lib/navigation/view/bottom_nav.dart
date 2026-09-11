@@ -58,7 +58,13 @@ class _BottomNavState extends State<BottomNav> {
         animationDuration: const Duration(milliseconds: 500),
         onTap: _controller.onTabTapped,
       ),
-      body: _model.pages[_controller.currentTabIndex],
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          const AuroraBackground(),
+          _model.pages[_controller.currentTabIndex],
+        ],
+      ),
     );
   }
 }

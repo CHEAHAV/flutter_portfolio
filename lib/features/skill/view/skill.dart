@@ -61,7 +61,7 @@ class _SkillPageState extends State<SkillPage>
         await apiModelFuture;
       },
       child: Scaffold(
-        backgroundColor: AppColors.bgDeep,
+        backgroundColor: Colors.transparent,
         appBar: MyAppBar(
           info: _info,
           index: 1,

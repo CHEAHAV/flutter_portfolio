@@ -40,9 +40,9 @@ class Portfolio extends StatelessWidget {
         AppRoute.contactPageRoute      : (context) => const ResponsiveRoot(initialIndex: 2),
         AppRoute.profilePageRoute      : (context) => const ResponsiveRoot(initialIndex: 3),
         AppRoute.projectDetailRoute    : (context) => const ProjectDetailPage(projectModel: []),
-        AppRoute.certificateDetailRoute: (context) => const CertificateDetailPage(actionButtonModel: []),
+        AppRoute.certificateDetailRoute: (context) => const CertificateDetailPage(),
         AppRoute.skillDetailRoute      : (context) => const SkillDetailPage(projectModel: []),
-        AppRoute.mycoreDetailRoute     : (context) => const MyCoreDetailPage(actionButtonModel: []),
+        AppRoute.mycoreDetailRoute     : (context) => const MyCoreDetailPage(),
       },
     );
   }

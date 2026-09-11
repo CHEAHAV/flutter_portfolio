@@ -54,12 +54,14 @@ class _WebPrimaryButtonState extends State<WebPrimaryButton> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                widget.label,
-                style: AppStyle.bodyMedium.copyWith(
-                  color        : AppColors.bgDeep,
-                  fontWeight   : FontWeight.w700,
-                  letterSpacing: 0.2,
+              Flexible(
+                child: Text(
+                  widget.label,
+                  style: AppStyle.bodyMedium.copyWith(
+                    color        : AppColors.bgDeep,
+                    fontWeight   : FontWeight.w700,
+                    letterSpacing: 0.2,
+                  ),
                 ),
               ),
               if (widget.icon != null) ...[
@@ -123,11 +125,13 @@ class _WebGhostButtonState extends State<WebGhostButton> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                widget.label,
-                style: AppStyle.bodyMedium.copyWith(
-                  color     : color,
-                  fontWeight: FontWeight.w600,
+              Flexible(
+                child: Text(
+                  widget.label,
+                  style: AppStyle.bodyMedium.copyWith(
+                    color     : color,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               if (widget.icon != null) ...[

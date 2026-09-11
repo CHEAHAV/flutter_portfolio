@@ -1,6 +1,9 @@
 export 'components/app_avatar.dart';
 export 'components/appsearch_bar.dart';
+export 'components/aurora_background.dart';
+export 'catalog/skill_resource.dart';
 export 'components/backend_message.dart';
+export 'components/detail_panels.dart';
 export 'components/divider.dart';
 export 'components/lottie.dart';
 export 'components/myapp_bar.dart';
@@ -9,6 +12,7 @@ export 'components/tab_bar.dart';
 export 'components/text_button.dart';
 export 'components/textform.dart';
 export 'components/textformarray.dart';
+export 'components/zoomable_image_viewer.dart';
 export 'responsive/breakpoint.dart';
 export 'style/style.dart';
 export 'theme/colors.dart';

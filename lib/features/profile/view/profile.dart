@@ -51,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
         await apiModelFuture;
       },
       child: Scaffold(
-        backgroundColor: AppColors.bgDeep,
+        backgroundColor: Colors.transparent,
         appBar: MyAppBar(
           info: _info,
           index: 3,
@@ -100,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
-                    ProfileController(image: info.image),
+                    ProfileController(image: info.image, mycore: content.mycore),
                     const SizedBox(height: 16),
                     Text(
                       info.name,

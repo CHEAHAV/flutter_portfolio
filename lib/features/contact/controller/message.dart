@@ -12,17 +12,18 @@ class Message extends StatefulWidget {
 }
 
 class _MessageState extends State<Message> with TickerProviderStateMixin {
-  bool expanded              = false;
-  bool _isSending            = false;
+  bool expanded = false;
+  bool _isSending = false;
   bool _showSuccessAnimation = false;
   Timer? _successAnimationTimer;
-  final _formKey             = GlobalKey<FormState>();
+  final List<Timer> _entryTimers = [];
+  final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
-  final _lastNameController  = TextEditingController();
-  final _emailController     = TextEditingController();
-  final _phoneController     = TextEditingController();
-  final _subjectController   = TextEditingController();
-  final _messageController   = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _subjectController = TextEditingController();
+  final _messageController = TextEditingController();
   late List<AnimationController> barControllers;
   late List<Animation<double>> barAnimations;
 
@@ -41,20 +42,26 @@ class _MessageState extends State<Message> with TickerProviderStateMixin {
         .toList();
 
     for (int i = 0; i < barControllers.length; i++) {
-      Future.delayed(Duration(milliseconds: i * 120), () {
-        if (mounted) barControllers[i].forward();
-      });
+      _entryTimers.add(
+        Timer(Duration(milliseconds: i * 120), () {
+          if (mounted) barControllers[i].forward();
+        }),
+      );
     }
   }
 
   @override
   void dispose() {
+    for (final timer in _entryTimers) {
+      timer.cancel();
+    }
     for (final c in barControllers) {
       c.dispose();
     }
     _firstNameController.dispose();
     _lastNameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose();
     _subjectController.dispose();
     _messageController.dispose();
     _successAnimationTimer?.cancel();
@@ -71,11 +78,11 @@ class _MessageState extends State<Message> with TickerProviderStateMixin {
     try {
       await sendContactMessage(
         firstName: _firstNameController.text.trim(),
-        lastName : _lastNameController.text.trim(),
-        email    : _emailController.text.trim(),
-        phone    : _phoneController.text.trim(),
-        subject  : _subjectController.text.trim(),
-        message  : _messageController.text.trim(),
+        lastName: _lastNameController.text.trim(),
+        email: _emailController.text.trim(),
+        phone: _phoneController.text.trim(),
+        subject: _subjectController.text.trim(),
+        message: _messageController.text.trim(),
       );
 
       if (!mounted) return;
@@ -130,9 +137,9 @@ class _MessageState extends State<Message> with TickerProviderStateMixin {
               Text(messageModel[0].firstName, style: AppStyle.bodyLarge),
               const SizedBox(height: 8),
               TextForm(
-                hintText  : firstNameHintText,
+                hintText: firstNameHintText,
                 controller: _firstNameController,
-                validator : MessageValidation.requiredField,
+                validator: MessageValidation.requiredField,
               ),
               const SizedBox(height: 10),
               Text(messageModel[0].lastName, style: AppStyle.bodyLarge),
@@ -146,43 +153,43 @@ class _MessageState extends State<Message> with TickerProviderStateMixin {
               Text(messageModel[0].gmail, style: AppStyle.bodyLarge),
               const SizedBox(height: 8),
               TextForm(
-                hintText    : gmailHintText,
-                controller  : _emailController,
+                hintText: gmailHintText,
+                controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                validator   : MessageValidation.emailField,
+                validator: MessageValidation.emailField,
               ),
               const SizedBox(height: 10),
               Text(messageModel[0].phone, style: AppStyle.bodyLarge),
               const SizedBox(height: 8),
               TextForm(
-                hintText  : phoneHintText,
+                hintText: phoneHintText,
                 controller: _phoneController,
-                validator : MessageValidation.requiredField,
+                validator: MessageValidation.requiredField,
               ),
               const SizedBox(height: 10),
               Text(messageModel[0].subject, style: AppStyle.bodyLarge),
               const SizedBox(height: 8),
               TextForm(
-                hintText  : subjectHintText,
+                hintText: subjectHintText,
                 controller: _subjectController,
-                validator : MessageValidation.requiredField,
+                validator: MessageValidation.requiredField,
               ),
               const SizedBox(height: 10),
               Text(messageModel[0].message, style: AppStyle.bodyLarge),
               const SizedBox(height: 8),
               TextFormArray(
-                hintText  : messageModel[0].hinttext,
+                hintText: messageModel[0].hinttext,
                 controller: _messageController,
-                validator : MessageValidation.requiredField,
+                validator: MessageValidation.requiredField,
               ),
               const SizedBox(height: 10),
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 3000),
                 child: _showSuccessAnimation
                     ? Container(
-                        key       : const ValueKey(overlay),
+                        key: const ValueKey(overlay),
                         decoration: BoxDecoration(
-                          color       : AppColors.bgColor.withValues(alpha: 0.70),
+                          color: AppColors.bgColor.withValues(alpha: 0.70),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         alignment: Alignment.center,
@@ -198,7 +205,7 @@ class _MessageState extends State<Message> with TickerProviderStateMixin {
                                   alpha: 0.70,
                                 ),
                                 fontWeight: FontWeight.bold,
-                                fontSize  : 20,
+                                fontSize: 20,
                               ),
                             ),
                             const SizedBox(height: 8),
@@ -220,9 +227,9 @@ class _MessageState extends State<Message> with TickerProviderStateMixin {
               Align(
                 alignment: Alignment.center,
                 child: AppTextButton(
-                  text     : _isSending ? sending[0].message: sending[1].message,
-                  onPressed: _isSending ? null              : _sendMessage,
-                  icon     : _isSending ? sending[0].icon   : sending[1].icon,
+                  text: _isSending ? sending[0].message : sending[1].message,
+                  onPressed: _isSending ? null : _sendMessage,
+                  icon: _isSending ? sending[0].icon : sending[1].icon,
                 ),
               ),
             ],

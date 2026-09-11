@@ -68,7 +68,7 @@ class WebNavBar extends StatelessWidget {
                       _WebBrand(onTap: () => onNavigate(WebAnchor.home)),
                       Expanded(
                         child: FittedBox(
-                          fit      : BoxFit.scaleDown,
+                          fit: BoxFit.scaleDown,
                           alignment: Alignment.center,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -79,9 +79,9 @@ class WebNavBar extends StatelessWidget {
                                       horizontal: isDesktop ? 15 : 9,
                                     ),
                                     child: WebNavLink(
-                                      label   : item.label,
+                                      label: item.label,
                                       selected: item.anchor == activeAnchor,
-                                      onTap   : () => onNavigate(item.anchor),
+                                      onTap: () => onNavigate(item.anchor),
                                     ),
                                   ),
                                 )
@@ -90,21 +90,21 @@ class WebNavBar extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        tooltip  : webEmailTooltip,
+                        tooltip: webEmailTooltip,
                         onPressed: () => _openEmail(context),
                         icon: ShaderMask(
                           shaderCallback: (bounds) => const LinearGradient(
                             colors: [AppColors.accent, AppColors.accentPurple],
-                            begin : Alignment.topLeft,
-                            end   : Alignment.bottomRight,
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
                           ).createShader(bounds),
                           child: const Icon(Icons.email_outlined, size: 20),
                         ),
                       ),
                       const SizedBox(width: 6),
                       WebPrimaryButton(
-                        label    : webResume,
-                        dense    : true,
+                        label: webResume,
+                        dense: true,
                         onPressed: () => onNavigate(WebAnchor.career),
                       ),
                     ],
@@ -146,20 +146,20 @@ class _WebBrand extends StatelessWidget {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap   : onTap,
+        onTap: onTap,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width : 30,
+              width: 30,
               height: 30,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(AppStyle.radiusSm),
-                border      : Border.all(color: AppColors.accent, width: 1.4),
+                border: Border.all(color: AppColors.accent, width: 1.4),
                 boxShadow: [
                   BoxShadow(
-                    color     : AppColors.accent.withValues(alpha: 0.25),
+                    color: AppColors.accent.withValues(alpha: 0.25),
                     blurRadius: 14,
                   ),
                 ],
@@ -167,7 +167,7 @@ class _WebBrand extends StatelessWidget {
               child: Text(
                 '<>',
                 style: AppStyle.label.copyWith(
-                  color   : AppColors.accent,
+                  color: AppColors.accent,
                   fontSize: 11,
                 ),
               ),
@@ -176,13 +176,13 @@ class _WebBrand extends StatelessWidget {
             ShaderMask(
               shaderCallback: (bounds) => const LinearGradient(
                 colors: [AppColors.accent, AppColors.accentPurple],
-                begin : Alignment.topLeft,
-                end   : Alignment.bottomRight,
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ).createShader(bounds),
               child: Text(
                 webBrand,
                 style: AppStyle.headline1.copyWith(
-                  fontSize     : context.isDesktop ? 19 : 16,
+                  fontSize: context.isDesktop ? 19 : 16,
                   letterSpacing: 1.5,
                 ),
               ),
@@ -218,38 +218,36 @@ class _WebNavLinkState extends State<WebNavLink> {
     final active = widget.selected || _hovered;
 
     return MouseRegion(
-      cursor : SystemMouseCursors.click,
+      cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _hovered = true),
-      onExit : (_) => setState(() => _hovered = false),
+      onExit: (_) => setState(() => _hovered = false),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap   : widget.onTap,
+        onTap: widget.onTap,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 180),
               style: AppStyle.bodyMedium.copyWith(
-                color     : active ? AppColors.textPrimary : AppColors.textSub,
-                fontWeight: widget.selected
-                    ? FontWeight.w600
-                    : FontWeight.w400,
+                color: active ? AppColors.textPrimary : AppColors.textSub,
+                fontWeight: widget.selected ? FontWeight.w600 : FontWeight.w400,
               ),
               child: Text(widget.label),
             ),
             const SizedBox(height: 6),
             AnimatedContainer(
               duration: const Duration(milliseconds: 220),
-              curve   : Curves.easeOutCubic,
-              height  : 2,
-              width   : widget.selected ? widget.label.length * 8.0 : 0,
+              curve: Curves.easeOutCubic,
+              height: 2,
+              width: widget.selected ? widget.label.length * 8.0 : 0,
               decoration: BoxDecoration(
-                color       : AppColors.accent,
+                color: AppColors.accent,
                 borderRadius: BorderRadius.circular(2),
                 boxShadow: widget.selected
                     ? [
                         BoxShadow(
-                          color     : AppColors.accent.withValues(alpha: 0.6),
+                          color: AppColors.accent.withValues(alpha: 0.6),
                           blurRadius: 8,
                         ),
                       ]

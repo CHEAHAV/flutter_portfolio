@@ -24,7 +24,7 @@ class WebContactSection extends StatelessWidget {
         const WebHeading(
           label: webContactLabel,
           title: title,
-          lead : webContactLead,
+          lead: webContactLead,
         ),
         const SizedBox(height: 40),
         if (contactme.isNotEmpty) ...[
@@ -53,7 +53,7 @@ class WebContactSection extends StatelessWidget {
       padding: EdgeInsets.all(isDesktop ? 30 : 22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize      : MainAxisSize.min,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(webFormTitle, style: AppStyle.headline3.copyWith(fontSize: 19)),
           const SizedBox(height: 8),
@@ -64,19 +64,15 @@ class WebContactSection extends StatelessWidget {
       ),
     );
 
-    if (!isDesktop) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [intro, const SizedBox(height: 36), form],
-      );
-    }
-
-    return Row(
+    // Keep the same element tree when zoom/resizing crosses a breakpoint,
+    // preserving the visitor's message and focus.
+    return Flex(
+      direction: isDesktop ? Axis.horizontal : Axis.vertical,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(flex: 5, child: intro),
-        const SizedBox(width: 56),
-        Expanded(flex: 6, child: form),
+        Flexible(flex: isDesktop ? 5 : 0, child: intro),
+        SizedBox(width: isDesktop ? 56 : 0, height: isDesktop ? 0 : 36),
+        Flexible(flex: isDesktop ? 6 : 0, child: form),
       ],
     );
   }
@@ -108,17 +104,17 @@ class _WebContactRowState extends State<WebContactRow> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 14),
       child: MouseRegion(
-        cursor : SystemMouseCursors.click,
+        cursor: SystemMouseCursors.click,
         onEnter: (_) => setState(() => _hovered = true),
-        onExit : (_) => setState(() => _hovered = false),
+        onExit: (_) => setState(() => _hovered = false),
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap   : _open,
+          onTap: _open,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 180),
-            padding : const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color       : _hovered ? AppColors.card : Colors.transparent,
+              color: _hovered ? AppColors.card : Colors.transparent,
               borderRadius: BorderRadius.circular(AppStyle.radiusMd),
               border: Border.all(
                 color: _hovered ? AppColors.accent : AppColors.divider,
@@ -127,8 +123,8 @@ class _WebContactRowState extends State<WebContactRow> {
             child: Row(
               children: [
                 Container(
-                  width  : 40,
-                  height : 40,
+                  width: 40,
+                  height: 40,
                   padding: const EdgeInsets.all(10),
                   decoration: const BoxDecoration(
                     color: AppColors.divider,
@@ -156,9 +152,9 @@ class _WebContactRowState extends State<WebContactRow> {
                       Text(
                         item.name.toUpperCase(),
                         style: AppStyle.bodySmall.copyWith(
-                          color        : AppColors.textSub,
-                          fontFamily   : 'JetBrainsMono',
-                          fontSize     : 9,
+                          color: AppColors.textSub,
+                          fontFamily: 'JetBrainsMono',
+                          fontSize: 9,
                           letterSpacing: 1.3,
                         ),
                       ),
@@ -168,7 +164,7 @@ class _WebContactRowState extends State<WebContactRow> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppStyle.bodyMedium.copyWith(
-                          color     : AppColors.textPrimary,
+                          color: AppColors.textPrimary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -177,7 +173,7 @@ class _WebContactRowState extends State<WebContactRow> {
                 ),
                 Icon(
                   Icons.north_east,
-                  size : 15,
+                  size: 15,
                   color: _hovered ? AppColors.accent : AppColors.textSub,
                 ),
               ],

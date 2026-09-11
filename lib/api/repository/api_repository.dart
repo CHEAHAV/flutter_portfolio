@@ -2,9 +2,11 @@ import '../../api/api.dart';
 import '../../routes/route.dart';
 
 class ApiRepository {
+  static final ApiClient _sharedClient = ApiClient();
   final ApiClient apiClient;
 
-  ApiRepository({ApiClient? apiClient}) : apiClient = apiClient ?? ApiClient();
+  ApiRepository({ApiClient? apiClient})
+    : apiClient = apiClient ?? _sharedClient;
 
   Future<ApiModel> loadApiModel() async {
     final [
@@ -19,7 +21,6 @@ class ApiRepository {
       storyResult,
       studyResult,
       teachstackResult,
-      messageResult,
       experienceResult,
     ] = await Future.wait([
       _loadSection('careers', ApiRoutes.careers),
@@ -33,7 +34,6 @@ class ApiRepository {
       _loadSection('stories', ApiRoutes.stories),
       _loadSection('studies', ApiRoutes.studies),
       _loadSection('teach-stacks', ApiRoutes.teachStacks),
-      _loadSection('messages', ApiRoutes.messages),
       _loadSection('experience', ApiRoutes.experience),
     ]);
 
@@ -49,7 +49,6 @@ class ApiRepository {
       storyResult,
       studyResult,
       teachstackResult,
-      messageResult,
       experienceResult,
     ];
 
@@ -67,19 +66,20 @@ class ApiRepository {
     }
 
     return ApiModel(
-      career       : _mapItems(careerResult.items, mapCareer),
+      career: _mapItems(careerResult.items, mapCareer),
       certification: _mapItems(certificationResult.items, mapCertification),
-      contactme    : _mapItems(contactmeResult.items, mapContactMe),
-      info         : _mapItems(infoResult.items, mapInfo),
-      mycore       : _mapItems(mycoreResult.items, mapMyCore),
-      project      : _mapItems(projectResult.items, mapProject),
-      skill        : _mapItems(skillResult.items, mapSkill),
-      social       : _mapItems(socialResult.items, mapSocial),
-      story        : _mapItems(storyResult.items, mapStory),
-      study        : _mapItems(studyResult.items, mapStudy),
-      teachstack   : _mapItems(teachstackResult.items, mapTeachStack),
-      message      : _mapItems(messageResult.items, mapMessage),
-      experience   : _mapItems(experienceResult.items, mapExperience),
+      contactme: _mapItems(contactmeResult.items, mapContactMe),
+      info: _mapItems(infoResult.items, mapInfo),
+      mycore: _mapItems(mycoreResult.items, mapMyCore),
+      project: _mapItems(projectResult.items, mapProject),
+      skill: _mapItems(skillResult.items, mapSkill),
+      social: _mapItems(socialResult.items, mapSocial),
+      story: _mapItems(storyResult.items, mapStory),
+      study: _mapItems(studyResult.items, mapStudy),
+      teachstack: _mapItems(teachstackResult.items, mapTeachStack),
+      // Visitor messages belong to the authenticated administration API.
+      message: const [],
+      experience: _mapItems(experienceResult.items, mapExperience),
     );
   }
 

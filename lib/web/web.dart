@@ -1,8 +1,8 @@
 export '../web/controller/web_about.dart';
-export '../web/controller/web_background.dart';
 export '../web/controller/web_buttons.dart';
 export '../web/controller/web_career.dart';
 export '../web/controller/web_contact_section.dart';
+export '../web/controller/web_detail_chrome.dart';
 export '../web/controller/web_footer.dart';
 export '../web/controller/web_hero.dart';
 export '../web/controller/web_nav_bar.dart';

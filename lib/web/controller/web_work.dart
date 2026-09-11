@@ -74,6 +74,19 @@ class _WebProjectRowState extends State<WebProjectRow> {
     }
   }
 
+  void _openZoom() {
+    showZoomableImage(
+      context,
+      image: ApiImage.imageProviderFor(
+        widget.project.image,
+        fallbackAsset: 'assets/images/computer.png',
+      ),
+      title: widget.project.name,
+      errorBuilder: (context, error, stackTrace) =>
+          Image.asset('assets/images/computer.png', fit: BoxFit.contain),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final project   = widget.project;
@@ -163,6 +176,20 @@ class _WebProjectRowState extends State<WebProjectRow> {
                       ),
                     ),
                   ),
+                  Positioned(
+                    right: 18,
+                    top  : 18,
+                    // Invisible when not hovered, so it never steals a tap
+                    // meant for the row on touch devices with no hover.
+                    child: IgnorePointer(
+                      ignoring: !_hovered,
+                      child: AnimatedOpacity(
+                        duration: const Duration(milliseconds: 160),
+                        opacity : _hovered ? 1 : 0,
+                        child: _ZoomBadge(onTap: _openZoom),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -241,6 +268,41 @@ class _WebProjectRowState extends State<WebProjectRow> {
               const SizedBox(width: 56),
               Expanded(flex: 5, child: details),
             ],
+    );
+  }
+}
+
+/// A hit target of its own, so tapping it opens the lightbox instead of
+/// bubbling to the row's onTap (which navigates to the case study).
+class _ZoomBadge extends StatelessWidget {
+  const _ZoomBadge({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: 'Zoom in',
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.all(9),
+            decoration: BoxDecoration(
+              color: AppColors.bgDeep.withValues(alpha: 0.82),
+              shape: BoxShape.circle,
+              border: Border.all(color: AppColors.tileBorder),
+            ),
+            child: const Icon(
+              Icons.zoom_in_rounded,
+              size: 18,
+              color: AppColors.accent,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
