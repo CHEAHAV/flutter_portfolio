@@ -31,7 +31,10 @@ void main(List<String> arguments) {
   }
 
   final siteUrl = '${uri.origin}/';
-  final imageUrl = '${siteUrl}icons/portfolio.png';
+  // Use a dedicated filename so crawlers fetching fresh metadata cannot reuse
+  // an image cached under an older icon URL. Keep the homepage URL unchanged.
+  const socialImagePath = 'social/portfolio-preview-v2.png';
+  final imageUrl = '$siteUrl$socialImagePath';
   final index = File('build/web/index.html');
   final marker = RegExp(
     r'<!-- seo:production:start -->.*?<!-- seo:production:end -->',
@@ -76,11 +79,18 @@ void main(List<String> arguments) {
   <script type="application/ld+json">$structuredData</script>
   <!-- seo:production:end -->''');
   for (final tag in ['property="og:image"', 'name="twitter:image"']) {
+    final imageTag = RegExp('<meta $tag content="[^"]*">');
+    if (imageTag.allMatches(html).length != 1) {
+      throw StateError('Expected exactly one social image tag: $tag');
+    }
     html = html.replaceFirst(
-      RegExp('<meta $tag content="[^"]*">'),
+      imageTag,
       '<meta $tag content="${escape.convert(imageUrl)}">',
     );
   }
+  final socialImage = File('build/web/$socialImagePath');
+  socialImage.parent.createSync(recursive: true);
+  File('assets/icons/portfolio.png').copySync(socialImage.path);
   index.writeAsStringSync(html);
   File('assets/icons/portfolio.png').copySync('build/web/icons/portfolio.png');
   File('build/web/robots.txt').writeAsStringSync(

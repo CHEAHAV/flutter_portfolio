@@ -7,6 +7,11 @@ Mr. IT Cheahav's portfolio of Flutter mobile apps, back-end projects, skills, an
 The browser, installed web app, and social sharing previews use
 `assets/icons/portfolio.png`. The original artwork is also copied to
 `web/icons/portfolio.png` so previews are available without running Flutter.
+The SEO preparation step publishes the same artwork at
+`/social/portfolio-preview-v2.png` and uses its absolute URL for Open Graph and
+Twitter previews. This dedicated filename avoids reusing an older cached icon
+when a crawler fetches fresh metadata. Increment the filename in
+`tool/prepare_web_seo.dart` when replacing the preview artwork.
 
 Social previews use `Mr. IT Cheahav` as the site name and
 `Mobile App Developer Portfolio` as the headline. The description explains the
@@ -40,13 +45,15 @@ search results would require pages with their own crawlable content and metadata
 The HTML includes a visible introduction while Flutter loads, and the app keeps
 the same descriptive browser title after startup.
 
-After deployment, verify `/robots.txt`, `/sitemap.xml`, and `/icons/portfolio.png`,
+After deployment, verify `/robots.txt`, `/sitemap.xml`, and
+`/social/portfolio-preview-v2.png`,
 then submit the sitemap in Google Search Console. Existing search results and
 social previews may retain cached artwork until they are crawled again.
 After deploying metadata changes, refresh the URL through Telegram's
-`@WebpageBot` and share it again. A fresh query string (for example,
-`?preview=portfolio3`) can also be used when checking a new preview. The canonical
-URL stays at the homepage. Existing messages may continue to show cached cards.
+`@WebpageBot` and share the original homepage URL again. No query string is
+required. Changing website files cannot clear Telegram's stored page preview;
+the bot must refetch the original URL. Existing messages may continue to show
+cached cards.
 
 ## Connect to the backend on a real phone
 
