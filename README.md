@@ -1,6 +1,42 @@
 # portfolio
 
-A new Flutter project.
+Mr. IT Cheahav's portfolio of Flutter mobile apps, back-end projects, skills, and experience.
+
+## Web branding and SEO
+
+The browser, installed web app, and social sharing previews use
+`assets/icons/portfolio.png`. The original artwork is also copied to
+`web/icons/portfolio.png` so previews are available without running Flutter.
+
+To regenerate the web icons after changing the artwork:
+
+```powershell
+dart run flutter_launcher_icons -f flutter_launcher_icons-web.yaml
+Copy-Item assets/icons/portfolio.png web/icons/portfolio.png
+```
+
+Vercel's build command prepares the canonical URL, absolute social image URLs,
+WebSite/Person structured data, robots.txt, and sitemap.xml automatically using
+`VERCEL_PROJECT_PRODUCTION_URL`. Set `SITE_URL` to your preferred public HTTPS
+origin if you want to override that domain. Enable Vercel's system environment
+variables for this build step.
+
+For another host, build and then supply the actual public URL:
+
+```powershell
+flutter build web --release
+dart run tool/prepare_web_seo.dart https://your-portfolio-domain.com
+```
+
+Deploy the resulting `build/web` directory. The sitemap lists the homepage;
+Flutter's hash routes are not separate indexable HTML pages. Project-specific
+search results would require pages with their own crawlable content and metadata.
+The HTML includes a visible introduction while Flutter loads, and the app keeps
+the same descriptive browser title after startup.
+
+After deployment, verify `/robots.txt`, `/sitemap.xml`, and `/icons/portfolio.png`,
+then submit the sitemap in Google Search Console. Existing search results and
+social previews may retain cached artwork until they are crawled again.
 
 ## Connect to the backend on a real phone
 

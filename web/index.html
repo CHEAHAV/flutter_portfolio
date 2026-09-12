@@ -19,28 +19,42 @@
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Mr. IT Cheahav - Mobile app developer crafting elegant, high-performance experiences with Flutter and modern back-end technologies.">
+  <meta name="description" content="Explore Mr. IT Cheahav's portfolio of Flutter mobile apps and back-end projects, with technical skills, experience, and ways to get in touch.">
+  <meta name="author" content="Mr. IT Cheahav">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="theme-color" content="#0A0F2E">
 
   <!-- Link previews -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Mr. IT Cheahav - Mobile App Developer">
-  <meta property="og:description" content="Portfolio of Mr. IT Cheahav: Flutter mobile applications, back-end services and selected case studies.">
-  <meta property="og:image" content="icons/Icon-512.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Mr. IT Cheahav - Mobile App Developer">
-  <meta name="twitter:description" content="Portfolio of Mr. IT Cheahav: Flutter mobile applications, back-end services and selected case studies.">
+  <meta property="og:site_name" content="Mr. IT Cheahav | Portfolio">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Mr. IT Cheahav | Flutter Developer Portfolio">
+  <meta property="og:description" content="Explore Mr. IT Cheahav's portfolio of Flutter mobile apps and back-end projects, with technical skills, experience, and ways to get in touch.">
+  <meta property="og:image" content="icons/portfolio.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="1200">
+  <meta property="og:image:alt" content="Handwritten Portfolio wordmark on a warm ivory background">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Mr. IT Cheahav | Flutter Developer Portfolio">
+  <meta name="twitter:description" content="Explore Mr. IT Cheahav's portfolio of Flutter mobile apps and back-end projects, with technical skills, experience, and ways to get in touch.">
+  <meta name="twitter:image" content="icons/portfolio.png">
+  <meta name="twitter:image:alt" content="Handwritten Portfolio wordmark on a warm ivory background">
+  <!-- Production URLs are inserted by tool/prepare_web_seo.dart. -->
+  <!-- seo:production:start -->
+  <!-- seo:production:end -->
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Portfolio">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <meta name="apple-mobile-web-app-title" content="Cheahav Portfolio">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png?v=portfolio-1">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/Icon-192.png?v=portfolio-1">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png?v=portfolio-1">
 
-  <title>Mr. IT Cheahav - Mobile App Developer</title>
+  <title>Mr. IT Cheahav | Flutter Developer Portfolio</title>
   <link rel="manifest" href="manifest.json">
 
   <style>
@@ -77,6 +91,23 @@
       letter-spacing: 4px;
     }
 
+    #loading h1, #loading p {
+      max-width: 560px;
+      margin: 0;
+      padding: 0 24px;
+      color: #F1F5F9;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    #loading h1 { font-size: 24px; }
+    #loading p { font-size: 15px; color: #CBD5E1; }
+
+    @media (prefers-reduced-motion: reduce) {
+      #loading { transition: none; }
+      #loading .bar { animation: none; }
+    }
+
     #loading .track {
       width: 160px;
       height: 2px;
@@ -102,7 +133,10 @@
 <body>
   <div id="loading">
     <div class="brand">PORTFOLIO</div>
-    <div class="track"><div class="bar"></div></div>
+    <h1>Mr. IT Cheahav | Flutter Developer</h1>
+    <p>Explore my Flutter mobile apps, back-end projects, technical skills, and experience.</p>
+    <div class="track" role="status" aria-label="Loading portfolio"><div class="bar"></div></div>
+    <noscript><p>Enable JavaScript to explore the interactive portfolio and get in touch.</p></noscript>
   </div>
 
   <!--
