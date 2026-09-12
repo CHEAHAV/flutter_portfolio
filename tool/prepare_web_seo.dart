@@ -52,7 +52,7 @@ void main(List<String> arguments) {
         '@type': 'WebSite',
         '@id': '$siteUrl#website',
         'url': siteUrl,
-        'name': 'Mr. IT Cheahav | Portfolio',
+        'name': 'Mr. IT Cheahav',
         'inLanguage': 'en',
         'about': {'@id': '$siteUrl#person'},
       },

@@ -8,6 +8,12 @@ The browser, installed web app, and social sharing previews use
 `assets/icons/portfolio.png`. The original artwork is also copied to
 `web/icons/portfolio.png` so previews are available without running Flutter.
 
+Social previews use `Mr. IT Cheahav` as the site name and
+`Mobile App Developer Portfolio` as the headline. The description explains the
+work without repeating the name. Search/browser and Twitter titles include the
+name once: `Mr. IT Cheahav | Mobile App Developer`. Keep the Flutter app title,
+HTML title, web manifest, and WebSite structured data aligned when rebranding.
+
 To regenerate the web icons after changing the artwork:
 
 ```powershell
@@ -37,6 +43,10 @@ the same descriptive browser title after startup.
 After deployment, verify `/robots.txt`, `/sitemap.xml`, and `/icons/portfolio.png`,
 then submit the sitemap in Google Search Console. Existing search results and
 social previews may retain cached artwork until they are crawled again.
+After deploying metadata changes, refresh the URL through Telegram's
+`@WebpageBot` and share it again. A fresh query string (for example,
+`?preview=portfolio3`) can also be used when checking a new preview. The canonical
+URL stays at the homepage. Existing messages may continue to show cached cards.
 
 ## Connect to the backend on a real phone
 

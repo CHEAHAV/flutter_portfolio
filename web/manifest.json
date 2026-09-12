@@ -1,5 +1,5 @@
 {
-    "name": "Mr. IT Cheahav | Flutter Developer Portfolio",
+    "name": "Mr. IT Cheahav | Mobile App Developer",
     "short_name": "Cheahav Portfolio",
     "id": ".",
     "scope": ".",
@@ -8,7 +8,7 @@
     "display": "standalone",
     "background_color": "#0A0F2E",
     "theme_color": "#0A0F2E",
-    "description": "Explore Mr. IT Cheahav's portfolio of Flutter mobile apps and back-end projects, with technical skills, experience, and ways to get in touch.",
+    "description": "Explore selected mobile apps and backend projects, technical skills, and experience. Get in touch to discuss your next project.",
     "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
