@@ -34,6 +34,12 @@ class WebNavBar extends StatelessWidget {
     messenger.showSnackBar(const SnackBar(content: Text(webLinkError)));
   }
 
+  Future<void> _openResume(BuildContext context) async {
+    final messenger = ScaffoldMessenger.of(context);
+    if (await ExternalLink.open(resumeUrl)) return;
+    messenger.showSnackBar(const SnackBar(content: Text(webLinkError)));
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDesktop = context.isDesktop;
@@ -105,7 +111,7 @@ class WebNavBar extends StatelessWidget {
                       WebPrimaryButton(
                         label: webResume,
                         dense: true,
-                        onPressed: () => onNavigate(WebAnchor.career),
+                        onPressed: () => _openResume(context),
                       ),
                     ],
                   ),

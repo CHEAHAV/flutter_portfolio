@@ -16,4 +16,5 @@ export 'components/zoomable_image_viewer.dart';
 export 'responsive/breakpoint.dart';
 export 'style/style.dart';
 export 'theme/colors.dart';
+export 'utils/app_links.dart';
 export 'utils/external_link.dart';
