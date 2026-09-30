@@ -2,10 +2,41 @@
   "installCommand": "if [ ! -d flutter ]; then git clone https://github.com/flutter/flutter.git -b stable --depth 1; fi && flutter/bin/flutter config --enable-web && flutter/bin/flutter pub get",
   "buildCommand": "flutter/bin/flutter build web --release --dart-define=API_BASE_URL=${API_BASE_URL:-https://fastapi-fortfolio.vercel.app} && flutter/bin/dart run tool/prepare_web_seo.dart",
   "outputDirectory": "build/web",
-  "rewrites": [
+  "headers": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        }
+      ]
+    },
+    {
+      "source": "/(favicon.ico|favicon.png|apple-touch-icon.png|icons/(.*)|social/(.*))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/manifest+json; charset=utf-8"
+        }
+      ]
     }
   ]
 }
